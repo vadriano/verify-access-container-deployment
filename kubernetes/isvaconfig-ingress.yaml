@@ -1,0 +1,18 @@
+ apiVersion: networking.k8s.io/v1beta1
+ kind: Ingress
+ metadata:
+   name: isvaconfig
+   annotations:
+     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+ spec:
+  tls:
+  - hosts:
+    - lmi.iamlab.ibm.com
+  rules:
+  - host: lmi.iamlab.ibm.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: isvaconfig
+          servicePort: 9443

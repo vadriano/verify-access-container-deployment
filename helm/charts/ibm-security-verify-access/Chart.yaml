@@ -1,0 +1,27 @@
+
+#
+# This file contains the definition for the IBM Security Verify Access helm
+# chart.
+#
+
+name: verify-access
+description: IBM Security Verify Access provides a simplified access management solution.
+icon: https://d1q6f0aelx0por.cloudfront.net/product-logos/32925feb-af2b-4b4c-8276-def2a031ed31-artwork2x.png
+
+version: 1.2.0
+tillerVersion: ">=2.9.1"
+engine: gotpl
+appVersion: 10.0.0.0
+
+keywords:
+  - isva
+  - amd64
+  - Security
+
+home: https://hub.docker.com/r/ibmcom/verify-access
+
+sources:
+  - https://github.com/ibm-security/helm-charts/tree/master/
+
+maintainers:
+  - name: IBM Security Verify Access

@@ -1,0 +1,19 @@
+ apiVersion: extensions/v1beta1
+ kind: Ingress
+ metadata:
+   name: iamlab-isvawrp-rp1
+   annotations:
+     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+     nginx.ingress.kubernetes.io/affinity: "cookie"
+ spec:
+  tls:
+  - hosts:
+    - www.iamlab.ibm.com
+  rules:
+  - host: www.iamlab.ibm.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: iamlab-isvawrp-rp1
+          servicePort: 443
