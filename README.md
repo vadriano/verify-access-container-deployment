@@ -21,14 +21,14 @@ This will create the container-deployment/local/dockerkeys directory and populat
 To set up a native Docker environment, use the files in container-deployment/docker.
 
 These scripts assume you have the following IP addresses available locally on your Docker system:
-- 127.0.0.2 (isam.iamlab.ibm.com)
+- 127.0.0.2 (lmi.iamlab.ibm.com)
 - 127.0.0.3 (www.iamlab.ibm.com)
 
 If you want to use other local IP addresses then you'll need to modify the common/env-config.sh file.
 
 Run `./docker-setup.sh` script to create docker containers.
 
-You can now connect to the ISAM LMI at https://127.0.0.2
+You can now connect to the Verify Access LMI at https://127.0.0.2
 
 To clean up the docker resources created, run the `./cleanup.sh` script.
 
@@ -38,7 +38,7 @@ To set up an environment with docker-compose, use the files in container-deploym
 These scripts will create the $HOME/dockershare directory.
 
 These scripts assume you have the following IP addresses available locally on your Docker system:
-- 127.0.0.2 (isam.iamlab.ibm.com)
+- 127.0.0.2 (lmi.iamlab.ibm.com)
 - 127.0.0.3 (www.iamlab.ibm.com)
 
 If you want to use other local IP addresses then you'll need to modify the common/env-config.sh file and run `./update-env-file.sh`
@@ -49,7 +49,7 @@ Change directory to the `iamlab` directory.
 
 Run command `docker-compose up -d` to create containers.
 
-You can now connect to the ISAM LMI at https://127.0.0.2
+You can now connect to the Verify Access LMI at https://127.0.0.2
 
 To clean up the docker resources created, run `docker-compose down -v` command.
 
@@ -77,7 +77,7 @@ To access the Reverse Proxy you will need to determine an External IP for a Node
 For Minikube an Ingress is defined.  This allows direct access to the Reverse Proxy when DNS points www.iamlab.ibm.com to the Minikube ingress controller IP address.
 
 For Google, access to a NodePort requires the following filewall rule to be created:
-`gcloud compute firewall-rules create isamwrp-node-port --allow tcp:30443`
+`gcloud compute firewall-rules create isvawrp-node-port --allow tcp:30443`
 
 # Helm 3.0
 To set up an environment using Helm, use the files in container-deployment/helm.
@@ -102,7 +102,7 @@ To set up an environment using OpenShift, use the files in container-deployment/
 
 These scripts assume that you have the `oc` utility installed and it is configured to talk to your OpenShift system.
 
-Custom Security Constraints are required to run IBM Security Access Manager under OpenShift.  The Access Manager container requires setuid and setgid permissions.
+Custom Security Constraints are required to run IBM Security Verify Access under OpenShift.  The Verify Access containers requires setuid and setgid permissions.
 In addition, the openldap container requires permission to run as root.
 
 You must be a cluster administrator to add security constraints and grant them to service accounts.  For example, login as system user:
@@ -143,7 +143,7 @@ oc process -f verify-access-rp-template.yaml | oc create -f -
 Once Verify Access is deployed, you can run the `./lmi-access.sh` script to start a port-forward session for access to the LMI.
 With this running, you can access LMI using at https://localhost:9443.
 
-OpenShift includes a web proxy which can route traffic to the ISAM Reverse Proxy.  You will need to determine the IP address where this is listening and then point www.iamlab.ibm.com to it in your /etc/hosts file.
+OpenShift includes a web proxy which can route traffic to the Verify Access Reverse Proxy.  You will need to determine the IP address where this is listening and then point www.iamlab.ibm.com to it in your /etc/hosts file.
 
 If the LMI port-forwarding isn't stable, you can also create a route using the provided `lmi-route.yaml` file (but this will open your LMI to the world).  You will need to determine the IP address where this is listening and then point lmi.iamlab.ibm.com to it in your /etc/hosts file.
 
