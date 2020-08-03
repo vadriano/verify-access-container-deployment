@@ -10,7 +10,7 @@ Find it here: https://ibm.biz/Verify_Access_Docker_Cookbook
 
 ## Community assistance
 If you have questions about deployment, or about IBM Security Verify, you can ask them on the IAM Group of the IBM Security Community:
-https://ibm.biz/iamcomunity
+https://ibm.biz/iamcommunity
 
 # Common Requirements and Setup
 
