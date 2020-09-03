@@ -129,7 +129,7 @@ objects:
               command:
               - /sbin/health_check.sh
               - livenessProbe
-            periodSeconds: 10
+            periodSeconds: 20
             timeoutSeconds: 2
           readinessProbe:
             httpGet:
