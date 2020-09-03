@@ -3,6 +3,14 @@ These assets are for IBM Security Verify Access v10.0.0
 
 Assets for IBM Security Access Manager are available at https://ibm.biz/isamdocker
 
+# Resources
+## Cookbooks
+A cookbook is available which describes Native Docker and Docker Compose deployment.  It covers some docker concepts, deployment of Verify Access containers, and initial configuration of a simple Verify Access system.  An IBMid is required for access to the Security Learning Academy but you can sign-up free of charge.
+Find it here: https://ibm.biz/Verify_Access_Docker_Cookbook
+
+## Community assistance
+If you have questions about deployment, or about IBM Security Verify, you can ask them on the IAM Group of the IBM Security Community:
+https://ibm.biz/iamcommunity
 
 # Common Requirements and Setup
 
