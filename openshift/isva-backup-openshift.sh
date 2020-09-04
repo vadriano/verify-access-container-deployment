@@ -29,6 +29,6 @@ oc exec ${POSTGRESQL} -- /usr/local/bin/pg_dump isva > $TMPDIR/isva.db
 
 cp -R ${KEYS} ${TMPDIR}
 
-tar -cf sam-backup-$RANDOM.tar -C ${TMPDIR} .
+tar -cf isva-backup-$RANDOM.tar -C ${TMPDIR} .
 rm -rf ${TMPDIR}
 echo Done.
