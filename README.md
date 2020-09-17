@@ -5,8 +5,13 @@ Assets for IBM Security Access Manager are available at https://ibm.biz/isamdock
 
 # Resources
 ## Cookbooks
-A cookbook is available which describes Native Docker and Docker Compose deployment.  It covers some docker concepts, deployment of Verify Access containers, and initial configuration of a simple Verify Access system.  An IBMid is required for access to the Security Learning Academy but you can sign-up free of charge.
+### Deployment with Native Docker and Docker Compose
+This cookbook describes deployment with Native Docker and Docker Compose.  It covers some docker concepts, deployment of Verify Access containers, and initial configuration of a simple Verify Access system.  An IBMid is required for access to the Security Learning Academy but you can sign-up free of charge.
 Find it here: https://ibm.biz/Verify_Access_Docker_Cookbook
+
+### Deployment on RedHat OpenShift
+This cookbook describes deployment on RedHat Openshift 3.x.  It covers some OpenShift concepts, deployment of Verify Access templates, and initial configuration of a simple Verify Access System.  An IBMid is required for access to the Security Learning Academy but you can sign-up free of charge.
+Find it here: https://ibm.biz/VerifyAccessOpenShiftCookbook
 
 ## Community assistance
 If you have questions about deployment, or about IBM Security Verify, you can ask them on the IAM Group of the IBM Security Community:
