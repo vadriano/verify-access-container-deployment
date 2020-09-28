@@ -17,10 +17,13 @@ mkdir $TMPDIR
 # Get docker container ID for isvaconfig container
 ISVACONFIG="$(oc get --no-headers=true pods -l name=verifyaccess-config -o custom-columns=:metadata.name)"
 
+# Get absolute tmp directory (Kubernetes bug means symlink destination causes error)
+ABSTMP=$(cd -P "$TMPDIR" && pwd)
+
 # Copy the current snapshots from isvaconfig container
 SNAPSHOTS=`oc exec ${ISVACONFIG} ls /var/shared/snapshots`
 for SNAPSHOT in $SNAPSHOTS; do
-oc cp ${ISVACONFIG}:/var/shared/snapshots/$SNAPSHOT $TMPDIR/$SNAPSHOT
+oc cp ${ISVACONFIG}:/var/shared/snapshots/$SNAPSHOT $ABSTMP/$SNAPSHOT
 done
 
 # Get docker container ID for openldap container
