@@ -1,7 +1,14 @@
 #!/bin/bash
 
-# Set file locations
-KEYS=${HOME}/dockerkeys
+# Get directory for this script
+RUNDIR="`dirname \"$0\"`"         # relative
+RUNDIR="`( cd \"$RUNDIR\" && pwd )`"  # absolutized and normalized
+if [ -z "$RUNDIR" ] ; then
+  echo "Failed to get local path"
+  exit 1  # fail
+fi
+
+. ${RUNDIR}/../common/env-config.sh
 
 # Create a temporary working directory
 TMPDIR=/tmp/backup-$RANDOM$RANDOM
@@ -27,7 +34,7 @@ kubectl exec ${OPENLDAP} -- ldapsearch -H "ldaps://localhost:636" -L -D "cn=root
 POSTGRESQL="$(kubectl get --no-headers=true pods -l app=iamlab-isvapostgresql -o custom-columns=:metadata.name)"
 kubectl exec ${POSTGRESQL} -- /usr/local/bin/pg_dump isva > $TMPDIR/isva.db
 
-cp -R ${KEYS} ${TMPDIR}
+cp -R ${DOCKERKEYS} ${TMPDIR}
 
 tar -cf isva-backup-$RANDOM.tar -C ${TMPDIR} .
 rm -rf ${TMPDIR}
