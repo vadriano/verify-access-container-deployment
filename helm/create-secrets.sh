@@ -10,7 +10,7 @@ fi
 
 . ${RUNDIR}/../common/env-config.sh
 
-if [ ! -f "$KEY_DIR/openldap/ldap.key" ] || [ ! -f "$KEY_DIR/openldap/ldap.crt" ] || [ ! -f "$KEY_DIR/openldap/ca.crt" ] || [ ! -f "$KEY_DIR/openldap/dhparam.pem" ] || [ ! -f "$KEY_DIR/postgresql/server.pem" ]
+if [ ! -f "${DOCKERKEYS}/openldap/ldap.key" ] || [ ! -f "${DOCKERKEYS}/openldap/ldap.crt" ] || [ ! -f "${DOCKERKEYS}/openldap/ca.crt" ] || [ ! -f "${DOCKERKEYS}/openldap/dhparam.pem" ] || [ ! -f "${DOCKERKEYS}/postgresql/server.pem" ]
 then
   echo "Key files not found.  Restore or create keys before running this script."
   exit 1
@@ -20,12 +20,12 @@ fi
 echo "Deleting openldap-keys Secret"
 kubectl delete secret openldap-keys > /dev/null 2>&1
 echo "Creating OpenLDAP SSL Keys as a Secret"
-kubectl create secret generic "openldap-keys" --from-file "$KEY_DIR/openldap/ldap.crt" --from-file "$KEY_DIR/openldap/ldap.key" --from-file "$KEY_DIR/openldap/ca.crt" --from-file "$KEY_DIR/openldap/dhparam.pem"
+kubectl create secret generic "openldap-keys" --from-file "${DOCKERKEYS}/openldap/ldap.crt" --from-file "${DOCKERKEYS}/openldap/ldap.key" --from-file "${DOCKERKEYS}/openldap/ca.crt" --from-file "${DOCKERKEYS}/openldap/dhparam.pem"
 
 echo "Deleting postgresql-keys Secret"
 kubectl delete secret postgresql-keys > /dev/null 2>&1
 echo "Creating server.pem as a Secret"
-kubectl create secret generic postgresql-keys --from-file "$KEY_DIR/postgresql/server.pem"
+kubectl create secret generic postgresql-keys --from-file "${DOCKERKEYS}/postgresql/server.pem"
 
 echo "Deleting helm-isvaadmin Secret"
 kubectl delete secret helm-isvaadmin > /dev/null 2>&1
