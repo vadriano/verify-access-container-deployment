@@ -10,26 +10,26 @@ dependencies:
     version: 1.2.15
     alias: sch
   - name: verify-access-config
-    version: 1.2.0
+    version: 1.2.1
     alias: isvaconfig
     repository: file://charts/verify-access-config
   - name: verify-access-wrp
-    version: 1.2.0
+    version: 1.2.1
     alias: isvawrp
     repository: file://charts/verify-access-wrp
   - name: verify-access-runtime
-    version: 1.2.0
+    version: 1.2.1
     alias: isvaruntime
     repository: file://charts/verify-access-runtime
   - name: verify-access-dsc
-    version: 1.2.0
+    version: 1.2.1
     alias: isvadsc
     repository: file://charts/verify-access-dsc
   - name: verify-access-postgresql
-    version: 1.2.0
+    version: 1.2.1
     alias: isvapostgresql
     repository: file://charts/verify-access-postgresql
   - name: verify-access-openldap
-    version: 1.2.0
+    version: 1.2.1
     alias: isvaopenldap
     repository: file://charts/verify-access-openldap
