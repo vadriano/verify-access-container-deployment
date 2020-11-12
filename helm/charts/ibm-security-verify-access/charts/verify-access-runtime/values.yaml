@@ -20,8 +20,9 @@ global:
   container:
     snapshot:            ""
     fixpacks:            ""
-    autoReloadInterval: 
-
+    autoReloadInterval:
+    timezone:           "Etc/UTC"
+    
   # Persistence Storage
   persistence:
     enabled: true
@@ -36,7 +37,7 @@ global:
 container:
   enabled:  false
   replicas: 1
-  
+
 ###############################################################################
 # Resource Configuration.
 
@@ -49,4 +50,3 @@ resources:
   limits:
     memory: 2Gi
     cpu:    2000m
-

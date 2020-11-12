@@ -20,10 +20,11 @@ global:
 
   # Container configuration.
   container:
-    snapshot:            ""
-    fixpacks:            ""
-    adminSecret:         "helm-isvaadmin"
+    snapshot:           ""
+    fixpacks:           ""
+    adminSecret:        "helm-isvaadmin"
     autoReloadInterval: 10
+    timezone:           "Etc/UTC"
 
   # Persistence Storage
   persistence:

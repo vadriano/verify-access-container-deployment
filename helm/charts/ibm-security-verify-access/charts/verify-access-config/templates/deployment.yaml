@@ -99,6 +99,8 @@ spec:
             secretKeyRef:
               name: {{ template "admin.secret" . }}
               key: {{ template "admin.secret.key" . }}
+        - name: CONTAINER_TIMEZONE
+          value: {{ default "" $.Values.global.container.timezone | quote }}
 
         readinessProbe:
           tcpSocket:

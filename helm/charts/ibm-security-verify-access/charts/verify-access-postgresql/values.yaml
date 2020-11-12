@@ -17,6 +17,7 @@ global:
     snapshot:            ""
     fixpacks:            ""
     autoReloadInterval:
+    timezone:           "Etc/UTC"
 
   # Persistence Storage
   persistence:
@@ -26,7 +27,7 @@ global:
   dataVolume:
     existingClaimName: ""
     size: 20Gi
-    
+
 ###############################################################################
 # Container Configuration.
 

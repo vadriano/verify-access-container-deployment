@@ -235,6 +235,7 @@ The following tables list the configurable parameters of the Verify Access chart
 | `global.container.fixpacks` | A space-separated, ordered list of fix packs to be applied when starting the container. If this environment variable is not present, any fix packs present in the fixpacks directory of the configuration volume will be applied in alphanumeric order. | all available fix packs
 | `global.container.adminSecret` | The name of an existing secret which contains the administrator password (key: adminPassword). If no secret is supplied a new secret will be created with a randomly generated password.| (none) |
 | `global.container.autoReloadInterval` | The interval, in seconds, that the runtime containers will wait before checking to see if any new configuration is available. | disabled
+| `global.container.timezone` | The timezone that will be used when writing log messages.  If not set, timezone is set by host environment | Etc/UTC
 | `global.persistence.enabled` | Whether to use a PVC to persist data. | `true` |
 | `global.persistence.useDynamicProvisioning` | Whether the requested volume will be automatically provisioned if dynamic provisioning is available. | `true` |
 
