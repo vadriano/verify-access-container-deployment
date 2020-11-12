@@ -9,4 +9,4 @@ if [ -z "$RUNDIR" ] ; then
 fi
 
 
-helm install iamlab -f $RUNDIR/values.yaml $RUNDIR/stable/ibm-security-verify-access
+helm install iamlab -f $RUNDIR/values.yaml $RUNDIR/charts/ibm-security-verify-access

@@ -2,7 +2,8 @@
 
 {{- $dot := . }}
 {{- range $index, $inst := .Values.container.instances }}
-{{- $instance := lower $inst }}
+{{- $instance := lower $inst.name }}
+{{- $nodePort := $inst.nodePort }}
 {{- $index    := (printf "%d" $index) }}
 
 #
@@ -24,6 +25,9 @@ spec:
   ports:
    - name: {{ include "wrp.service.name" (list $dot $index) }}
      port: {{ template "runtime.port" $dot }}
+{{ if and (eq $.Values.service.type "NodePort") $nodePort }}
+     nodePort: {{ $nodePort }}
+{{- end }}
 
   selector:
     app: {{ include "wrp.name" (list $dot $instance) }}

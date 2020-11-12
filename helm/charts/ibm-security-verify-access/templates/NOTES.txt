@@ -9,7 +9,7 @@ To obtain the administrator password execute the following command:
 Configuration
 =============
 
-The configuration server should be used to configure the environment.  
+The configuration server should be used to configure the environment.
 
 {{- if contains "NodePort" .Values.isvaconfig.service.type }}
 
@@ -36,7 +36,7 @@ Web Reverse Proxy
 
 The Web Reverse Proxy instances should be used as an entry point into the environment.  The instance names in this release are:
 {{- range .Values.isvawrp.container.instances }}
-  - {{ . }}
+  - {{ .name }}
 {{- end }}
 
 {{- if contains "NodePort" .Values.isvawrp.service.type }}
@@ -87,13 +87,13 @@ The server can then be accessed at the following URL: https://127.0.0.1:9443
 DSC
 ===
 
-The distributed session cache service should only ever be accessed byVerify Accesscomponents running in the same cluster.  
+The distributed session cache service should only ever be accessed byVerify Accesscomponents running in the same cluster.
 
-The primary distributed session cache service can be accessed using the {{ include "dsc.name" (list . "primary") }} host and {{ template "runtime.port" . }} port.  
+The primary distributed session cache service can be accessed using the {{ include "dsc.name" (list . "primary") }} host and {{ template "runtime.port" . }} port.
 
 {{- if .Values.isvadsc.container.useReplica }}
 
-The secondary distributed session cache service can be accessed using the {{ include "dsc.name" (list . "secondary") }} host and {{ template "runtime.port" . }} port.  
+The secondary distributed session cache service can be accessed using the {{ include "dsc.name" (list . "secondary") }} host and {{ template "runtime.port" . }} port.
 
 The two distributed session cache replicas will communicate over the {{ template "replica.port" . }} port.
 {{- end }}

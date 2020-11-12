@@ -24,6 +24,7 @@ global:
     fixpacks:            ""
     adminSecret:         ""
     autoReloadInterval:
+    timezone:            "Etc/UTC"
 
   # Persistence Storage
   persistence:
@@ -49,6 +50,7 @@ isvaconfig:
   # Service Configuration.
   service:
     type: NodePort
+    nodePort:
 
   # Data Volume
   dataVolume:
@@ -71,8 +73,9 @@ isvawrp:
   # Container configuration.
   container:
     instances:
-     - default
-    replicas:  1
+     - name: default
+       nodePort:
+       replicas: 1
 
   # Resource Configuration.
   # Information on computing resources can be found at:
@@ -88,7 +91,7 @@ isvawrp:
   # Service Configuration.
   service:
     type: NodePort
-
+    nodePort:
 
 ###############################################################################
 # Runtime container variables.

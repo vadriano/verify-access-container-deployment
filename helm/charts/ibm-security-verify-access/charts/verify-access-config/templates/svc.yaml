@@ -19,7 +19,9 @@ spec:
   ports:
    - name: {{ .sch.chart.config.servicename }}-https
      port: {{ template "admin.port" . }}
+{{ if and (eq .Values.service.type "NodePort") .Values.service.nodePort }}
+     nodePort: {{ .Values.service.nodePort }}
+{{- end }}
 
   selector:
     app: {{ template "config.name" . }}
-

@@ -104,6 +104,8 @@ spec:
               key: {{ template "admin.secret.key" . }}
         - name: AUTO_RELOAD_FREQUENCY
           value: {{ default "" .Values.global.container.autoReloadInterval | quote }}
+        - name: CONTAINER_TIMEZONE
+          value: {{ default "" $.Values.global.container.timezone | quote }}
         - name: CONFIG_SERVICE_URL
           value: {{ template "config.service.url" . }}
         - name: CONFIG_SERVICE_USER_NAME

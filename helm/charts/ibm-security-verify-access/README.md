@@ -235,6 +235,7 @@ The following tables list the configurable parameters of the Verify Access chart
 | `global.container.fixpacks` | A space-separated, ordered list of fix packs to be applied when starting the container. If this environment variable is not present, any fix packs present in the fixpacks directory of the configuration volume will be applied in alphanumeric order. | all available fix packs
 | `global.container.adminSecret` | The name of an existing secret which contains the administrator password (key: adminPassword). If no secret is supplied a new secret will be created with a randomly generated password.| (none) |
 | `global.container.autoReloadInterval` | The interval, in seconds, that the runtime containers will wait before checking to see if any new configuration is available. | disabled
+| `global.container.timezone` | The timezone that will be used when writing log messages.  If not set, timezone is set by host environment | Etc/UTC
 | `global.persistence.enabled` | Whether to use a PVC to persist data. | `true` |
 | `global.persistence.useDynamicProvisioning` | Whether the requested volume will be automatically provisioned if dynamic provisioning is available. | `true` |
 
@@ -248,6 +249,7 @@ The following tables list the configurable parameters of the Verify Access chart
 | `isvaconfig.resources.limits.memory` | The maximum amount of memory to be used by the configuration service. | `2Gi` |
 | `isvaconfig.resources.limits.cpu` | The maximum amount of CPU to be used by the configuration service. | `2000m` |
 | `isvaconfig.service.type` | The service type for the configuration service. | `NodePort` |
+| `isvaconfig.service.nodePort` | The nodePort to use for the configuration service (when service type is NodePort). | empty |
 | `isvaconfig.dataVolume.existingClaimName` | The name of an existing PersistentVolumeClaim to be used.| empty |
 | `isvaconfig.dataVolume.storageClassName` | The storage class of the backing PVC. | empty |
 | `isvaconfig.dataVolume.size` | The size of the data volume. | `20Gi` |
@@ -256,13 +258,16 @@ The following tables list the configurable parameters of the Verify Access chart
 
 | Parameter | Description | Default |
 | --------- | ----------- | ------- |
-| `isvawrp.container.instances` | An array of instance names to be created. | `-rp1` |
-| `isvawrp.container.replicas` | The number of replicas to start for each unique secure Web Reverse Proxy instance. | `1` |
+| `isvawrp.container.instances` | An array of instances to be created. | See Below |
+| `isvawrp.container.instances.name` | The name of the instance | `default` |
+| `isvawrp.container.instances.nodePort` | The nodePort (if service type is NodePort). | empty |
+| `isvawrp.container.instances.replicas` | The number of replicas to start for the instance. | `1` |
 | `isvawrp.resources.requests.memory` | The amount of memory to be allocated to each Web Reverse Proxy instance. | `512Mi` |
 | `isvawrp.resources.requests.cpu` | The amount of CPU to be allocated to each replica of each Web Reverse Proxy instance. | `500m` |
 | `isvawrp.resources.limits.memory` | The maximum amount of memory to be used by each replica of each Web Reverse Proxy instance. | `1Gi` |
 | `isvawrp.resources.limits.cpu` | The maximum amount of CPU to be used by each replica of each Web Reverse Proxy instance. | `1000m` |
 | `isvawrp.service.type` | The service type for the Web Reverse Proxy instances. | `NodePort` |
+| `isvawrp.service.nodePort` | The nodePort to use for the Web Reverse Proxy services (when service type is NodePort). | empty |
 
 ### Runtime Service
 

@@ -9,7 +9,7 @@ To obtain the administrator password execute the following command:
 
 The Web Reverse Proxy instances should be used as an entry point into the environment.  The instance names in this release are:
 {{- range  .Values.container.instances  }}
-  - {{ . }}
+  - {{ .name }}
 {{- end }}
 
 {{- if contains "NodePort" .Values.service.type }}
@@ -38,4 +38,3 @@ POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app={{ incl
 kubectl port-forward $POD_NAME 9443:{{ template "admin.port" . }}
 
 The server can then be accessed at the following URL: https://127.0.0.1:9443
-

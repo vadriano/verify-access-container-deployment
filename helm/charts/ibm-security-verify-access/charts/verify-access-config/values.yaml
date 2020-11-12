@@ -20,6 +20,7 @@ global:
   container:
     snapshot:           ""
     fixpacks:           ""
+    timezone:           "Etc/UTC"
 
   # Persistence Storage
   persistence:
@@ -48,3 +49,4 @@ resources:
 
 service:
   type: NodePort
+  nodePort:
