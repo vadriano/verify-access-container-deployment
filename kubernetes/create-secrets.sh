@@ -8,7 +8,7 @@ if [ -z "$RUNDIR" ] ; then
   exit 1  # fail
 fi
 
-KEY_DIR="${HOME}/dockerkeys"
+. ${RUNDIR}/../common/env-config.sh
 
 if [ ! -f "$KEY_DIR/openldap/ldap.key" ] || [ ! -f "$KEY_DIR/openldap/ldap.crt" ] || [ ! -f "$KEY_DIR/openldap/ca.crt" ] || [ ! -f "$KEY_DIR/openldap/dhparam.pem" ] || [ ! -f "$KEY_DIR/postgresql/server.pem" ]
 then
