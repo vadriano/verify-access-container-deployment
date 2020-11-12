@@ -2,8 +2,9 @@
 
 {{- $dot := . }}
 {{- range $index, $inst := .Values.container.instances }}
-{{- $instance := lower $inst }}
-{{- $wrp_instance := $inst }}
+{{- $instance := lower $inst.name }}
+{{- $wrp_instance := $inst.name }}
+{{- $replicas := $inst.replicas }}
 {{- $index    := (printf "%d" $index) }}
 
 #
@@ -20,8 +21,11 @@ metadata:
 {{ include "sch.metadata.labels.standard" (list $dot "") | indent 4 }}
 
 spec:
-  replicas: {{ $.Values.container.replicas }}
-
+{{ if $replicas }}
+  replicas: {{ $inst.replicas }}
+{{- else }}
+  replicas: 1
+{{- end }}
   selector:
     matchLabels:
       app: {{ include "wrp.name" (list $dot $instance) }}

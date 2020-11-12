@@ -22,7 +22,7 @@ global:
     fixpacks:            ""
     autoReloadInterval:
     timezone:           "Etc/UTC"
-    
+
   # Persistence Storage
   persistence:
     enabled: true
@@ -36,8 +36,9 @@ global:
 
 container:
   instances:
-    -rp1
-  replicas:  1
+    - name: default
+      nodePort:
+      replicas: 1
 
 ###############################################################################
 # Resource Configuration.
@@ -57,3 +58,4 @@ resources:
 
 service:
   type: NodePort
+  nodePort:

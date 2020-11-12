@@ -50,7 +50,7 @@ isvaconfig:
   # Service Configuration.
   service:
     type: NodePort
-
+    nodePort:
   # Data Volume
   dataVolume:
 
@@ -72,8 +72,9 @@ isvawrp:
   # Container configuration.
   container:
     instances:
-      - rp1
-    replicas:  1
+      - name: rp1
+        nodePort:
+        replicas: 1
 
   # Resource Configuration.
   # Information on computing resources can be found at:
@@ -89,7 +90,7 @@ isvawrp:
   # Service Configuration.
   service:
     type: NodePort
-
+    nodePort:
 
 ###############################################################################
 # Runtime container variables.

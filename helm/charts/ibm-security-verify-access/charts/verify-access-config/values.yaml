@@ -49,3 +49,4 @@ resources:
 
 service:
   type: NodePort
+  nodePort:

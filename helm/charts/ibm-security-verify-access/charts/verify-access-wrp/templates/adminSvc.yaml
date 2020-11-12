@@ -2,7 +2,7 @@
 
 {{- $dot := . }}
 {{- range $index, $inst := .Values.container.instances }}
-{{- $instance := lower $inst }}
+{{- $instance := lower $inst.name }}
 {{- $index    := (printf "%d" $index) }}
 
 #
