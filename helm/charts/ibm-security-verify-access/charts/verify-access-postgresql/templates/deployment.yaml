@@ -51,14 +51,15 @@ spec:
         runAsGroup:   70
       affinity:
 {{- include "sch.affinity.nodeAffinity" (list .) | indent 8 }}
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: app
-                operator: In
-                values:
-                - {{ template "postgresql.name" . }}
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - {{ template "postgresql.name" . }}
             topologyKey: "kubernetes.io/hostname"
 
       containers:
