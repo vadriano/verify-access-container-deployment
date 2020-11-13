@@ -51,6 +51,7 @@ spec:
         runAsGroup:   70
       affinity:
 {{- include "sch.affinity.nodeAffinity" (list .) | indent 8 }}
+        podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
           - weight: 100
             podAffinityTerm:
