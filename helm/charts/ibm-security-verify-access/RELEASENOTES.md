@@ -3,6 +3,7 @@ The following enhancements have been made:
 * Ability to set timezone for containers
 * Ability to set port for NodePorts
 * Change to preferred antiAffinity to allow for in-place upgrade
+* Mark PVCs as "keep" so not deleted with release
 * Change to Reverse Proxy definition to allow per-instance settings
 
 # Values migration
