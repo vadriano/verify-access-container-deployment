@@ -15,7 +15,8 @@ metadata:
   name: {{ template "config.pvc.name" . }}
   labels:
 {{ include "sch.metadata.labels.standard" (list . "") | indent 4 }}
-
+  annotations:
+    "helm.sh/resource-policy": keep
 spec:
   {{- if .Values.global.persistence.useDynamicProvisioning }}
   ## if present, use the storageClassName from the values.yaml, else use the
@@ -35,4 +36,3 @@ spec:
       storage: {{ .Values.dataVolume.size | quote }}
 
 {{- end }}
-
