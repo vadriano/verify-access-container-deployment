@@ -61,7 +61,7 @@ spec:
                   operator: In
                   values:
                   - {{ template "postgresql.name" . }}
-            topologyKey: "kubernetes.io/hostname"
+              topologyKey: "kubernetes.io/hostname"
 
       containers:
       - name:  {{ template "postgresql.name" . }}
