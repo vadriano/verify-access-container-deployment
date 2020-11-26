@@ -163,14 +163,14 @@ If the LMI port-forwarding isn't stable, you can also create a route using the p
 # Backup and Restore
 
 To backup the state of your environment, use the `./isva-backup....sh` script in the directory for the environment you're using.  The backup tar file created will contain:
-- Content of the $HOME/dockerkeys directory
+- Content of the .../local/dockerkeys directory
 - OpenLDAP directory content
 - PostgreSQL database content
 - Configuration snapshot from the Verify Access config container
 
 To restore from a backup, perform these steps:
 
-1. Delete the $HOME/dockerkeys directory
+1. Delete the .../local/dockerkeys directory
 1. Run `container-deployment/common/restore-keys.sh <archive tar file>`
 1. Complete setup for the environment you want to create (until containers are running)
 1. Run `./isva-restore....sh <archive tar file>` to restore configuration.
