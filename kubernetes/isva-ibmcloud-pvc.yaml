@@ -106,7 +106,7 @@ spec:
             secretName: openldap-keys
       containers:
         - name: openldap
-          image: ibmcom/verify-access-openldap:10.0.0.0
+          image: ibmcom/verify-access-openldap:10.0.2.0
           ports:
             - containerPort: 636
           env:
@@ -177,7 +177,7 @@ spec:
             secretName: postgresql-keys
       containers:
         - name: postgresql
-          image: ibmcom/verify-access-postgresql:10.0.0.0
+          image: ibmcom/verify-access-postgresql:10.0.2.0
           ports:
             - containerPort: 5432
           env:
@@ -240,7 +240,7 @@ spec:
           emptyDir: {}
       containers:
         - name: isvaconfig
-          image: ibmcom/verify-access:10.0.0.0
+          image: ibmcom/verify-access:10.0.2.0
           volumeMounts:
             - mountPath: /var/shared
               name: isvaconfig
@@ -313,7 +313,7 @@ spec:
           emptyDir: {}
       containers:
         - name: isvawrprp1
-          image: ibmcom/verify-access:10.0.0.0
+          image: ibmcom/verify-access-wrp:10.0.2.0
           ports:
             - containerPort: 443
           volumeMounts:
@@ -399,7 +399,7 @@ spec:
           emptyDir: {}
       containers:
         - name: isvaruntime
-          image: ibmcom/verify-access:10.0.0.0
+          image: ibmcom/verify-access-runtime:10.0.2.0
           ports:
             - containerPort: 443
           volumeMounts:
@@ -479,7 +479,7 @@ spec:
           emptyDir: {}
       containers:
         - name: isvadsc
-          image: ibmcom/verify-access:10.0.0.0
+          image: ibmcom/verify-access-dsc:10.0.2.0
           ports:
             - containerPort: 443
             - containerPort: 444

@@ -32,7 +32,7 @@ services:
       - postgresql
 
   isvawrprp1:
-    image: ibmcom/verify-access:${ISVA_VERSION}
+    image: ibmcom/verify-access-wrp:${ISVA_VERSION}
     hostname: isvawrprp1
     networks:
       default:
@@ -54,7 +54,7 @@ services:
       - openldap
 
   isvaruntime:
-    image: ibmcom/verify-access:${ISVA_VERSION}
+    image: ibmcom/verify-access-runtime:${ISVA_VERSION}
     hostname: isvaruntime
     restart: always
     environment:
@@ -70,7 +70,7 @@ services:
       - postgresql
 
   isvadsc:
-    image: ibmcom/verify-access:${ISVA_VERSION}
+    image: ibmcom/verify-access-dsc:${ISVA_VERSION}
     hostname: isvadsc
     restart: always
     environment:

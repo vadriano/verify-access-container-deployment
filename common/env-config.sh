@@ -19,9 +19,9 @@ MY_WEB1_IP=127.0.0.3
 MY_WEB2_IP=127.0.0.4
 
 # Versions
-ISVA_VERSION=10.0.0.0
-LDAP_VERSION=10.0.0.0
-DB_VERSION=10.0.0.0
+ISVA_VERSION=10.0.2.0
+LDAP_VERSION=10.0.2.0
+DB_VERSION=10.0.2.0
 
 # Get directory for this script
 THISDIR="`dirname \"$0\"`"         # relative

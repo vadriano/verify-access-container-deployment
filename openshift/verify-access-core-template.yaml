@@ -230,7 +230,7 @@ objects:
               secretKeyRef:
                 name: ${APP_NAME}-core
                 key: config-read-password
-          image: docker.io/ibmcom/verify-access:${ISVA_VERSION}
+          image: docker.io/ibmcom/verify-access-dsc:${ISVA_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}-dsc1
           ports:
@@ -341,7 +341,7 @@ objects:
               secretKeyRef:
                 name: ${APP_NAME}-core
                 key: config-read-password
-          image: docker.io/ibmcom/verify-access:${ISVA_VERSION}
+          image: docker.io/ibmcom/verify-access-dsc:${ISVA_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}-dsc2
           ports:
@@ -452,7 +452,7 @@ objects:
               secretKeyRef:
                 name: ${APP_NAME}-core
                 key: config-read-password
-          image: docker.io/ibmcom/verify-access:${ISVA_VERSION}
+          image: docker.io/ibmcom/verify-access-dsc:${ISVA_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}-dsc3
           ports:
@@ -563,7 +563,7 @@ objects:
               secretKeyRef:
                 name: ${APP_NAME}-core
                 key: config-read-password
-          image: docker.io/ibmcom/verify-access:${ISVA_VERSION}
+          image: docker.io/ibmcom/verify-access-dsc4:${ISVA_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}-dsc4
           ports:
@@ -671,7 +671,7 @@ objects:
               secretKeyRef:
                 name: ${APP_NAME}-core
                 key: config-read-password
-          image: docker.io/ibmcom/verify-access:${ISVA_VERSION}
+          image: docker.io/ibmcom/verify-access-runtime:${ISVA_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}-runtime
           ports:
@@ -870,9 +870,9 @@ parameters:
     name: APP_NAME
     value: verifyaccess
   - displayName: Verify Access Image Version
-    description: The tag that will be used to pull the ibmcom/verify-access image.
+    description: The tag that will be used to pull the ibmcom/verify-access images.
     name: ISVA_VERSION
-    value: 10.0.0.0
+    value: 10.0.2.0
   - displayName: Config Service Name
     description: The name for the config service.  Also used as the hostname for connections within the cluster.
     name: CONFIG_SERVICE

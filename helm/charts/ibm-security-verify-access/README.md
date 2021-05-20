@@ -18,7 +18,12 @@ This chart will deploy an IBM Security Verify Access environment.  This environm
 | isvapostgresql | This container provides a sample database which can be used by IBM Security Verify Access.  It is not designed to be used in production and should only ever be used in development or proof of concept environments.
 | isvaopenldap | This container provides a sample LDAP directory which can be used by IBM Security Verify Access.  It is not designed to be used in production and should only ever be used in development or proof of concept environments.
 
-The chart will make use of the verify access docker image, which is available on Docker Hub: [https://hub.docker.com/r/ibmcom/verify-access](https://hub.docker.com/r/ibmcom/verify-access).  
+The chart makes use of the verify access docker images, which are available on Docker Hub: * [https://hub.docker.com/r/ibmcom/verify-access](https://hub.docker.com/r/ibmcom/verify-access)
+[https://hub.docker.com/r/ibmcom/verify-access-wrp](https://hub.docker.com/r/ibmcom/verify-access-wrp)
+[https://hub.docker.com/r/ibmcom/verify-access-runtime](https://hub.docker.com/r/ibmcom/verify-access-runtime)
+[https://hub.docker.com/r/ibmcom/verify-access-dsc](https://hub.docker.com/r/ibmcom/verify-access-dsc)
+[https://hub.docker.com/r/ibmcom/verify-access-openldap](https://hub.docker.com/r/ibmcom/verify-access-openldap)
+[https://hub.docker.com/r/ibmcom/verify-access-postgresql](https://hub.docker.com/r/ibmcom/verify-access-postgresql)
 
 ## Prerequisites
 
@@ -211,7 +216,7 @@ To uninstall/delete the `my-release` deployment:
 $ helm delete my-release
 ```
 
-The command removes all of the Kubernetes components associated with the chart and deletes the release.  
+The command removes all of the Kubernetes components associated with the chart and deletes the release.
 
 When deleting a release with stateful sets the associated persistent volume will need to be deleted.  Execute the following command after deleting the chart release to clean up orphaned Persistent Volumes.
 
@@ -226,9 +231,12 @@ The following tables list the configurable parameters of the Verify Access chart
 
 | Parameter | Description | Default |
 | --------- | ----------- | ------- |
-| `global.image.repository` | The image repository. | `ibmcom/verify-access:10.0.0.0` |
-| `global.image.dbrepository` | The image repository for the postgresql server. | `ibmcom/verify-access-postgresql:10.0.0.0` |
-| `global.image.ldaprepository` | The image repository for the openldap server. | `ibmcom/verify-access-openldap:10.0.0.0` |
+| `global.image.configrepository` | The config container image repository. | `ibmcom/verify-access:10.0.2.0` |
+| `global.image.wrprepository` | The web reverse proxy image repository. | `ibmcom/verify-access-wrp:10.0.2.0` |
+| `global.image.runtimerepository` | The runtime repository. | `ibmcom/verify-access-runtime:10.0.2.0` |
+| `global.image.dscrepository` | The dsc repository. | `ibmcom/verify-access-dsc:10.0.2.0` |
+| `global.image.dbrepository` | The image repository for the postgresql server. | `ibmcom/verify-access-postgresql:10.0.2.0` |
+| `global.image.ldaprepository` | The image repository for the openldap server. | `ibmcom/verify-access-openldap:10.0.2.0` |
 | `global.image.pullPolicy` | The image pull policy. | `IfNotPresent` |
 | `global.imageCredentials.dockerSecret` | The name of an existing secret which contains the Docker Store credentials. | (none) |
 | `global.container.snapshot` | The name of the configuration data snapshot that is to be used when starting the container. This will default to the latest published configuration.| latest published snapshot
@@ -366,7 +374,7 @@ The chart mounts a [Persistent Volume](http://kubernetes.io/docs/user-guide/pers
 $ helm install --set "isvaconfig.dataVolume.existingClaimName=PVC_NAME" ...
 ```
 
-All containers within the chart will share the same persistent volume claim.  
+All containers within the chart will share the same persistent volume claim.
 
 ## Limitations
 

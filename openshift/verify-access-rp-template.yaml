@@ -104,7 +104,7 @@ objects:
               secretKeyRef:
                 name: ${CORE_APP_NAME}-core
                 key: config-read-password
-          image: docker.io/ibmcom/verify-access:${ISVA_VERSION}
+          image: docker.io/ibmcom/verify-access-wrp:${ISVA_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${CORE_APP_NAME}-${INSTANCE_NAME}
           ports:
@@ -186,9 +186,9 @@ objects:
     loadBalancer: {}
 parameters:
   - displayName: Verify Access Image Version
-    description: The tag that will be used to pull the ibmcom/verify-access image.
+    description: The tag that will be used to pull the ibmcom/verify-access-wrp image.
     name: ISVA_VERSION
-    value: 10.0.0.0
+    value: 10.0.2.0
   - displayName: Core Application Name
     description: The name of the core application (omit -core).  This must match what was
       configured when creating the core application.

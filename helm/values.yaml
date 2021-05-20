@@ -9,9 +9,12 @@
 global:
   # Common image variables
   image:
-    repository:   ibmcom/verify-access:10.0.0.0
-    dbrepository: ibmcom/verify-access-postgresql:10.0.0.0
-    ldaprepository: ibmcom/verify-access-openldap:10.0.0.0
+    configrepository:   ibmcom/verify-access:10.0.2.0
+    wrprepository:   ibmcom/verify-access-wrp:10.0.2.0
+    runtimerepository:   ibmcom/verify-access-runtime:10.0.2.0
+    dscrepository:   ibmcom/verify-access-dsc:10.0.2.0
+    dbrepository: ibmcom/verify-access-postgresql:10.0.2.0
+    ldaprepository: ibmcom/verify-access-openldap:10.0.2.0
     pullPolicy:   IfNotPresent
 
   # Image credentials.

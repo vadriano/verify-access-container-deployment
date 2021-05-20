@@ -31,6 +31,41 @@ message: |-
   Secret containing Config Admin credentials: ${CORE_APP_NAME}-lmi
 
 objects:
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    labels:
+      build: ${APP_NAME}-wrp
+    name: ${APP_NAME}-wrp
+  spec:
+    output:
+      to:
+        kind: ImageStreamTag
+        name: '${APP_NAME}-wrp:latest'
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      dockerStrategy: {}
+      type: Docker
+- apiVersion: image.openshift.io/v1
+  kind: ImageStream
+  metadata:
+    labels:
+      build: ${APP_NAME}-wrp
+    name: ${APP_NAME}-wrp
+  spec:
+    lookupPolicy:
+      local: false
+    tags:
+      - annotations: null
+        from:
+          kind: DockerImage
+          name: 'docker.io/ibmcom/verify-access-wrp:${ISVA_VERSION}'
+        importPolicy: {}
+        name: base
+        referencePolicy:
+          type: Source
 - apiVersion: v1
   kind: DeploymentConfig
   metadata:
@@ -55,7 +90,7 @@ objects:
           automatic: true
           from:
             kind: ImageStreamTag
-            name: ${CORE_APP_NAME}:latest
+            name: ${CORE_APP_NAME}-wrp:latest
           containerNames:
             - ${CORE_APP_NAME}-${INSTANCE_NAME}
     template:

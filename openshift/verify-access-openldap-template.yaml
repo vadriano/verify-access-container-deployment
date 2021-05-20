@@ -185,7 +185,7 @@ parameters:
   - displayName: Image Version
     description: The tag that will be used to pull the ibmcom/verify-access-openldap image.
     name: LDAP_VERSION
-    value: 10.0.0.0
+    value: 10.0.2.0
   - displayName: Domain
     description: This is used to create the suffix for users.  A value of ibm.com would create suffix dc=ibm,dc=com.
     name: DOMAIN
