@@ -8,6 +8,12 @@ echo "File not found: $1"
 exit 1
 fi
 
-cp $1 build/temp.snapshot
-oc start-build verifyaccess --from-dir build --follow
-rm build/temp.snapshot
+cp $1 build-runtime/temp.snapshot
+cp $1 build-dsc/temp.snapshot
+cp $1 build-wrp/temp.snapshot
+oc start-build verifyaccess --from-dir build-runtime --follow
+oc start-build verifyaccess --from-dir build-dsc --follow
+oc start-build verifyaccess --from-dir build-wrp --follow
+rm build-runtime/temp.snapshot
+rm build-dsc/temp.snapshot
+rm build-wrp/temp.snapshot
