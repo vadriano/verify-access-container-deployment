@@ -87,7 +87,7 @@ spec:
             - SETGID
             - SETUID
 
-        image: "{{ .Values.global.image.repository }}"
+        image: "{{ .Values.global.image.configrepository }}"
         imagePullPolicy: {{ default "IfNotPresent" .Values.global.image.pullPolicy | quote }}
         env:
         - name: SNAPSHOT

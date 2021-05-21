@@ -90,7 +90,7 @@ spec:
             - SETGID
             - SETUID
 
-        image: "{{ $.Values.global.image.repository }}"
+        image: "{{ $.Values.global.image.dscrepository }}"
         imagePullPolicy: {{ default "IfNotPresent" $.Values.global.image.pullPolicy | quote }}
         env:
         - name: SNAPSHOT
@@ -105,11 +105,6 @@ spec:
           {{- else }}
           value: "2"
           {{- end }}
-        - name: ADMIN_PWD
-          valueFrom:
-            secretKeyRef:
-              name: {{ template "admin.secret" $dot }}
-              key: {{ template "admin.secret.key" $dot }}
         - name: AUTO_RELOAD_FREQUENCY
           value: {{ default "" $.Values.global.container.autoReloadInterval | quote }}
         - name: CONTAINER_TIMEZONE
@@ -146,8 +141,6 @@ spec:
         ports:
         - name: {{ include "dsc.service.name" (list $dot $element) }}
           containerPort: {{ template "runtime.port" $dot }}
-        - name: {{ include "dsc.admin.service.name" (list $dot $element) }}
-          containerPort: {{ template "admin.port" $dot }}
         - name: {{ include "dsc.replica.service.name" (list $dot $element) }}
           containerPort: {{ template "replica.port" $dot }}
 

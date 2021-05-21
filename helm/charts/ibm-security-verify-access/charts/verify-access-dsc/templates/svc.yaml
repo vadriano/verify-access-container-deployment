@@ -24,8 +24,6 @@ spec:
   ports:
    - name: {{ include "dsc.service.name" (list $dot $element) }}
      port: {{ template "runtime.port" $dot }}
-   - name: {{ include "dsc.admin.service.name" (list $dot $element) }}
-     port: {{ template "admin.port" $dot }}
    - name: {{ include "dsc.replica.service.name" (list $dot $element) }}
      port: {{ template "replica.port" $dot }}
 
@@ -37,4 +35,3 @@ spec:
 {{- end -}}
 
 {{- end -}}
-

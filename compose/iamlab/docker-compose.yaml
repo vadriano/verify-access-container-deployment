@@ -49,7 +49,7 @@ services:
     volumes:
       - isvaconfig:/var/shared
     ports:
-      - ${WEB1_IP}:443:443
+      - ${WEB1_IP}:443:9443
     depends_on:
       - openldap
 

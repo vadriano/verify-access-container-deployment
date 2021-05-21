@@ -59,26 +59,12 @@ The server can then be accessed at the following URL: https://127.0.0.1:9443
 
 {{- end }}
 
-To connect to the administation Web service of the container use kubernetes port forwarding:
-
-POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app={{ include "wrp.name" (list . "<instance_name>") }}" -o jsonpath="{.items[0].metadata.name}")
-kubectl port-forward $POD_NAME 9443:{{ template "admin.port" . }}
-
-The server can then be accessed at the following URL: https://127.0.0.1:9443
-
 {{- if .Values.isvaruntime.container.enabled }}
 
 Runtime
 =======
 
 The federation and advanced access control runtime requests should always be serviced via a secure Web reverse proxy instance.  The runtime service can be accessed by the secure Web reverse proxy over SSL through the {{ template "runtime.name" . }} host and {{ template "runtime.port" . }} port.
-
-To connect to the administation Web service of the container use kubernetes port forwarding:
-
-POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app={{ template "runtime.name" . }}" -o jsonpath="{.items[0].metadata.name}")
-kubectl port-forward $POD_NAME 9443:{{ template "admin.port" . }}
-
-The server can then be accessed at the following URL: https://127.0.0.1:9443
 
 {{- end }}
 
@@ -87,7 +73,7 @@ The server can then be accessed at the following URL: https://127.0.0.1:9443
 DSC
 ===
 
-The distributed session cache service should only ever be accessed byVerify Accesscomponents running in the same cluster.
+The distributed session cache service should only ever be accessed by Verify Access components running in the same cluster.
 
 The primary distributed session cache service can be accessed using the {{ include "dsc.name" (list . "primary") }} host and {{ template "runtime.port" . }} port.
 
@@ -97,21 +83,6 @@ The secondary distributed session cache service can be accessed using the {{ inc
 
 The two distributed session cache replicas will communicate over the {{ template "replica.port" . }} port.
 {{- end }}
-
-To connect to the administation Web service of the primary container use kubernetes port forwarding:
-
-POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app={{ include "dsc.name" (list . "primary") }}" -o jsonpath="{.items[0].metadata.name}")
-kubectl port-forward $POD_NAME 9443:{{ template "admin.port" . }}
-
-{{- if .Values.isvadsc.container.useReplica }}
-
-To connect to the administation Web service of the secondary container use kubernetes port forwarding:
-
-POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app={{ include "dsc.name" (list . "secondary") }}" -o jsonpath="{.items[0].metadata.name}")
-kubectl port-forward $POD_NAME 9443:{{ template "admin.port" . }}
-{{- end }}
-
-The server can then be accessed at the following URL: https://127.0.0.1:9443
 
 {{- end }}
 

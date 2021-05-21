@@ -90,7 +90,7 @@ spec:
             - SETGID
             - SETUID
 
-        image: "{{ .Values.global.image.repository }}"
+        image: "{{ .Values.global.image.runtimerepository }}"
         imagePullPolicy: {{ default "IfNotPresent" .Values.global.image.pullPolicy | quote }}
         env:
         - name: SNAPSHOT
@@ -99,11 +99,6 @@ spec:
           value: {{ default "" .Values.global.container.fixpacks | quote }}
         - name: SERVICE
           value: runtime
-        - name: ADMIN_PWD
-          valueFrom:
-            secretKeyRef:
-              name: {{ template "admin.secret" . }}
-              key: {{ template "admin.secret.key" . }}
         - name: AUTO_RELOAD_FREQUENCY
           value: {{ default "" .Values.global.container.autoReloadInterval | quote }}
         - name: CONTAINER_TIMEZONE
@@ -123,7 +118,7 @@ spec:
             command:
             - /sbin/health_check.sh
             - livenessProbe
-          initialDelaySeconds: 10
+          initialDelaySeconds: 30
           periodSeconds: 10
 
         readinessProbe:
@@ -140,8 +135,6 @@ spec:
         ports:
         - name: {{ .sch.chart.config.servicename }}
           containerPort: {{ template "runtime.port" . }}
-        - name: {{ .sch.chart.config.adminservicename }}
-          containerPort: {{ template "admin.port" . }}
 
         resources:
 {{ toYaml .Values.resources | indent 10 }}

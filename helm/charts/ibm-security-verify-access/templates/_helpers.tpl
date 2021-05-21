@@ -1,7 +1,7 @@
 
 {{/*
 Create the fully qualified name of the docker store secret.
-We truncate at 63 chars because some Kubernetes name fields are limited to 
+We truncate at 63 chars because some Kubernetes name fields are limited to
 this (by the DNS naming spec).
 */}}
 {{- define "docker.credentials.secret" -}}
@@ -10,7 +10,7 @@ this (by the DNS naming spec).
 
 {{/*
 Create the fully qualified name of the administration secret.
-We truncate at 63 chars because some Kubernetes name fields are limited to 
+We truncate at 63 chars because some Kubernetes name fields are limited to
 this (by the DNS naming spec).
 */}}
 {{- define "admin.secret" -}}
@@ -48,12 +48,9 @@ Our well known ports.
 {{- end -}}
 
 {{- define "runtime.port" -}}
-{{- printf "443" -}}
+{{- printf "9443" -}}
 {{- end -}}
 
 {{- define "replica.port" -}}
-{{- printf "444" -}}
+{{- printf "9444" -}}
 {{- end -}}
-
-
-

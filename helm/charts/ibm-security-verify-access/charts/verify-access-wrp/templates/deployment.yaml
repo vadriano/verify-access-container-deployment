@@ -97,7 +97,7 @@ spec:
             - SETGID
             - SETUID
 
-        image: "{{ $.Values.global.image.repository }}"
+        image: "{{ $.Values.global.image.wrprepository }}"
         imagePullPolicy: {{ default "IfNotPresent" $.Values.global.image.pullPolicy | quote }}
         env:
         - name: SNAPSHOT
@@ -108,11 +108,6 @@ spec:
           value: webseal
         - name: INSTANCE
           value: {{ printf "%s" $wrp_instance }}
-        - name: ADMIN_PWD
-          valueFrom:
-            secretKeyRef:
-              name: {{ template "admin.secret" $dot }}
-              key: {{ template "admin.secret.key" $dot }}
         - name: AUTO_RELOAD_FREQUENCY
           value: {{ default "" $.Values.global.container.autoReloadInterval | quote }}
         - name: CONTAINER_TIMEZONE
@@ -149,8 +144,6 @@ spec:
         ports:
         - name: {{ include "wrp.service.name" (list $dot $index) }}
           containerPort: {{ template "runtime.port" $dot }}
-        - name: {{ include "wrp.admin.service.name" (list $dot $index) }}
-          containerPort: {{ template "admin.port" $dot }}
 
         resources:
 {{ toYaml $.Values.resources | indent 10 }}

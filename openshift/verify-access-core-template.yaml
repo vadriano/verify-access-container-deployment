@@ -30,9 +30,6 @@ message: |-
   Config Service Admin User: admin
   Config Service Admin Password: ${ADMIN_PW}
 
-  Non-Config Service REST User: admin
-  Non-Config Service REST Password: ${REST_PW}
-
   Config Reader Username: ${CONFIG_ID}
   Config Reader Password: ${CONFIG_PW}
   (This user must be created in the LMI)
@@ -64,7 +61,6 @@ objects:
   kind: Secret
   metadata:
     annotations:
-      template.openshift.io/expose-rest_password: '{.data[''rest-password'']}'
       template.openshift.io/expose-config_service_url: '{.data[''config-service-url'']}'
       template.openshift.io/expose-config_read_username: '{.data[''config-read-username'']}'
       template.openshift.io/expose-config_read_password: '{.data[''config-read-password'']}'
@@ -72,7 +68,6 @@ objects:
     labels:
       app: ${APP_NAME}-core
   stringData:
-    rest-password: ${REST_PW}
     config-service-url: https://${CONFIG_SERVICE}:9443/shared_volume
     config-read-username: ${CONFIG_ID}
     config-read-password: ${CONFIG_PW}
@@ -184,10 +179,6 @@ objects:
           name: ${APP_NAME}-dsc1
           isvaaffinity: ${APP_NAME}-dsc
       spec:
-        serviceAccountName: ${SERVICE_ACCOUNT}
-        securityContext:
-          runAsNonRoot: true
-          runAsUser:    6000
         affinity:
           podAntiAffinity:
             preferredDuringSchedulingIgnoredDuringExecution:
@@ -200,6 +191,10 @@ objects:
                     values:
                     - ${APP_NAME}-dsc
                 topologyKey: kubernetes.io/hostname
+        serviceAccountName: ${SERVICE_ACCOUNT}
+        securityContext:
+          runAsNonRoot: true
+          runAsUser:    6000
         containers:
         - env:
           - name: SERVICE
@@ -215,11 +210,6 @@ objects:
               secretKeyRef:
                 name: ${APP_NAME}-core
                 key: config-service-url
-          - name: ADMIN_PWD
-            valueFrom:
-              secretKeyRef:
-                name: ${APP_NAME}-core
-                key: rest-password
           - name: CONFIG_SERVICE_USER_NAME
             valueFrom:
               secretKeyRef:
@@ -234,9 +224,9 @@ objects:
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}-dsc1
           ports:
-          - containerPort: 443
+          - containerPort: 9443
             protocol: TCP
-          - containerPort: 444
+          - containerPort: 9444
             protocol: TCP
           resources: {}
           terminationMessagePath: /dev/termination-log
@@ -295,10 +285,6 @@ objects:
           name: ${APP_NAME}-dsc2
           isvaaffinity: ${APP_NAME}-dsc
       spec:
-        serviceAccountName: ${SERVICE_ACCOUNT}
-        securityContext:
-          runAsNonRoot: true
-          runAsUser:    6000
         affinity:
           podAntiAffinity:
             preferredDuringSchedulingIgnoredDuringExecution:
@@ -311,6 +297,10 @@ objects:
                     values:
                     - ${APP_NAME}-dsc
                 topologyKey: kubernetes.io/hostname
+        serviceAccountName: ${SERVICE_ACCOUNT}
+        securityContext:
+          runAsNonRoot: true
+          runAsUser:    6000
         containers:
         - env:
           - name: SERVICE
@@ -326,11 +316,6 @@ objects:
               secretKeyRef:
                 name: ${APP_NAME}-core
                 key: config-service-url
-          - name: ADMIN_PWD
-            valueFrom:
-              secretKeyRef:
-                name: ${APP_NAME}-core
-                key: rest-password
           - name: CONFIG_SERVICE_USER_NAME
             valueFrom:
               secretKeyRef:
@@ -345,9 +330,9 @@ objects:
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}-dsc2
           ports:
-          - containerPort: 443
+          - containerPort: 9443
             protocol: TCP
-          - containerPort: 444
+          - containerPort: 9444
             protocol: TCP
           resources: {}
           terminationMessagePath: /dev/termination-log
@@ -406,10 +391,6 @@ objects:
           name: ${APP_NAME}-dsc3
           isvaaffinity: ${APP_NAME}-dsc
       spec:
-        serviceAccountName: ${SERVICE_ACCOUNT}
-        securityContext:
-          runAsNonRoot: true
-          runAsUser:    6000
         affinity:
           podAntiAffinity:
             preferredDuringSchedulingIgnoredDuringExecution:
@@ -422,6 +403,10 @@ objects:
                     values:
                     - ${APP_NAME}-dsc
                 topologyKey: kubernetes.io/hostname
+        serviceAccountName: ${SERVICE_ACCOUNT}
+        securityContext:
+          runAsNonRoot: true
+          runAsUser:    6000
         containers:
         - env:
           - name: SERVICE
@@ -437,11 +422,6 @@ objects:
               secretKeyRef:
                 name: ${APP_NAME}-core
                 key: config-service-url
-          - name: ADMIN_PWD
-            valueFrom:
-              secretKeyRef:
-                name: ${APP_NAME}-core
-                key: rest-password
           - name: CONFIG_SERVICE_USER_NAME
             valueFrom:
               secretKeyRef:
@@ -456,9 +436,9 @@ objects:
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}-dsc3
           ports:
-          - containerPort: 443
+          - containerPort: 9443
             protocol: TCP
-          - containerPort: 444
+          - containerPort: 9444
             protocol: TCP
           resources: {}
           terminationMessagePath: /dev/termination-log
@@ -517,10 +497,6 @@ objects:
           name: ${APP_NAME}-dsc4
           isvaaffinity: ${APP_NAME}-dsc
       spec:
-        serviceAccountName: ${SERVICE_ACCOUNT}
-        securityContext:
-          runAsNonRoot: true
-          runAsUser:    6000
         affinity:
           podAntiAffinity:
             preferredDuringSchedulingIgnoredDuringExecution:
@@ -533,6 +509,10 @@ objects:
                     values:
                     - ${APP_NAME}-dsc
                 topologyKey: kubernetes.io/hostname
+        serviceAccountName: ${SERVICE_ACCOUNT}
+        securityContext:
+          runAsNonRoot: true
+          runAsUser:    6000
         containers:
         - env:
           - name: SERVICE
@@ -548,11 +528,6 @@ objects:
               secretKeyRef:
                 name: ${APP_NAME}-core
                 key: config-service-url
-          - name: ADMIN_PWD
-            valueFrom:
-              secretKeyRef:
-                name: ${APP_NAME}-core
-                key: rest-password
           - name: CONFIG_SERVICE_USER_NAME
             valueFrom:
               secretKeyRef:
@@ -567,9 +542,9 @@ objects:
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}-dsc4
           ports:
-          - containerPort: 443
+          - containerPort: 9443
             protocol: TCP
-          - containerPort: 444
+          - containerPort: 9444
             protocol: TCP
           resources: {}
           terminationMessagePath: /dev/termination-log
@@ -627,10 +602,6 @@ objects:
           app: ${APP_NAME}-core
           name: ${APP_NAME}-runtime
       spec:
-        serviceAccountName: ${SERVICE_ACCOUNT}
-        securityContext:
-          runAsNonRoot: true
-          runAsUser:    6000
         affinity:
           podAntiAffinity:
             preferredDuringSchedulingIgnoredDuringExecution:
@@ -643,6 +614,10 @@ objects:
                     values:
                     - ${APP_NAME}-runtime
                 topologyKey: kubernetes.io/hostname
+        serviceAccountName: ${SERVICE_ACCOUNT}
+        securityContext:
+          runAsNonRoot: true
+          runAsUser:    6000
         containers:
         - env:
           - name: SERVICE
@@ -656,11 +631,6 @@ objects:
               secretKeyRef:
                 name: ${APP_NAME}-core
                 key: config-service-url
-          - name: ADMIN_PWD
-            valueFrom:
-              secretKeyRef:
-                name: ${APP_NAME}-core
-                key: rest-password
           - name: CONFIG_SERVICE_USER_NAME
             valueFrom:
               secretKeyRef:
@@ -675,7 +645,7 @@ objects:
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}-runtime
           ports:
-          - containerPort: 443
+          - containerPort: 9443
             protocol: TCP
           resources: {}
           terminationMessagePath: /dev/termination-log
@@ -685,14 +655,15 @@ objects:
               command:
               - /sbin/health_check.sh
               - livenessProbe
+            initialDelaySeconds: 90
             periodSeconds: 10
             timeoutSeconds: 2
           readinessProbe:
             httpGet:
               scheme: HTTPS
-              port: 443
+              port: 9443
               path: /sps/static/ibm-logo.png
-            initialDelaySeconds: 30
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 2
           volumeMounts:
@@ -738,17 +709,13 @@ objects:
   spec:
     ports:
     - name: service
-      port: 443
-      protocol: TCP
-      targetPort: 443
-    - name: replication
-      port: 444
-      protocol: TCP
-      targetPort: 444
-    - name: rest
       port: 9443
       protocol: TCP
       targetPort: 9443
+    - name: replication
+      port: 9444
+      protocol: TCP
+      targetPort: 9444
     selector:
       name: ${APP_NAME}-dsc1
     sessionAffinity: None
@@ -766,17 +733,13 @@ objects:
   spec:
     ports:
     - name: service
-      port: 443
-      protocol: TCP
-      targetPort: 443
-    - name: replication
-      port: 444
-      protocol: TCP
-      targetPort: 444
-    - name: rest
       port: 9443
       protocol: TCP
       targetPort: 9443
+    - name: replication
+      port: 9444
+      protocol: TCP
+      targetPort: 9444
     selector:
       name: ${APP_NAME}-dsc2
     sessionAffinity: None
@@ -794,17 +757,13 @@ objects:
   spec:
     ports:
     - name: service
-      port: 443
-      protocol: TCP
-      targetPort: 443
-    - name: replication
-      port: 444
-      protocol: TCP
-      targetPort: 444
-    - name: rest
       port: 9443
       protocol: TCP
       targetPort: 9443
+    - name: replication
+      port: 9444
+      protocol: TCP
+      targetPort: 9444
     selector:
       name: ${APP_NAME}-dsc3
     sessionAffinity: None
@@ -822,17 +781,13 @@ objects:
   spec:
     ports:
     - name: service
-      port: 443
-      protocol: TCP
-      targetPort: 443
-    - name: replication
-      port: 444
-      protocol: TCP
-      targetPort: 444
-    - name: rest
       port: 9443
       protocol: TCP
       targetPort: 9443
+    - name: replication
+      port: 9444
+      protocol: TCP
+      targetPort: 9444
     selector:
       name: ${APP_NAME}-dsc4
     sessionAffinity: None
@@ -850,14 +805,9 @@ objects:
   spec:
     ports:
     - name: https
-      port: 443
-      protocol: TCP
-      targetPort: 443
-    - name: rest
       port: 9443
       protocol: TCP
       targetPort: 9443
-    selector:
     selector:
       name: ${APP_NAME}-runtime
     sessionAffinity: None
@@ -889,11 +839,6 @@ parameters:
   - displayName: LMI Admin Password
     description: This will be the password for the config service admin user (for both Web and REST access)
     name: ADMIN_PW
-    from: '[a-zA-Z0-9]{16}'
-    generate: expression
-  - displayName: REST Access Password (non-config Nodes)
-    description: This will be the password for the admin user on non-config Nodes.
-    name: REST_PW
     from: '[a-zA-Z0-9]{16}'
     generate: expression
   - displayName: Config Read Username

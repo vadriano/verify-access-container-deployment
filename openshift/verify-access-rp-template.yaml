@@ -58,10 +58,6 @@ objects:
           name: ${CORE_APP_NAME}-${INSTANCE_NAME}
           app: ${CORE_APP_NAME}-${INSTANCE_NAME}
       spec:
-        serviceAccountName: ${SERVICE_ACCOUNT}
-        securityContext:
-          runAsNonRoot: true
-          runAsUser:    6000
         affinity:
           podAntiAffinity:
             preferredDuringSchedulingIgnoredDuringExecution:
@@ -74,6 +70,10 @@ objects:
                     values:
                     - ${CORE_APP_NAME}-${INSTANCE_NAME}
                 topologyKey: kubernetes.io/hostname
+        serviceAccountName: ${SERVICE_ACCOUNT}
+        securityContext:
+          runAsNonRoot: true
+          runAsUser:    6000
         containers:
         - env:
           - name: SERVICE
@@ -82,11 +82,6 @@ objects:
             value: ${INSTANCE_NAME}
           - name: CONTAINER_TIMEZONE
             value: ${TIMEZONE}
-          - name: ADMIN_PWD
-            valueFrom:
-              secretKeyRef:
-                name: ${CORE_APP_NAME}-core
-                key: rest-password
           - name: AUTO_RELOAD_FREQUENCY
             value: ${RELOAD_INTERVAL}
           - name: CONFIG_SERVICE_URL
@@ -108,7 +103,7 @@ objects:
           imagePullPolicy: IfNotPresent
           name: ${CORE_APP_NAME}-${INSTANCE_NAME}
           ports:
-          - containerPort: 443
+          - containerPort: 9443
             protocol: TCP
           resources: {}
           terminationMessagePath: /dev/termination-log
@@ -168,10 +163,6 @@ objects:
   spec:
     ports:
     - name: https
-      port: 443
-      protocol: TCP
-      targetPort: 443
-    - name: rest
       port: 9443
       protocol: TCP
       targetPort: 9443

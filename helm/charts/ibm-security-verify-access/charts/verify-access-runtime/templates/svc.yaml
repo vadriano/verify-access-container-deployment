@@ -21,11 +21,8 @@ spec:
   ports:
    - name: {{ .sch.chart.config.servicename }}
      port: {{ template "runtime.port" . }}
-   - name: {{ .sch.chart.config.adminservicename }}
-     port: {{ template "admin.port" . }}
 
   selector:
     app: {{ template "runtime.name" . }}
 
 {{- end }}
-
