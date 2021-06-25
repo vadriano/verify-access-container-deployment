@@ -18,7 +18,6 @@ services:
     hostname: isvaconfig
     restart: always
     environment:
-      - SERVICE=config
 #     - SNAPSHOT=${SNAPSHOT}
 #     - FIXPACKS=${FIXPACKS}
       - CONTAINER_TIMEZONE=${TIMEZONE}
@@ -40,12 +39,10 @@ services:
           - www.iamlab.ibm.com
     restart: always
     environment:
-      - SERVICE=webseal
       - INSTANCE=rp1
 #     - SNAPSHOT=${SNAPSHOT}
 #     - FIXPACKS=${FIXPACKS}
       - CONTAINER_TIMEZONE=${TIMEZONE}
-      - AUTO_RELOAD_FREQUENCY=5
     volumes:
       - isvaconfig:/var/shared
     ports:
@@ -58,11 +55,9 @@ services:
     hostname: isvaruntime
     restart: always
     environment:
-      - SERVICE=runtime
 #     - SNAPSHOT=${SNAPSHOT}
 #     - FIXPACKS=${FIXPACKS}
       - CONTAINER_TIMEZONE=${TIMEZONE}
-      - AUTO_RELOAD_FREQUENCY=5
     volumes:
       - isvaconfig:/var/shared
     depends_on:
@@ -74,12 +69,10 @@ services:
     hostname: isvadsc
     restart: always
     environment:
-      - SERVICE=dsc
       - INSTANCE=1
 #     - SNAPSHOT=${SNAPSHOT}
 #     - FIXPACKS=${FIXPACKS}
       - CONTAINER_TIMEZONE=${TIMEZONE}
-      - AUTO_RELOAD_FREQUENCY=5
     volumes:
       - isvaconfig:/var/shared
 
