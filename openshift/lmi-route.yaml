@@ -4,7 +4,7 @@ metadata:
   creationTimestamp: null
   name: verifyaccess-lmi
   labels:
-    app: verifyaccess-core
+    app: verifyaccess
 spec:
   host: lmi.iamlab.ibm.com
   port:

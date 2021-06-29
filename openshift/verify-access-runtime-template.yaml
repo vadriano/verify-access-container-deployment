@@ -1,35 +1,26 @@
 apiVersion: v1
 kind: Template
 labels:
-  template: verify-access-reverse-proxy
+  template: verify-access-runtime
 metadata:
   creationTimestamp: null
-  name: verify-access-reverse-proxy
+  name: verify-access-runtime
   annotations:
-    openshift.io/display-name: IBM Security Verify Access Reverse Proxy
+    openshift.io/display-name: IBM Security Verify Access Runtime
     iconClass: icon-sso
-    description: IBM Security Verify Access Reverse Proxy
-    openshift.io/long-description: This template deploys an IBM Security Verify Access Reverse Proxy
-      instance.  This template can be deployed multiple times to create multiple Reverse Proxies.
+    description: IBM Security Verify Access Runtime Services
+    openshift.io/long-description: This template deploys the runtime services required for an IBM
+      Security Verify Access environment.
     openshift.io/documentation-url: https://ibm.biz/verifyaccesscontainers
     openshift.io/provider-display-name: IBM Security Verify Access
     openshift.io/support-url: https://ibm.biz/iamcommunity
     tags: ibm, verifyaccess
 message: |-
 
-  Application Name: ${CORE_APP_NAME}-${INSTANCE_NAME}
+  Application Name: ${APP_NAME}
 
-  Instance Name: ${INSTANCE_NAME}
-  An instance with this name must be configured in the config service.
-
-  The following service has been created in your project:
-    - ${SERVICE_NAME}
-
-  Route URL: https://${DNS_NAME}
-
-  Secret containing REST credentials: ${CORE_APP_NAME}-core
-  Secret containing Config Admin credentials: ${CORE_APP_NAME}-lmi
-
+  The following services have been created in your project:
+    - ${RUNTIME_SERVICE}
 objects:
 - apiVersion: apps/v1
   kind: Deployment
@@ -39,24 +30,24 @@ objects:
     creationTimestamp: null
     generation: 1
     labels:
-      app: ${CORE_APP_NAME}
-      name: ${CORE_APP_NAME}-${INSTANCE_NAME}
-    name: ${CORE_APP_NAME}-${INSTANCE_NAME}
+      app: ${APP_NAME}
+      name: ${APP_NAME}-runtime
+    name: ${APP_NAME}-runtime
   spec:
     progressDeadlineSeconds: 600
     replicas: 1
     revisionHistoryLimit: 10
     selector:
       matchLabels:
-        name: ${CORE_APP_NAME}-${INSTANCE_NAME}
+        name: ${APP_NAME}-runtime
     triggers:
       - type: ConfigChange
     template:
       metadata:
         creationTimestamp: null
         labels:
-          name: ${CORE_APP_NAME}-${INSTANCE_NAME}
-          app: ${CORE_APP_NAME}
+          app: ${APP_NAME}
+          name: ${APP_NAME}-runtime
       spec:
         affinity:
           podAntiAffinity:
@@ -65,10 +56,10 @@ objects:
               podAffinityTerm:
                 labelSelector:
                   matchExpressions:
-                  - key: app
+                  - key: name
                     operator: In
                     values:
-                    - ${CORE_APP_NAME}-${INSTANCE_NAME}
+                    - ${APP_NAME}-runtime
                 topologyKey: kubernetes.io/hostname
         serviceAccountName: ${SERVICE_ACCOUNT}
         securityContext:
@@ -76,28 +67,26 @@ objects:
           runAsUser:    6000
         containers:
         - env:
-          - name: INSTANCE
-            value: ${INSTANCE_NAME}
           - name: CONTAINER_TIMEZONE
             value: ${TIMEZONE}
           - name: CONFIG_SERVICE_URL
             valueFrom:
               secretKeyRef:
-                name: ${CORE_APP_NAME}-config
+                name: ${APP_NAME}-config
                 key: config-service-url
           - name: CONFIG_SERVICE_USER_NAME
             valueFrom:
               secretKeyRef:
-                name: ${CORE_APP_NAME}-config
+                name: ${APP_NAME}-config
                 key: config-read-username
           - name: CONFIG_SERVICE_USER_PWD
             valueFrom:
               secretKeyRef:
-                name: ${CORE_APP_NAME}-config
+                name: ${APP_NAME}-config
                 key: config-read-password
-          image: docker.io/ibmcom/verify-access-wrp:${ISVA_VERSION}
+          image: docker.io/ibmcom/verify-access-runtime:${ISVA_VERSION}
           imagePullPolicy: IfNotPresent
-          name: ${CORE_APP_NAME}-${INSTANCE_NAME}
+          name: ${APP_NAME}-runtime
           ports:
           - containerPort: 9443
             protocol: TCP
@@ -109,18 +98,20 @@ objects:
               command:
               - /sbin/health_check.sh
               - livenessProbe
+            initialDelaySeconds: 90
             periodSeconds: 10
             timeoutSeconds: 2
           readinessProbe:
-            exec:
-              command:
-              - /sbin/health_check.sh
-            initialDelaySeconds: 20
+            httpGet:
+              scheme: HTTPS
+              port: 9443
+              path: /sps/static/ibm-logo.png
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 2
           volumeMounts:
           - mountPath: /var/application.logs
-            name: ${CORE_APP_NAME}-${INSTANCE_NAME}-logs
+            name: ${APP_NAME}-runtime-logs
         dnsPolicy: ClusterFirst
         imagePullSecrets:
         - name: ${PULL_SECRET}
@@ -128,34 +119,16 @@ objects:
         schedulerName: default-scheduler
         terminationGracePeriodSeconds: 30
         volumes:
-        - name: ${CORE_APP_NAME}-${INSTANCE_NAME}-logs
+        - name: ${APP_NAME}-runtime-logs
           emptyDir: {}
-- apiVersion: v1
-  kind: Route
-  metadata:
-    creationTimestamp: null
-    name: ${CORE_APP_NAME}-${INSTANCE_NAME}
-    labels:
-      app: ${CORE_APP_NAME}
-  spec:
-    host: ${DNS_NAME}
-    port:
-      targetPort: https
-    tls:
-      insecureEdgeTerminationPolicy: Redirect
-      termination: passthrough
-    to:
-      kind: Service
-      name: ${SERVICE_NAME}
-      weight: 100
-    wildcardPolicy: None
 - apiVersion: v1
   kind: Service
   metadata:
     creationTimestamp: null
-    name: ${SERVICE_NAME}
+    name: ${RUNTIME_SERVICE}
     labels:
-      app: ${CORE_APP_NAME}
+      app: ${APP_NAME}
+      name: ${APP_NAME}-runtime
   spec:
     ports:
     - name: https
@@ -163,36 +136,24 @@ objects:
       protocol: TCP
       targetPort: 9443
     selector:
-      app: ${CORE_APP_NAME}
-    sessionAffinity: ClientIP
-    sessionAffinityConfig:
-      clientIP:
-        timeoutSeconds: 10800
+      name: ${APP_NAME}-runtime
+    sessionAffinity: None
     type: ClusterIP
   status:
     loadBalancer: {}
 parameters:
+  - displayName: Application Name
+    description: This is the name for the application which is used to create unique object names in the cluster.
+    name: APP_NAME
+    value: verifyaccess
   - displayName: Verify Access Image Version
-    description: The tag that will be used to pull the ibmcom/verify-access-wrp image.
+    description: The tag that will be used to pull the ibmcom/verify-access images.
     name: ISVA_VERSION
     value: 10.0.2.0
-  - displayName: Core Application Name
-    description: The name of the core application (omit -core).  This must match what was
-      configured when creating the core application.
-    name: CORE_APP_NAME
-    value: verifyaccess
-  - displayName: Instance name
-    description: This must match an instance configured in the configuration service.
-    name: INSTANCE_NAME
-    value: rp1
-  - displayName: Service Name
-    description: The name of the Service. Also used as the hostname for connections within the cluster.
-    name: SERVICE_NAME
-    value: isvawrprp1
-  - displayName: Fully Qualified DNS Name for Route
-    description: A DNS or hosts entry must associate this hostname with IP of OpenShift router.
-    name: DNS_NAME
-    value: www.iamlab.ibm.com
+  - displayName: Runtime Service Name
+    description: The name for the runtime service.  Also used as the hostname for connections within the cluster.
+    name: RUNTIME_SERVICE
+    value: isvaruntime
   - displayName: Image Pull Secret
     description: This is an (existing) docker login secret for pulling the Access Manager image.
       Only required if hosting images on a private repository
@@ -202,7 +163,7 @@ parameters:
     description: The timezone for message logging (e.g. Europe/London)
     name: TIMEZONE
     value: Etc/UTC
-  - displayName: Service Account
-    description: This is the (existing) Service Account for running the Reverse Proxy pods.  Needs to allow running as specific non-root user.
+  - displayName: Runtime Service Account
+    description: This is the (existing) Service Account for running the Runtime pods.  Needs to support running as specific non-root userid.
     name: SERVICE_ACCOUNT
     value: verifyaccess-nonroot
