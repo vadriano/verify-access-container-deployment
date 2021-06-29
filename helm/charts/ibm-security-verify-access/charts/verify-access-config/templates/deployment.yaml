@@ -94,8 +94,6 @@ spec:
           value: {{ default "" .Values.global.container.snapshot | quote }}
         - name: FIXPACKS
           value: {{ default "" .Values.global.container.fixpacks | quote }}
-        - name: SERVICE
-          value: config
         - name: ADMIN_PWD
           valueFrom:
             secretKeyRef:

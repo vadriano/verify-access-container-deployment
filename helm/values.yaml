@@ -26,7 +26,6 @@ global:
     snapshot:           ""
     fixpacks:           ""
     adminSecret:        "helm-isvaadmin"
-    autoReloadInterval: 10
     timezone:           "Etc/UTC"
 
   # Persistence Storage

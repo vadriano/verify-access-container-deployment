@@ -97,10 +97,6 @@ spec:
           value: {{ default "" .Values.global.container.snapshot | quote }}
         - name: FIXPACKS
           value: {{ default "" .Values.global.container.fixpacks | quote }}
-        - name: SERVICE
-          value: runtime
-        - name: AUTO_RELOAD_FREQUENCY
-          value: {{ default "" .Values.global.container.autoReloadInterval | quote }}
         - name: CONTAINER_TIMEZONE
           value: {{ default "" $.Values.global.container.timezone | quote }}
         - name: CONFIG_SERVICE_URL

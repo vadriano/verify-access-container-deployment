@@ -97,16 +97,12 @@ spec:
           value: {{ default "" $.Values.global.container.snapshot | quote }}
         - name: FIXPACKS
           value: {{ default "" $.Values.global.container.fixpacks | quote }}
-        - name: SERVICE
-          value: dsc
         - name: INSTANCE
           {{- if (eq $element "primary") }}
           value: "1"
           {{- else }}
           value: "2"
           {{- end }}
-        - name: AUTO_RELOAD_FREQUENCY
-          value: {{ default "" $.Values.global.container.autoReloadInterval | quote }}
         - name: CONTAINER_TIMEZONE
           value: {{ default "" $.Values.global.container.timezone | quote }}
         - name: CONFIG_SERVICE_URL

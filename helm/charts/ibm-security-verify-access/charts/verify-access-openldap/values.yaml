@@ -16,9 +16,8 @@ global:
   container:
     snapshot:            ""
     fixpacks:            ""
-    autoReloadInterval:
     timezone:           "Etc/UTC"
-    
+
   # Persistence Storage
   persistence:
     enabled: true

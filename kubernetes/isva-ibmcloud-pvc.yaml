@@ -247,8 +247,6 @@ spec:
             - mountPath: /var/application.logs
               name: isvaconfig-logs
           env:
-            - name: SERVICE
-              value: config
             - name: CONTAINER_TIMEZONE
               value: Europe/London
             - name: ADMIN_PWD
@@ -322,14 +320,10 @@ spec:
             - mountPath: /var/application.logs
               name: isvawrprp1-logs
           env:
-            - name: SERVICE
-              value: webseal
             - name: INSTANCE
               value: rp1
             - name: CONTAINER_TIMEZONE
               value: Europe/London
-            - name: AUTO_RELOAD_FREQUENCY
-              value: "5"
             - name: CONFIG_SERVICE_URL
               value: https://isvaconfig:9443/shared_volume
             - name: CONFIG_SERVICE_USER_NAME
@@ -408,12 +402,8 @@ spec:
             - mountPath: /var/application.logs
               name: isvaruntime-logs
           env:
-            - name: SERVICE
-              value: runtime
             - name: CONTAINER_TIMEZONE
               value: Europe/London
-            - name: AUTO_RELOAD_FREQUENCY
-              value: "5"
             - name: CONFIG_SERVICE_URL
               value: https://isvaconfig:9443/shared_volume
             - name: CONFIG_SERVICE_USER_NAME
@@ -489,14 +479,10 @@ spec:
             - mountPath: /var/application.logs
               name: isvadsc-logs
           env:
-            - name: SERVICE
-              value: dsc
             - name: INSTANCE
               value: '1'
             - name: CONTAINER_TIMEZONE
               value: Europe/London
-            - name: AUTO_RELOAD_FREQUENCY
-              value: "5"
             - name: CONFIG_SERVICE_URL
               value: https://isvaconfig:9443/shared_volume
             - name: CONFIG_SERVICE_USER_NAME

@@ -26,7 +26,6 @@ global:
     snapshot:            ""
     fixpacks:            ""
     adminSecret:         ""
-    autoReloadInterval:
     timezone:            "Etc/UTC"
 
   # Persistence Storage
