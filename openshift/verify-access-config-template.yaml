@@ -100,8 +100,6 @@ objects:
           runAsUser:    6000
         containers:
         - env:
-          - name: SERVICE
-            value: config
           - name: CONTAINER_TIMEZONE
             value: ${TIMEZONE}
           - name: ADMIN_PWD
