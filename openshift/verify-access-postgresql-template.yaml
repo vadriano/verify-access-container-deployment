@@ -81,6 +81,7 @@ objects:
         securityContext:
           runAsNonRoot: true
           runAsUser:    70
+          fsGroup: ${FS_GROUP}
         containers:
         - env:
           - name: POSTGRES_USER
@@ -175,3 +176,7 @@ parameters:
     description: This is the (existing) Service Account for running the pods.  It must allow runAsNonRoot.
     name: SERVICE_ACCOUNT
     value: verifyaccess-nonroot
+  - displayName: fsGroup
+    description: Value for the fsGroup to be added to security context.  Needs to be 0 if volumes mounted as root.
+    name: FS_GROUP
+    value: 0
