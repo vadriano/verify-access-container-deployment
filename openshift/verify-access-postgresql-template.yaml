@@ -81,7 +81,7 @@ objects:
         securityContext:
           runAsNonRoot: true
           runAsUser:    70
-          fsGroup: ${FS_GROUP}
+          fsGroup: ${{FS_GROUP}}
         containers:
         - env:
           - name: POSTGRES_USER
@@ -179,4 +179,4 @@ parameters:
   - displayName: fsGroup
     description: Value for the fsGroup to be added to security context.  Needs to be 0 if volumes mounted as root.
     name: FS_GROUP
-    value: 0
+    value: '0'
