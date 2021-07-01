@@ -226,7 +226,7 @@ metadata:
     tags: ibm, verifyaccess
 message: |-
 
-  Application Name: ${CORE_APP_NAME}
+  Application Name: ${CORE_APP_NAME}-wrp-${INSTANCE_NAME}
 
   Reverse Proxy Instance Name: ${INSTANCE_NAME}
   An instance with this name must be configured in the config service.
@@ -248,7 +248,7 @@ objects:
     creationTimestamp: null
     generation: 1
     labels:
-      app: ${CORE_APP_NAME}
+      app: ${CORE_APP_NAME}-wrp-${INSTANCE_NAME}
       name: ${CORE_APP_NAME}-wrp-${INSTANCE_NAME}
     name: ${CORE_APP_NAME}-wrp-${INSTANCE_NAME}
   spec:
@@ -265,7 +265,7 @@ objects:
         creationTimestamp: null
         labels:
           name: ${CORE_APP_NAME}-wrp-${INSTANCE_NAME}
-          app: ${CORE_APP_NAME}
+          app: ${CORE_APP_NAME}-wrp-${INSTANCE_NAME}
       spec:
         affinity:
           podAntiAffinity:
@@ -345,7 +345,7 @@ objects:
     creationTimestamp: null
     name: ${CORE_APP_NAME}-wrp-${INSTANCE_NAME}
     labels:
-      app: ${CORE_APP_NAME}
+      app: ${CORE_APP_NAME}-wrp-${INSTANCE_NAME}
       name: ${CORE_APP_NAME}-wrp-${INSTANCE_NAME}
   spec:
     host: ${DNS_NAME}
@@ -365,7 +365,7 @@ objects:
     creationTimestamp: null
     name: ${SERVICE_NAME}
     labels:
-      app: ${CORE_APP_NAME}
+      app: ${CORE_APP_NAME}-wrp-${INSTANCE_NAME}
       name: ${CORE_APP_NAME}-wrp-${INSTANCE_NAME}
   spec:
     ports:
