@@ -173,9 +173,9 @@ parameters:
     name: TIMEZONE
     value: Etc/UTC
   - displayName: Config Service Account
-    description: This is the (existing) Service Account for running the config pod.  It must allow runAsNonRoot, SETUID, SETGID.
+    description: This is the (existing) Service Account for running the snapshot manager pod.
     name: SNAPMGR_SERVICE_ACCOUNT
-    value: verifyaccess-config
+    value: default
 ---
 apiVersion: v1
 kind: Template
