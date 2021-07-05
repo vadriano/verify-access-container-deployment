@@ -118,14 +118,23 @@ objects:
               command:
               - /sbin/health_check.sh
               - livenessProbe
-            periodSeconds: 20
+            periodSeconds: 10
             timeoutSeconds: 2
+            failureThreshold: 6
           readinessProbe:
             httpGet:
               scheme: HTTPS
               port: 9443
               path: /core/login
-            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 2
+          startupProbe:
+            exec:
+              command:
+              - /sbin/health_check.sh
+              - startupProbe
+            failureThreshold: 30
             periodSeconds: 10
             timeoutSeconds: 2
           volumeMounts:
@@ -317,13 +326,14 @@ objects:
               - livenessProbe
             periodSeconds: 10
             timeoutSeconds: 2
+            failureThreshold: 6
           readinessProbe:
             exec:
               command:
               - /sbin/health_check.sh
-            initialDelaySeconds: 20
             periodSeconds: 10
             timeoutSeconds: 2
+            failureThreshold: 2
           volumeMounts:
           - mountPath: /var/application.logs
             name: ${CORE_APP_NAME}-wrp-${INSTANCE_NAME}-logs
@@ -512,15 +522,23 @@ objects:
               command:
               - /sbin/health_check.sh
               - livenessProbe
-            initialDelaySeconds: 90
             periodSeconds: 10
             timeoutSeconds: 2
+            failureThreshold: 6
           readinessProbe:
             httpGet:
               scheme: HTTPS
               port: 9443
               path: /sps/static/ibm-logo.png
-            initialDelaySeconds: 10
+            periodSeconds: 10
+            failureThreshold: 2
+            timeoutSeconds: 2
+          startupProbe:
+            exec:
+              command:
+              - /sbin/health_check.sh
+              - startupProbe
+            failureThreshold: 30
             periodSeconds: 10
             timeoutSeconds: 2
           volumeMounts:
@@ -690,13 +708,14 @@ objects:
               - livenessProbe
             periodSeconds: 10
             timeoutSeconds: 2
+            failureThreshold: 6
           readinessProbe:
             exec:
               command:
               - /sbin/health_check.sh
-            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 2
+            failureThreshold: 2
           volumeMounts:
           - mountPath: /var/application.logs
             name: ${APP_NAME}-dsc1-logs
@@ -789,13 +808,14 @@ objects:
               - livenessProbe
             periodSeconds: 10
             timeoutSeconds: 2
+            failureThreshold: 6
           readinessProbe:
             exec:
               command:
               - /sbin/health_check.sh
-            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 2
+            failureThreshold: 2
           volumeMounts:
           - mountPath: /var/application.logs
             name: ${APP_NAME}-dsc2-logs
@@ -888,13 +908,14 @@ objects:
               - livenessProbe
             periodSeconds: 10
             timeoutSeconds: 2
+            failureThreshold: 6
           readinessProbe:
             exec:
               command:
               - /sbin/health_check.sh
-            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 2
+            failureThreshold: 2
           volumeMounts:
           - mountPath: /var/application.logs
             name: ${APP_NAME}-dsc3-logs
@@ -987,13 +1008,14 @@ objects:
               - livenessProbe
             periodSeconds: 10
             timeoutSeconds: 2
+            failureThreshold: 6
           readinessProbe:
             exec:
               command:
               - /sbin/health_check.sh
-            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 2
+            failureThreshold: 2
           volumeMounts:
           - mountPath: /var/application.logs
             name: ${APP_NAME}-dsc4-logs

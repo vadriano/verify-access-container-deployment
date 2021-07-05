@@ -100,14 +100,6 @@ objects:
           resources: {}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
-#          readinessProbe:
-#            httpGet:
-#              scheme: HTTPS
-#              port: 9443
-#              path: /
-#            initialDelaySeconds: 10
-#            periodSeconds: 10
-#            timeoutSeconds: 2
           volumeMounts:
           - mountPath: /data
             name: ${APP_NAME}-snapmgr
@@ -296,14 +288,23 @@ objects:
               command:
               - /sbin/health_check.sh
               - livenessProbe
-            periodSeconds: 20
+            periodSeconds: 10
             timeoutSeconds: 2
+            failureThreshold: 6
           readinessProbe:
             httpGet:
               scheme: HTTPS
               port: 9443
               path: /core/login
-            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 2
+          startupProbe:
+            exec:
+              command:
+              - /sbin/health_check.sh
+              - startupProbe
+            failureThreshold: 30
             periodSeconds: 10
             timeoutSeconds: 2
           volumeMounts:
