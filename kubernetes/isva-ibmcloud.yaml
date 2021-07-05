@@ -175,15 +175,25 @@ spec:
                   name: isvaadmin
                   key: adminpw
           readinessProbe:
-            tcpSocket:
+            httpGet:
+              scheme: HTTPS
+              path: /core/login
               port:  9443
-            initialDelaySeconds: 5
+            failureThreshold: 2
+            timeoutSeconds: 2
             periodSeconds: 10
           livenessProbe:
             tcpSocket:
               port: 9443
-            initialDelaySeconds: 120
-            periodSeconds: 20
+            failureThreshold: 6
+            timeoutSeconds: 2
+            periodSeconds: 10
+          startupProbe:
+            tcpSocket:
+              port: 9443
+            failureThreshold: 30
+            timeoutSeconds: 2
+            periodSeconds: 10
 #          command: [ "/sbin/bootstrap.sh" ]
       imagePullSecrets:
         - name: dockerlogin
@@ -221,9 +231,6 @@ spec:
       labels:
         app: isvawrprp1
     spec:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser:    6000
       volumes:
         - name: isvaconfig
           emptyDir: {}
@@ -258,16 +265,16 @@ spec:
               command:
               - /sbin/health_check.sh
               - livenessProbe
-            initialDelaySeconds: 10
             periodSeconds: 10
+            failureThreshold: 6
             timeoutSeconds: 2
           readinessProbe:
             exec:
               command:
               - /sbin/health_check.sh
-            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 2
+            failureThreshold: 2
       imagePullSecrets:
         - name: dockerlogin
 ---
@@ -303,9 +310,6 @@ spec:
       labels:
         app: isvaruntime
     spec:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser:    6000
       volumes:
         - name: isvaconfig
           emptyDir: {}
@@ -338,14 +342,22 @@ spec:
               command:
               - /sbin/health_check.sh
               - livenessProbe
-            initialDelaySeconds: 30
+            failureThreshold: 6
+            periodSeconds: 10
+            timeoutSeconds: 2
+          startupProbe:
+            exec:
+              command:
+              - /sbin/health_check.sh
+              - startupProbe
+            failureThreshold: 30
             periodSeconds: 10
             timeoutSeconds: 2
           readinessProbe:
             exec:
               command:
               - /sbin/health_check.sh
-            initialDelaySeconds: 10
+            failureThreshold: 2
             periodSeconds: 10
             timeoutSeconds: 2
       imagePullSecrets:
@@ -379,9 +391,6 @@ spec:
       labels:
         app: isvadsc
     spec:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser:    6000
       volumes:
         - name: isvaconfig
           emptyDir: {}
@@ -417,16 +426,16 @@ spec:
               command:
               - /sbin/health_check.sh
               - livenessProbe
-            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 2
+            failureThreshold: 6
           readinessProbe:
             exec:
               command:
               - /sbin/health_check.sh
-            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 2
+            failureThreshold: 2
       imagePullSecrets:
         - name: dockerlogin
 ---
