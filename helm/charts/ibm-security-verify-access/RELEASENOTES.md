@@ -1,10 +1,20 @@
 # What's new in verify-access v1.3.0 Chart
 The following enhancements have been made:
 * Support for function-specific containers
+* Support to set service name (which is hostname)
+* Added startupProbe for config and runtime containers
+* Allow service type to be set per WRP instance
+* Improvements to NOTES.txt
 
 # Documentation
 For detailed documentation instructions go to [https://www.ibm.com/support/knowledgecenter/en/SSPREK/welcome.html](https://www.ibm.com/support/knowledgecenter/en/SSPREK/welcome.html).
 
+# Required configuration changes for lightweight containers
+The new lightweight runtime container in v10.0.2.0 does not listen on port 443.  Instead it listens on port 9443.  You will need to update junctions and WRP configuration items that reference the runtime to set this new port.
+
+The new lightweight DSC containers in v10.0.2.0 do not listen on ports 443 and 444. Instead they listen on ports 9443 and 9444.  You will need to update you cluster configuration to reflect this change.
+
+The new lightweight reverse proxy container in v10.0.2.0 does not listen on port 443.  Instead it listens on port 9443.  You may need to update ingress or loadbalancer configurations to reflect this.
 
 # Version History
 

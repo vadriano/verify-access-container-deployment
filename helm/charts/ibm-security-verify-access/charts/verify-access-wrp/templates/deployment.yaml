@@ -50,14 +50,9 @@ spec:
 {{- include "sch.metadata.annotations.metering" (list $dot $.sch.chart.metering) | indent 8 }}
 
     spec:
-
       hostNetwork:    false
       hostPID:        false
       hostIPC:        false
-      securityContext:
-        runAsNonRoot: true
-        runAsUser:    6000
-
       affinity:
 {{- include "sch.affinity.nodeAffinity" (list $dot) | indent 8 }}
         podAntiAffinity:
@@ -77,26 +72,6 @@ spec:
 
       containers:
       - name:  {{ include "wrp.name" (list $dot $instance) }}
-
-        securityContext:
-          privileged:               false
-          readOnlyRootFilesystem:   false
-          allowPrivilegeEscalation: true
-          runAsNonRoot:             true
-          runAsUser:                6000
-          capabilities:
-            drop:
-            - ALL
-            add:
-            - CHOWN
-            - DAC_OVERRIDE
-            - FOWNER
-            - KILL
-            - NET_BIND_SERVICE
-            - SETFCAP
-            - SETGID
-            - SETUID
-
         image: "{{ $.Values.global.image.wrprepository }}"
         imagePullPolicy: {{ default "IfNotPresent" $.Values.global.image.pullPolicy | quote }}
         env:

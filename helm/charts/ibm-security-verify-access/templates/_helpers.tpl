@@ -29,16 +29,17 @@ Create the fully name of the administration secret key.
 {{- end -}}
 
 {{/*
-The name of our persistent volume claim.
+Create the fully qualified name of the configuration service URL.
+We truncate at 63 chars because some Kubernetes name fields are limited to
+this (by the DNS naming spec).
 */}}
-{{- define "pvc.name" -}}
-{{- if .Values.global.dataVolume.existingClaimName -}}
-{{- printf "%s" .Values.global.dataVolume.existingClaimName -}}
+{{- define "config.service.url" -}}
+{{- if .Values.global.configservicename -}}
+{{- printf "https://%s:9443/shared_volume" (printf "%s" .Values.global.configservicename | trunc 63 | trimSuffix "-") -}}
 {{- else }}
-{{- printf "%s-datapvc" .Release.Name -}}
+{{- printf "https://%s:9443/shared_volume" (printf "%s-isvaconfig" .Release.Name | trunc 63 | trimSuffix "-") -}}
 {{- end }}
 {{- end -}}
-
 
 {{/*
 Our well known ports.

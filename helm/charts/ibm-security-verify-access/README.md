@@ -245,7 +245,7 @@ The following tables list the configurable parameters of the Verify Access chart
 | `global.container.timezone` | The timezone that will be used when writing log messages.  If not set, timezone is set by host environment | Etc/UTC
 | `global.persistence.enabled` | Whether to use a PVC to persist data. | `true` |
 | `global.persistence.useDynamicProvisioning` | Whether the requested volume will be automatically provisioned if dynamic provisioning is available. | `true` |
-
+| `global.configservicename` | Set a specific service name for the config service.  | `<release>-isvaconfig` |
 
 ### Configuration Service
 
@@ -267,14 +267,14 @@ The following tables list the configurable parameters of the Verify Access chart
 | --------- | ----------- | ------- |
 | `isvawrp.container.instances` | An array of instances to be created. | See Below |
 | `isvawrp.container.instances.name` | The name of the instance | `default` |
+| `isvawrp.container.instances.servicename` | Service name of the instance | `<release>wrp-<instance>` |
+| `isvawrp.container.instances.servicetype` | ClusterIP or NodePort | `ClusterIP` |
 | `isvawrp.container.instances.nodePort` | The nodePort (if service type is NodePort). | empty |
 | `isvawrp.container.instances.replicas` | The number of replicas to start for the instance. | `1` |
 | `isvawrp.resources.requests.memory` | The amount of memory to be allocated to each Web Reverse Proxy instance. | `512Mi` |
 | `isvawrp.resources.requests.cpu` | The amount of CPU to be allocated to each replica of each Web Reverse Proxy instance. | `500m` |
 | `isvawrp.resources.limits.memory` | The maximum amount of memory to be used by each replica of each Web Reverse Proxy instance. | `1Gi` |
 | `isvawrp.resources.limits.cpu` | The maximum amount of CPU to be used by each replica of each Web Reverse Proxy instance. | `1000m` |
-| `isvawrp.service.type` | The service type for the Web Reverse Proxy instances. | `NodePort` |
-| `isvawrp.service.nodePort` | The nodePort to use for the Web Reverse Proxy services (when service type is NodePort). | empty |
 
 ### Runtime Service
 
@@ -286,6 +286,7 @@ The following tables list the configurable parameters of the Verify Access chart
 | `isvaruntime.resources.requests.cpu` | The amount of CPU to be allocated to each replica of the runtime service. | `1000m` |
 | `isvaruntime.resources.limits.memory` | The maximum amount of memory to be used by each replica of the runtime service. | `2Gi` |
 | `isvaruntime.resources.limits.cpu` | The maximum amount of CPU to be used by each replica of the runtime service. | `2000m` |
+| `isvaruntime.service.servicename` | Service name for the runtime | `<release>-isvaruntime` |
 
 ### Distributed Session Cache
 
@@ -297,6 +298,7 @@ The following tables list the configurable parameters of the Verify Access chart
 | `isvadsc.resources.requests.cpu` | The amount of CPU to be allocated to each replica of the distributed session cache service. | `500m` |
 | `isvadsc.resources.limits.memory` | The maximum amount of memory to be used by each replica of the distributed session cache service. | `1Gi` |
 | `isvadsc.resources.limits.cpu` | The maximum amount of CPU to be used by each replica of the distributed session cache service. | `1000m` |
+| `isvadsc.service.servicename` | Service name for the DSC. Replica has 2 appended | `<release>-isvadsc-<primary|secondary>` |
 
 ### Database
 
@@ -311,6 +313,7 @@ The following tables list the configurable parameters of the Verify Access chart
 | `isvapostgresql.dataVolume.existingClaimName` | The name of an existing PersistentVolumeClaim to be used.| empty |
 | `isvapostgresql.dataVolume.storageClassName` | The storage class of the backing PVC. | empty |
 | `isvapostgresql.dataVolume.size` | The size of the data volume. | `20Gi` |
+| `isvapostgresql.service.servicename` | Service name for postgreSQL. | `<release>-isvapostgresql` |
 
 ### Directory
 
@@ -325,6 +328,7 @@ The following tables list the configurable parameters of the Verify Access chart
 | `isvaopenldap.dataVolume.existingClaimName` | The name of an existing PersistentVolumeClaim to be used.| empty |
 | `isvaopenldap.dataVolume.storageClassName` | The storage class of the backing PVC. | empty |
 | `isvaopenldap.dataVolume.size` | The size of the data volume. | `20Gi` |
+| `isvaopenldap.service.servicename` | Service name for postgreSQL. | `<release>-isvaopenldap` |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`.  For example:
 

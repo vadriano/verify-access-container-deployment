@@ -43,14 +43,9 @@ spec:
 {{- include "sch.metadata.annotations.metering" (list . .sch.chart.metering) | indent 8 }}
 
     spec:
-
       hostNetwork:    false
       hostPID:        false
       hostIPC:        false
-      securityContext:
-        runAsNonRoot: true
-        runAsUser:    6000
-
       affinity:
 {{- include "sch.affinity.nodeAffinity" (list .) | indent 8 }}
         podAntiAffinity:
@@ -70,26 +65,6 @@ spec:
 
       containers:
       - name:  {{ template "runtime.name" . }}
-
-        securityContext:
-          privileged:               false
-          readOnlyRootFilesystem:   false
-          allowPrivilegeEscalation: true
-          runAsNonRoot:             true
-          runAsUser:                6000
-          capabilities:
-            drop:
-            - ALL
-            add:
-            - CHOWN
-            - DAC_OVERRIDE
-            - FOWNER
-            - KILL
-            - NET_BIND_SERVICE
-            - SETFCAP
-            - SETGID
-            - SETUID
-
         image: "{{ .Values.global.image.runtimerepository }}"
         imagePullPolicy: {{ default "IfNotPresent" .Values.global.image.pullPolicy | quote }}
         env:
@@ -114,8 +89,18 @@ spec:
             command:
             - /sbin/health_check.sh
             - livenessProbe
-          initialDelaySeconds: 30
+          failureThreshold: 6
           periodSeconds: 10
+          timeoutSeconds: 2
+
+        startupProbe:
+          exec:
+            command:
+            - /sbin/health_check.sh
+            - startupProbe
+          failureThreshold: 30
+          periodSeconds: 10
+          timeoutSeconds: 2
 
         readinessProbe:
           exec:
@@ -125,8 +110,9 @@ spec:
             {{- else }}
             - /usr/bin/true
             {{- end }}
-          initialDelaySeconds: 10
+          failureThreshold: 2
           periodSeconds: 10
+          timeoutSeconds: 2
 
         ports:
         - name: {{ .sch.chart.config.servicename }}

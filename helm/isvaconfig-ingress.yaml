@@ -16,6 +16,6 @@
         pathType: Prefix
         backend:
           service:
-            name: iamlab-isvaconfig
+            name: isvaconfig
             port:
               number: 9443

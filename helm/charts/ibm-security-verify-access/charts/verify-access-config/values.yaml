@@ -48,5 +48,6 @@ resources:
 # Service Configuration.
 
 service:
+  servicename:
   type: NodePort
   nodePort:

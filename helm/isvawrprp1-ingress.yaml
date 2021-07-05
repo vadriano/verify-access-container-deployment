@@ -17,6 +17,6 @@
         pathType: Prefix
         backend:
           service:
-            name: iamlab-isvawrp-rp1
+            name: isvawrprp1
             port:
               number: 9443
