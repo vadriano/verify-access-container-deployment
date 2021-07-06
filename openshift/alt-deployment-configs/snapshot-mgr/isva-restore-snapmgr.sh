@@ -39,19 +39,16 @@ echo "Loading DB Data..."
 oc exec ${POSTGRESQL} -i -- /usr/local/bin/psql isva < ${TMPDIR}/isva.db >> /tmp/isva-restore.log 2>&1
 
 # Get docker container ID for isvaconfig container
-ISVACONFIG="$(oc get --no-headers=true pods -l name=verifyaccess-config -o custom-columns=:metadata.name)"
+ISVASNAP="$(oc get --no-headers=true pods -l name=verifyaccess-snapmgr -o custom-columns=:metadata.name)"
 
-# Copy snapshots to the isvaconfig container
+# Copy snapshots to the snapshot manager container
 echo "Copying Snapshot..."
 SNAPSHOTS=`ls ${TMPDIR}/*.snapshot`
 for SNAPSHOT in $SNAPSHOTS; do
-oc cp ${SNAPSHOT} ${ISVACONFIG}:/var/shared/snapshots
+oc exec ${ISVASNAP} -- mkdir /data/snapshots
+oc cp ${SNAPSHOT} ${ISVASNAP}:/data/snapshots
 done
 
 rm -rf $TMPDIR
-
-# Restart config container to apply updated files
-echo "Killing Config Pod (a new one will be started)..."
-oc delete pod ${ISVACONFIG}
 
 echo "Done."

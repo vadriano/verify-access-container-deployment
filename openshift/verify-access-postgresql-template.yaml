@@ -1,4 +1,4 @@
-apiVersion: v1
+apiVersion: template.openshift.io/v1
 kind: Template
 labels:
   template: verify-access-postgresql
@@ -81,7 +81,7 @@ objects:
         securityContext:
           runAsNonRoot: true
           runAsUser:    70
-          fsGroup:      0
+          fsGroup: ${{FS_GROUP}}
         containers:
         - env:
           - name: POSTGRES_USER
@@ -154,7 +154,7 @@ parameters:
   - displayName: Image Version
     description: The tag that will be used to pull the ibmcom/verify-access-postgresql image.
     name: DB_VERSION
-    value: 10.0.0.0
+    value: 10.0.2.0
   - displayName: Administrator Username
     description: The username for the database administrator.
     name: ADMIN_ID
@@ -175,4 +175,8 @@ parameters:
   - displayName: Service Account
     description: This is the (existing) Service Account for running the pods.  It must allow runAsNonRoot.
     name: SERVICE_ACCOUNT
-    value: verifyaccess
+    value: verifyaccess-nonroot
+  - displayName: fsGroup
+    description: Value for the fsGroup to be added to security context.  Needs to be 0 if volumes mounted as root.
+    name: FS_GROUP
+    value: '0'

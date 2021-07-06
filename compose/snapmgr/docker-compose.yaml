@@ -22,6 +22,9 @@ services:
 #     - FIXPACKS=${FIXPACKS}
       - CONTAINER_TIMEZONE=${TIMEZONE}
       - ADMIN_PWD=${ADMIN_PASSWORD}
+      - CONFIG_SERVICE_URL=https://isvasnapmgr:9443
+      - CONFIG_SERVICE_USER_NAME=snapmgr
+      - CONFIG_SERVICE_USER_PWD=${SNAPMGR_PW}
     volumes:
       - isvaconfig:/var/shared
     ports:
@@ -43,12 +46,14 @@ services:
 #     - SNAPSHOT=${SNAPSHOT}
 #     - FIXPACKS=${FIXPACKS}
       - CONTAINER_TIMEZONE=${TIMEZONE}
-    volumes:
-      - isvaconfig:/var/shared
+      - CONFIG_SERVICE_URL=https://isvasnapmgr:9443
+      - CONFIG_SERVICE_USER_NAME=snapmgr
+      - CONFIG_SERVICE_USER_PWD=${SNAPMGR_PW}
     ports:
       - ${WEB1_IP}:443:9443
     depends_on:
       - openldap
+      - isvasnapmgr
 
   isvaruntime:
     image: ibmcom/verify-access-runtime:${ISVA_VERSION}
@@ -58,11 +63,13 @@ services:
 #     - SNAPSHOT=${SNAPSHOT}
 #     - FIXPACKS=${FIXPACKS}
       - CONTAINER_TIMEZONE=${TIMEZONE}
-    volumes:
-      - isvaconfig:/var/shared
+      - CONFIG_SERVICE_URL=https://isvasnapmgr:9443
+      - CONFIG_SERVICE_USER_NAME=snapmgr
+      - CONFIG_SERVICE_USER_PWD=${SNAPMGR_PW}
     depends_on:
       - openldap
       - postgresql
+      - isvasnapmgr
 
   isvadsc:
     image: ibmcom/verify-access-dsc:${ISVA_VERSION}
@@ -73,12 +80,25 @@ services:
 #     - SNAPSHOT=${SNAPSHOT}
 #     - FIXPACKS=${FIXPACKS}
       - CONTAINER_TIMEZONE=${TIMEZONE}
-    volumes:
-      - isvaconfig:/var/shared
+      - CONFIG_SERVICE_URL=https://isvasnapmgr:9443
+      - CONFIG_SERVICE_USER_NAME=snapmgr
+      - CONFIG_SERVICE_USER_PWD=${SNAPMGR_PW}
+    depends_on:
+      - isvasnapmgr
 
 #
 # Service Containers
 #
+
+  isvasnapmgr:
+    image: ibmcom/verify-access-snapshotmgr:${ISVA_VERSION}
+    hostname: isvasnapmgr
+    restart: always
+    environment:
+      - USERNAME=snapmgr
+      - PASSWORD=${SNAPMGR_PW}
+    volumes:
+      - /data
 
   openldap:
     image: ibmcom/verify-access-openldap:${LDAP_VERSION}

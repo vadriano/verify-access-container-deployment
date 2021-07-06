@@ -9,9 +9,12 @@
 global:
   # Common image variables
   image:
-    repository:   ibmcom/verify-access:10.0.0.0
-    dbrepository: ibmcom/verify-access-postgresql:10.0.0.0
-    ldaprepository: ibmcom/verify-access-openldap:10.0.0.0
+    configrepository:   ibmcom/verify-access:10.0.2.0
+    wrprepository:   ibmcom/verify-access-wrp:10.0.2.0
+    runtimerepository:   ibmcom/verify-access-runtime:10.0.2.0
+    dscrepository:   ibmcom/verify-access-dsc:10.0.2.0
+    dbrepository: ibmcom/verify-access-postgresql:10.0.2.0
+    ldaprepository: ibmcom/verify-access-openldap:10.0.2.0
     pullPolicy:   IfNotPresent
 
   # Image credentials.
@@ -23,13 +26,15 @@ global:
     snapshot:           ""
     fixpacks:           ""
     adminSecret:        "helm-isvaadmin"
-    autoReloadInterval: 10
     timezone:           "Etc/UTC"
 
   # Persistence Storage
   persistence:
     enabled:                true
     useDynamicProvisioning: true
+
+  # Config container service Name
+  configservicename: isvaconfig
 
 ###############################################################################
 # Configuration container variables.
@@ -56,7 +61,7 @@ isvaconfig:
 
     # Specify the name of the Existing Claim to be used by your application.
     # An empty string means that an existing claim will not be used.
-    existingClaimName: ""
+    existingClaimName: "iamlab-pvc-cfg"
 
     # Specify the name of the storage class.  Any empty string means that we
     # won't use a storage class.
@@ -73,6 +78,8 @@ isvawrp:
   container:
     instances:
       - name: rp1
+        servicename: isvawrprp1
+        servicetype: ClusterIP
         nodePort:
         replicas: 1
 
@@ -86,11 +93,6 @@ isvawrp:
     limits:
       memory: 1Gi
       cpu:    1000m
-
-  # Service Configuration.
-  service:
-    type: NodePort
-    nodePort:
 
 ###############################################################################
 # Runtime container variables.
@@ -113,6 +115,9 @@ isvaruntime:
       memory: 2Gi
       cpu:    2000m
 
+  service:
+    servicename: isvaruntime
+
 ###############################################################################
 # DSC container variables.
 
@@ -133,6 +138,9 @@ isvadsc:
     limits:
       memory: 1Gi
       cpu:    1000m
+
+  service:
+    servicename: isvadsc
 
 ###############################################################################
 # postgresql container variables.
@@ -155,12 +163,15 @@ isvapostgresql:
       memory: 1Gi
       cpu:    1000m
 
+  service:
+    servicename: postgresql
+
   # Data Volume
   dataVolume:
 
     # Specify the name of the Existing Claim to be used by your application.
     # An empty string means that an existing claim will not be used.
-    existingClaimName: ""
+    existingClaimName: "iamlab-pvc-db"
 
     # Specify the name of the storage class.  Any empty string means that we
     # won't use a storage class.
@@ -189,12 +200,15 @@ isvaopenldap:
       memory: 1Gi
       cpu:    1000m
 
+  service:
+    servicename: openldap
+
   # Data Volume
   dataVolume:
 
     # Specify the name of the Existing Claim to be used by your application.
     # An empty string means that an existing claim will not be used.
-    existingClaimName: ""
+    existingClaimName: "iamlab-pvc-ldp"
 
     # Specify the name of the storage class.  Any empty string means that we
     # won't use a storage class.
