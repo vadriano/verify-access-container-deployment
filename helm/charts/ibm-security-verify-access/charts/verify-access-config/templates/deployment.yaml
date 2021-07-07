@@ -102,6 +102,7 @@ spec:
         - name: CONTAINER_TIMEZONE
           value: {{ default "" $.Values.global.container.timezone | quote }}
 
+{{- if not $.Values.global.container.readinessProbeDisabled }}
         readinessProbe:
           httpGet:
             scheme: HTTPS
@@ -110,6 +111,7 @@ spec:
           failureThreshold: 2
           timeoutSeconds: 2
           periodSeconds: 10
+{{- end }}
 
         livenessProbe:
           tcpSocket:

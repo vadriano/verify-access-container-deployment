@@ -99,7 +99,7 @@ spec:
             - livenessProbe
           initialDelaySeconds: 10
           periodSeconds: 10
-
+          timeoutSeconds: 2
         readinessProbe:
           exec:
             command:
@@ -110,7 +110,7 @@ spec:
             {{- end }}
           initialDelaySeconds: 10
           periodSeconds: 10
-
+          timeoutSeconds: 2
         ports:
         - name: {{ include "dsc.service.name" (list $dot $element) }}
           containerPort: {{ template "runtime.port" $dot }}
