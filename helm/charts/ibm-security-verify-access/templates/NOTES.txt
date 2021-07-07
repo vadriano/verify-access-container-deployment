@@ -47,10 +47,10 @@ The Web Reverse Proxy instances should be used as an entry point into the enviro
 {{- range .Values.isvawrp.container.instances }}
   - {{ .name }}
 {{- end }}
-
+{{- $defaultservicetype := (default "ClusterIP" .Values.isvawrp.service.type) }}
 {{- range $index, $inst := .Values.isvawrp.container.instances }}
-{{- $servicetype := (default "ClusterIP" $inst.servicetype) }}
-{{- if contains "NodePort" $servicetype }}
+{{- $servicetype := (default $defaultservicetype $inst.servicetype) }}
+{{- if eq "NodePort" $servicetype }}
 
 The {{ $inst.name }} instance has been configured with a NodePort service.
 To connect to the instance, obtain the external IP address and port:

@@ -4,7 +4,7 @@
 {{- range $index, $inst := .Values.container.instances }}
 {{- $instance := lower $inst.name }}
 {{- $servicename := $inst.servicename }}
-{{- $servicetype := (default "ClusterIP" $inst.servicetype) }}
+{{- $servicetype := (default $.Values.service.type $inst.servicetype) }}
 {{- $nodePort := $inst.nodePort }}
 {{- $index    := (printf "%d" $index) }}
 
