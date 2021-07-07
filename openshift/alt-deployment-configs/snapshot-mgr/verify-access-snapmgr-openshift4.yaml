@@ -303,7 +303,6 @@ objects:
             exec:
               command:
               - /sbin/health_check.sh
-              - startupProbe
             failureThreshold: 30
             periodSeconds: 10
             timeoutSeconds: 2
