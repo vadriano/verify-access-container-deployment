@@ -109,8 +109,10 @@ The output from this command includes the information you will need to connect t
 
 To delete the release and clean up, run the `./cleanup.sh` command.
 
-The Helm Charts included here are similar to those hosted at: https://github.com/ibm-security/helm-charts. You can add these as a Helm repo using command:
-`helm repo add ibmverify https://raw.githubusercontent.com/IBM-Security/helm-charts/master/repo/stable`
+The Helm Charts included here are also hosted in the incubator repo at: https://github.com/ibm-security/helm-charts. You can add these as a Helm repo using command:
+```
+helm repo add ibm-security-incubator https://raw.githubusercontent.com/IBM-Security/helm-charts/master/repo/incubator
+```
 
 # OpenShift
 To set up an environment using OpenShift, use the files in `container-deployment/openshift`.
