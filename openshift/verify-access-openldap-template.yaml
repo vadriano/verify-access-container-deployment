@@ -125,6 +125,16 @@ objects:
           image: docker.io/ibmcom/verify-access-openldap:${LDAP_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}
+          livenessProbe:
+            tcpSocket:
+              port: 636
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          readinessProbe:
+            tcpSocket:
+              port: 636
+            initialDelaySeconds: 5
+            periodSeconds: 10
           ports:
           - containerPort: 636
             protocol: TCP

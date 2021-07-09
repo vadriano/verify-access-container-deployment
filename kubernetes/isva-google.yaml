@@ -87,6 +87,16 @@ spec:
       containers:
         - name: openldap
           image: ibmcom/verify-access-openldap:10.0.2.0
+          livenessProbe:
+            tcpSocket:
+              port: 636
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          readinessProbe:
+            tcpSocket:
+              port: 636
+            initialDelaySeconds: 5
+            periodSeconds: 10
           ports:
             - containerPort: 636
           env:
@@ -158,6 +168,16 @@ spec:
       containers:
         - name: postgresql
           image: ibmcom/verify-access-postgresql:10.0.2.0
+          livenessProbe:
+            tcpSocket:
+              port: 5432
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          readinessProbe:
+            tcpSocket:
+              port: 5432
+            initialDelaySeconds: 5
+            periodSeconds: 10
           ports:
             - containerPort: 5432
           env:
@@ -234,26 +254,29 @@ spec:
                 secretKeyRef:
                   name: isvaadmin
                   key: adminpw
+          livenessProbe:
+            exec:
+              command:
+              - /sbin/health_check.sh
+              - livenessProbe
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 6
           readinessProbe:
             httpGet:
               scheme: HTTPS
+              port: 9443
               path: /core/login
-              port:  9443
+            periodSeconds: 10
+            timeoutSeconds: 2
             failureThreshold: 2
-            timeoutSeconds: 2
-            periodSeconds: 10
-          livenessProbe:
-            tcpSocket:
-              port: 9443
-            failureThreshold: 6
-            timeoutSeconds: 2
-            periodSeconds: 10
           startupProbe:
-            tcpSocket:
-              port: 9443
+            exec:
+              command:
+              - /sbin/health_check.sh
             failureThreshold: 30
-            timeoutSeconds: 2
             periodSeconds: 10
+            timeoutSeconds: 2
 #          command: [ "/sbin/bootstrap.sh" ]
       imagePullSecrets:
         - name: dockerlogin
@@ -402,21 +425,22 @@ spec:
               command:
               - /sbin/health_check.sh
               - livenessProbe
-            failureThreshold: 6
             periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 6
+          readinessProbe:
+            httpGet:
+              scheme: HTTPS
+              port: 9443
+              path: /sps/static/ibm-logo.png
+            periodSeconds: 10
+            failureThreshold: 2
             timeoutSeconds: 2
           startupProbe:
             exec:
               command:
               - /sbin/health_check.sh
             failureThreshold: 30
-            periodSeconds: 10
-            timeoutSeconds: 2
-          readinessProbe:
-            exec:
-              command:
-              - /sbin/health_check.sh
-            failureThreshold: 2
             periodSeconds: 10
             timeoutSeconds: 2
       imagePullSecrets:

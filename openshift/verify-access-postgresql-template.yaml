@@ -104,6 +104,16 @@ objects:
           image: docker.io/ibmcom/verify-access-postgresql:${DB_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}
+          livenessProbe:
+            tcpSocket:
+              port: 5432
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          readinessProbe:
+            tcpSocket:
+              port: 5432
+            initialDelaySeconds: 5
+            periodSeconds: 10
           ports:
           - containerPort: 5432
             protocol: TCP
