@@ -84,31 +84,31 @@ spec:
               name: {{ template "admin.secret" . }}
               key: {{ template "admin.secret.key" . }}
 
-          livenessProbe:
-            exec:
-              command:
-              - /sbin/health_check.sh
-              - livenessProbe
-            periodSeconds: 10
-            timeoutSeconds: 2
-            failureThreshold: 6
+        livenessProbe:
+          exec:
+            command:
+            - /sbin/health_check.sh
+            - livenessProbe
+          periodSeconds: 10
+          timeoutSeconds: 2
+          failureThreshold: 6
 {{- if not .Values.global.container.readinessProbeDisabled }}
-          readinessProbe:
-            httpGet:
-              scheme: HTTPS
-              port: {{ template "runtime.port" . }}
-              path: /sps/static/ibm-logo.png
-            periodSeconds: 10
-            failureThreshold: 2
-            timeoutSeconds: 2
+        readinessProbe:
+          httpGet:
+            scheme: HTTPS
+            port: {{ template "runtime.port" . }}
+            path: /sps/static/ibm-logo.png
+          periodSeconds: 10
+          failureThreshold: 2
+          timeoutSeconds: 2
 {{- end }}
-          startupProbe:
-            exec:
-              command:
-              - /sbin/health_check.sh
-            failureThreshold: 30
-            periodSeconds: 10
-            timeoutSeconds: 2
+        startupProbe:
+          exec:
+            command:
+            - /sbin/health_check.sh
+          failureThreshold: 30
+          periodSeconds: 10
+          timeoutSeconds: 2
 
         ports:
         - name: {{ .sch.chart.config.servicename }}
