@@ -8,7 +8,7 @@ Assets for IBM Security Access Manager are available at https://ibm.biz/isamdock
 # Resources
 ## Cookbooks
 ### Deployment with Native Docker and Docker Compose
-This cookbook describes deployment with Native Docker and Docker Compose.  It covers some docker concepts, deployment of Verify Access containers, and initial configuration of a simple Verify Access system. [Download docker cookbook](https://ibm.box.com/shared/static/ygowqwfyt2z37m9npsaboe493jybx2pi.pdf).
+This cookbook describes deployment with Native Docker and Docker Compose.  It covers some docker concepts, deployment of Verify Access containers, and initial configuration of a simple Verify Access system. [Download docker cookbook from Security Learning Academy](http://ibm.biz/Verify_Access_Docker_Cookbook).
 
 ## Community assistance
 If you have questions about deployment, or about IBM Security Verify, you can ask them on the IAM Group of the IBM Security Community: https://ibm.biz/iamcommunity
