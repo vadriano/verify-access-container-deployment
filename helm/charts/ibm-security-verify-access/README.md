@@ -231,12 +231,12 @@ The following tables list the configurable parameters of the Verify Access chart
 
 | Parameter | Description | Default |
 | --------- | ----------- | ------- |
-| `global.image.configrepository` | The config container image repository. | `ibmcom/verify-access:10.0.2.0` |
-| `global.image.wrprepository` | The web reverse proxy image repository. | `ibmcom/verify-access-wrp:10.0.2.0` |
-| `global.image.runtimerepository` | The runtime repository. | `ibmcom/verify-access-runtime:10.0.2.0` |
-| `global.image.dscrepository` | The dsc repository. | `ibmcom/verify-access-dsc:10.0.2.0` |
-| `global.image.dbrepository` | The image repository for the postgresql server. | `ibmcom/verify-access-postgresql:10.0.2.0` |
-| `global.image.ldaprepository` | The image repository for the openldap server. | `ibmcom/verify-access-openldap:10.0.2.0` |
+| `global.image.configrepository` | The config container image repository. | `ibmcom/verify-access:10.0.3.0` |
+| `global.image.wrprepository` | The web reverse proxy image repository. | `ibmcom/verify-access-wrp:10.0.3.0` |
+| `global.image.runtimerepository` | The runtime repository. | `ibmcom/verify-access-runtime:10.0.3.0` |
+| `global.image.dscrepository` | The dsc repository. | `ibmcom/verify-access-dsc:10.0.3.0` |
+| `global.image.dbrepository` | The image repository for the postgresql server. | `ibmcom/verify-access-postgresql:10.0.3.0` |
+| `global.image.ldaprepository` | The image repository for the openldap server. | `ibmcom/verify-access-openldap:10.0.3.0` |
 | `global.image.pullPolicy` | The image pull policy. | `IfNotPresent` |
 | `global.imageCredentials.dockerSecret` | The name of an existing secret which contains the Docker Store credentials. | (none) |
 | `global.container.snapshot` | The name of the configuration data snapshot that is to be used when starting the container. This will default to the latest published configuration.| latest published snapshot

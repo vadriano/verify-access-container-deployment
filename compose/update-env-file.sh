@@ -17,7 +17,7 @@ echo "Updating .env using common/env-config.sh"
 mv .env .env.original
 sed  '/_IP/d' .env.original > .env
 mv .env .env.original
-sed  '/ISAM_VERSION/d' .env.original > .env
+sed  '/ISVA_VERSION/d' .env.original > .env
 mv .env .env.original
 sed  '/LDAP_VERSION/d' .env.original > .env
 mv .env .env.original

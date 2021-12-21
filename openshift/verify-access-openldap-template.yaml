@@ -31,6 +31,7 @@ objects:
     labels:
       app: ${APP_NAME}
   spec:
+    storageClassName: ${STORAGE_CLASS}
     accessModes:
     - ReadWriteOnce
     resources:
@@ -43,6 +44,7 @@ objects:
     labels:
       app: ${APP_NAME}
   spec:
+    storageClassName: ${STORAGE_CLASS}
     accessModes:
     - ReadWriteOnce
     resources:
@@ -55,6 +57,7 @@ objects:
     labels:
       app: ${APP_NAME}
   spec:
+    storageClassName: ${STORAGE_CLASS}
     accessModes:
     - ReadWriteOnce
     resources:
@@ -195,7 +198,7 @@ parameters:
   - displayName: Image Version
     description: The tag that will be used to pull the ibmcom/verify-access-openldap image.
     name: LDAP_VERSION
-    value: 10.0.2.0
+    value: 10.0.3.0
   - displayName: Domain
     description: This is used to create the suffix for users.  A value of ibm.com would create suffix dc=ibm,dc=com.
     name: DOMAIN
@@ -214,6 +217,10 @@ parameters:
     description: The (existing) Secret for crypto data.  Files required are ca.crt, ldap.crt, ldap.key, dhparam.pem.
     name: KEY_SECRET
     value: openldap-keys
+  - displayName: Storage class
+    description: Storage class that will be requested by PVC.
+    name: STORAGE_CLASS
+    value: default
   - displayName: Service Account
     description: This is the (existing) Service Account for running the pods.  It must allow RUNASANY user.
     name: SERVICE_ACCOUNT
