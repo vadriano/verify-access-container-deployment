@@ -38,6 +38,7 @@ objects:
       app: ${APP_NAME}
       name: ${APP_NAME}-config
   spec:
+    storageClassName: ${STORAGE_CLASS}
     accessModes:
     - ReadWriteOnce
     resources:
@@ -181,7 +182,7 @@ parameters:
   - displayName: Verify Access Image Version
     description: The tag that will be used to pull the ibmcom/verify-access images.
     name: ISVA_VERSION
-    value: 10.0.2.0
+    value: 10.0.3.1
   - displayName: Config Service Name
     description: The name for the config service.  Also used as the hostname for connections within the cluster.
     name: CONFIG_SERVICE
@@ -201,6 +202,10 @@ parameters:
     name: CONFIG_PW
     from: '[a-zA-Z0-9]{16}'
     generate: expression
+  - displayName: Storage class
+    description: Storage class that will be requested by PVC.
+    name: STORAGE_CLASS
+    value: default
   - displayName: Image Pull Secret
     description: This is an (existing) docker login secret for pulling the Access Manager image.
       Only required if hosting images on a private repository
@@ -392,7 +397,7 @@ parameters:
   - displayName: Verify Access Image Version
     description: The tag that will be used to pull the ibmcom/verify-access-wrp image.
     name: ISVA_VERSION
-    value: 10.0.2.0
+    value: 10.0.3.1
   - displayName: Core Application Name
     description: The name of the core application (omit -core).  This must match what was
       configured when creating the core application.
@@ -579,7 +584,7 @@ parameters:
   - displayName: Verify Access Image Version
     description: The tag that will be used to pull the ibmcom/verify-access images.
     name: ISVA_VERSION
-    value: 10.0.2.0
+    value: 10.0.3.1
   - displayName: Runtime Service Name
     description: The name for the runtime service.  Also used as the hostname for connections within the cluster.
     name: RUNTIME_SERVICE
@@ -1130,7 +1135,7 @@ parameters:
   - displayName: Verify Access Image Version
     description: The tag that will be used to pull the ibmcom/verify-access images.
     name: ISVA_VERSION
-    value: 10.0.2.0
+    value: 10.0.3.1
   - displayName: Primary DSC Service Name
     description: The name for the Primary DSC service.  Also used as the hostname for connections within the cluster.
       Other DSC service/host names will have 2, 3, and 4 appended.

@@ -35,6 +35,7 @@ objects:
       app: ${APP_NAME}
       name: ${APP_NAME}-snapmgr
   spec:
+    storageClassName: ${STORAGE_CLASS}
     accessModes:
     - ReadWriteOnce
     resources:
@@ -141,7 +142,7 @@ parameters:
   - displayName: Verify Access Image Version
     description: The tag that will be used to pull the ibmcom/verify-access-snapshotmgr image.
     name: ISVA_VERSION
-    value: 10.0.2.0
+    value: 10.0.3.1
   - displayName: Snapshot Service Name
     description: The name for the snapshot service.  Also used as the hostname for connections within the cluster.
     name: SNAPMGR_SERVICE
@@ -155,6 +156,10 @@ parameters:
     name: SNAPMGR_PW
     from: '[a-zA-Z0-9]{16}'
     generate: expression
+  - displayName: Storage class
+    description: Storage class that will be requested by PVC.
+    name: STORAGE_CLASS
+    value: default
   - displayName: Image Pull Secret
     description: This is an (existing) docker login secret for pulling the Access Manager image.
       Only required if hosting images on a private repository
@@ -206,6 +211,7 @@ objects:
       app: ${APP_NAME}
       name: ${APP_NAME}-config
   spec:
+    storageClassName: ${STORAGE_CLASS}
     accessModes:
     - ReadWriteOnce
     resources:
@@ -351,7 +357,7 @@ parameters:
   - displayName: Verify Access Image Version
     description: The tag that will be used to pull the ibmcom/verify-access images.
     name: ISVA_VERSION
-    value: 10.0.2.0
+    value: 10.0.3.1
   - displayName: Config Service Name
     description: The name for the config service.  Also used as the hostname for connections within the cluster.
     name: CONFIG_SERVICE
@@ -361,6 +367,10 @@ parameters:
     name: ADMIN_PW
     from: '[a-zA-Z0-9]{16}'
     generate: expression
+  - displayName: Storage class
+    description: Storage class that will be requested by PVC.
+    name: STORAGE_CLASS
+    value: default
   - displayName: Image Pull Secret
     description: This is an (existing) docker login secret for pulling the Access Manager image.
       Only required if hosting images on a private repository
