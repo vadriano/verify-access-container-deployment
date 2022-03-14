@@ -83,6 +83,8 @@ Once all pods are running, you can run the `./lmi-access.sh` script to start a p
 
 If the LMI port-forwarding isn't stable, you can also create a node port or ingress using the provided `isvaconfig-nodeport.yaml` or `isvaconfig-ingress.yaml` files (but this will open your LMI to the world).  If using an ingress, you will need to determine the IP address where this is listening and then point `lmi.iamlab.ibm.com` to it in your `/etc/hosts` file.
 
+To allow worker containers to access configuration snapshots, you must set the password of the `cfgsvc` user in the LMI to match the password set in the `configreader` secret (default is `Passw0rd`).  You can set this password under **System->Account management** in the LMI.
+
 To access the Reverse Proxy you will need to determine an External IP for a Node in the cluster and then connnect to this using https on port 30443.
 
 For Google, access to a NodePort requires the following filewall rule to be created:
@@ -196,6 +198,8 @@ With this running, you can access LMI using at https://localhost:9443.
 If the LMI port-forwarding isn't stable, you can also create a route using the provided `lmi-route.yaml` file (but this will open your LMI to the world).  You will need to determine the IP address where this is listening and then point `lmi.iamlab.ibm.com` to it in your `/etc/hosts` file.
 
 OpenShift includes a web proxy which can route traffic to the Verify Access Reverse Proxy.  You will need to determine the IP address where this is listening and then point `www.iamlab.ibm.com` to it in your `/etc/hosts` file.
+
+To allow worker containers to access configuration snapshots, you must create an LMI user that matches the `configuration read username` and `configuration read password` set during deployment of the configuration container. This is done under **System->Account management** in the LMI. The default username is `cfgsvc` and this user already exists in the LMI.  If you use this username you will only need to set the password.  
 
 # Backup and Restore
 
