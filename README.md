@@ -1,5 +1,5 @@
 # Version Information
-These assets are for IBM Security Verify Access v10.0.3.0.
+These assets are for IBM Security Verify Access v10.0.3.1.
 They will also work for v10.0.2.0 if version is changed where appropriate.
 
 Assets for v10.0.0.0 (which will also work with v10.0.1.0) are available as a release.  Checkout tag `v10.0.0.0-1`.

@@ -1,6 +1,6 @@
 # What's new in verify-access v1.3.1 Chart
 The following enhancements have been made:
-* Update default version to 10.0.3.0
+* Update default version to 10.0.3.1
 
 # Documentation
 For detailed documentation instructions go to [https://www.ibm.com/support/knowledgecenter/en/SSPREK/welcome.html](https://www.ibm.com/support/knowledgecenter/en/SSPREK/welcome.html).
