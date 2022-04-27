@@ -993,7 +993,7 @@ objects:
               secretKeyRef:
                 name: ${APP_NAME}-config
                 key: config-read-password
-          image: docker.io/ibmcom/verify-access-dsc4:${ISVA_VERSION}
+          image: docker.io/ibmcom/verify-access-dsc:${ISVA_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}-dsc4
           ports:
