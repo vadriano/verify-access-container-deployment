@@ -11,6 +11,10 @@ Assets for IBM Security Access Manager are available at https://ibm.biz/isamdock
 ### Deployment with Native Docker and Docker Compose
 This cookbook describes deployment with Native Docker and Docker Compose.  It covers some docker concepts, deployment of Verify Access containers, and initial configuration of a simple Verify Access system. [Download docker cookbook from Security Learning Academy](http://ibm.biz/Verify_Access_Docker_Cookbook).
 
+### Deployment with Kubernetes
+This cookbook describes deployment using Kubernetes.  It requires that you have access to a Kubernetes cluster.  This could be a hosted cluster on a cloud environment or a test environment built using a tool such as Minikube.
+https://www.securitylearningacademy.com/course/view.php?id=6860
+
 ## Community assistance
 If you have questions about deployment, or about IBM Security Verify, you can ask them on the IAM Group of the IBM Security Community: https://ibm.biz/iamcommunity
 
@@ -199,7 +203,7 @@ If the LMI port-forwarding isn't stable, you can also create a route using the p
 
 OpenShift includes a web proxy which can route traffic to the Verify Access Reverse Proxy.  You will need to determine the IP address where this is listening and then point `www.iamlab.ibm.com` to it in your `/etc/hosts` file.
 
-To allow worker containers to access configuration snapshots, you must create an LMI user that matches the `configuration read username` and `configuration read password` set during deployment of the configuration container. This is done under **System->Account management** in the LMI. The default username is `cfgsvc` and this user already exists in the LMI.  If you use this username you will only need to set the password.  
+To allow worker containers to access configuration snapshots, you must create an LMI user that matches the `configuration read username` and `configuration read password` set during deployment of the configuration container. This is done under **System->Account management** in the LMI. The default username is `cfgsvc` and this user already exists in the LMI.  If you use this username you will only need to set the password.
 
 # Backup and Restore
 
