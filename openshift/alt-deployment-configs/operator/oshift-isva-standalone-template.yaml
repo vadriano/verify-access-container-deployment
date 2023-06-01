@@ -110,8 +110,7 @@ objects:
         terminationGracePeriodSeconds: 30
         volumes:
         - name: ${APP_NAME}-config
-          persistentVolumeClaim:
-            claimName: ${APP_NAME}-config
+          emptyDir: {}
         - name: ${APP_NAME}-config-logs
           emptyDir: {}
 - apiVersion: apps/v1
@@ -360,17 +359,17 @@ objects:
           - name: CONFIG_SERVICE_URL
             valueFrom:
               secretKeyRef:
-                name: ${APP_NAME}-config
+                name: ${APP_NAME}-core
                 key: config-service-url
           - name: CONFIG_SERVICE_USER_NAME
             valueFrom:
               secretKeyRef:
-                name: ${APP_NAME}-config
+                name: ${APP_NAME}-core
                 key: config-read-username
           - name: CONFIG_SERVICE_USER_PWD
             valueFrom:
               secretKeyRef:
-                name: ${APP_NAME}-config
+                name: ${APP_NAME}-core
                 key: config-read-password
           image: ${ISVA_IMAGE_NAME}-dsc:${ISVA_VERSION}
           imagePullPolicy: IfNotPresent
