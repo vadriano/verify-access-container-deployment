@@ -29,7 +29,7 @@ An example secret is:
 
 The example deployment also assumes the following directory structure:
 
-    ├── autoconf.propertie
+    ├── autoconf.propertiies
     ├── config.yaml
     ├── oshift-isva-operator-template.yaml
     ├── oshift-isva-standalone-template.yaml
