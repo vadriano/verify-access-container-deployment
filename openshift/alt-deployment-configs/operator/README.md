@@ -26,7 +26,7 @@ services before creating containers.
 
 Secrets for operator can be read from operator namespace
 `oc get secret verify-access-operator -n openshift-operators -o yaml`
-A simple bash script is provided to read the verify-access-operator secret from the OpenShift-operators namespace, then 
+A simple bash script is provided to read the verify-access-operator secret from the `openshift-operators` namespace, then 
 attach to the configuration container and upload the specified snapshot to the Operator's snapshot manager service.
 
     $ bash upload_snapshot_to_operator.sh <configuration_container_id> <snapshot_name>
