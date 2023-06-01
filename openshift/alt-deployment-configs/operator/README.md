@@ -1,13 +1,13 @@
-# Deploying Verify Access usign the OpenShift Operator
+# Deploying Verify Access using the OpenShift Operator
 
 1 - install operator (check version is 23.3 and OpenShift can pull images from icr.io)
 
 2 - Deploy ISVA using template + use Ansible (or other) to configure containers with required junctions, access policies, federations, ect.
 
-Demo does not include the OpenLDAP and PostgreSQL services. Adminsitratos should deploy the required LDAP and HVDB
+Demo does not include the OpenLDAP and PostgreSQL services. Administrators should deploy the required LDAP and HVDB
 services before creating containers.
 
-Demo assumens that contaienrs are deployed to the "default" namespace and that a OpenShift secret called `isva-secrets`
+Demo assumes that containers are deployed to the "default" namespace and that a OpenShift secret called `isva-secrets`
 has been created with the required properties to run the `config.yaml` deployment.
 
 An example secret is:
@@ -29,7 +29,7 @@ An example secret is:
 
 The example deployment also assumes the following directory structure:
 
-    ├── autoconf.propertiies
+    ├── autoconf.properties
     ├── config.yaml
     ├── oshift-isva-operator-template.yaml
     ├── oshift-isva-standalone-template.yaml
@@ -62,7 +62,7 @@ verifies the connection to the HVDB.
 
 Secrets for operator can be read from operator namespace
 `oc get secret verify-access-operator -n openshift-operators -o yaml`
-A simple bash script is provided to read the verify-access-operator secret from the openshift-operators namespace, then 
+A simple bash script is provided to read the verify-access-operator secret from the OpenShift-operators namespace, then 
 attach to the configuration container and upload the specified snapshot to the Operator's snapshot manager service.
 
     `bash upload_snapshot_to_operator.sh <configuration container id> <snapshot name>`
