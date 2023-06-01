@@ -4,13 +4,13 @@
 
 2 - Deploy ISVA using template + use Ansible (or other) to configure containers with required junctions, access policies, federations, ect.
 
-    Demo does not include the OpenLDAP and PostgreSQL services. Adminsitratos should deploy the required LDAP and HVDB
-    services before creating containers.
+Demo does not include the OpenLDAP and PostgreSQL services. Adminsitratos should deploy the required LDAP and HVDB
+services before creating containers.
 
-    Demo assumens that contaienrs are deployed to the "default" namespace and that a OpenShift secret called `isva-secrets`
-    has been created with the required properties to run the `config.yaml` deployment.
+Demo assumens that contaienrs are deployed to the "default" namespace and that a OpenShift secret called `isva-secrets`
+has been created with the required properties to run the `config.yaml` deployment.
 
-    An example secret is:
+An example secret is:
 
     ```
     apiVersion: v1
@@ -29,19 +29,19 @@
       fed-code: TODO
     ```
 
-    The example deployment also assumes the following directory structure:
+The example deployment also assumes the following directory structure:
 
-    ├── config.yaml
-    ├── oshift-isva-operator-template.yaml
-    ├── oshift-isva-standalone-template.yaml
-    ├── pki
-    │   ├── openldap.pem
-    │   └── postgresql.pem
-    ├── README.md
-    └── upload_snapshot_to_operator.sh
+├── config.yaml
+├── oshift-isva-operator-template.yaml
+├── oshift-isva-standalone-template.yaml
+├── pki
+│   ├── openldap.pem
+│   └── postgresql.pem
+├── README.md
+└── upload_snapshot_to_operator.sh
 
-    Where `openldap.pem` is the X509 certificate to verify the OpenLDAP server; and the `postgresql.pem` X509 Certificates
-    verifies the connection to the HVDB.
+Where `openldap.pem` is the X509 certificate to verify the OpenLDAP server; and the `postgresql.pem` X509 Certificates
+verifies the connection to the HVDB.
 
     oc process -f oshift-isva-standalone-template.yaml \
         -p APP_NAME='verify-access-demo' \
@@ -61,21 +61,21 @@
 
 4 - Upload generated (and tested) snapshot to operator using bash script
 
-    Secrets for operator can be read from operator namespace
-    `oc get secret verify-access-operator -n openshift-operators -o yaml`
-    A simple bash script is provided to read the verify-access-operator secret from the openshift-operators namespace, then 
-    attach to the configuration container and upload the specified snapshot to the Operator's snapshot manager service.
-    
+Secrets for operator can be read from operator namespace
+`oc get secret verify-access-operator -n openshift-operators -o yaml`
+A simple bash script is provided to read the verify-access-operator secret from the openshift-operators namespace, then 
+attach to the configuration container and upload the specified snapshot to the Operator's snapshot manager service.
+
     `bash upload_snapshot_to_operator.sh <configuration container id> <snapshot name>`
-    
-    eg: `$ bash upload_snapshot_to_operator.sh isamconfig-8694c5fb66-77rr5 isva_10.0.5.0_published.snapshot`
-    
-    >Note: the "snapshotId" property in the operator only refers to the "published" substring in the snapshot file name.
-    
+
+eg: `$ bash upload_snapshot_to_operator.sh isamconfig-8694c5fb66-77rr5 isva_10.0.5.0_published.snapshot`
+
+>Note: the "snapshotId" property in the operator only refers to the "published" substring in the snapshot file name.
+
 5 - Deploy containers using the Deploy Operator template
     be careful of "stale" secrets in your namespace: `kubectl delete secret verify-access-operator`
-    
-    
+
+
     oc process -f oshift-isva-operator-template.yaml \
         -p APP_NAME='verify-access-operator-demo' \
         -p ISVA_BASE_IMAGE_NAME='icr.io/isva/verify-access'
