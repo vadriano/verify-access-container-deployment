@@ -29,7 +29,7 @@ Secrets for operator can be read from operator namespace
 A simple bash script is provided to read the verify-access-operator secret from the OpenShift-operators namespace, then 
 attach to the configuration container and upload the specified snapshot to the Operator's snapshot manager service.
 
-    `bash upload_snapshot_to_operator.sh <configuration container id> <snapshot name>`
+    $ bash upload_snapshot_to_operator.sh <configuration_container_id> <snapshot_name>
 
 eg: `$ bash upload_snapshot_to_operator.sh isamconfig-8694c5fb66-77rr5 isva_10.0.5.0_published.snapshot`
 
