@@ -1,6 +1,6 @@
 # Version Information
-These assets are for IBM Security Verify Access v10.0.3.1.
-They will also work for v10.0.2.0 if version is changed where appropriate.
+These assets are for IBM Security Verify Access v10.0.6.0.
+They will also work for older versions (eg. v10.0.4.0) if version is changed where appropriate.
 
 Assets for v10.0.0.0 (which will also work with v10.0.1.0) are available as a release.  Checkout tag `v10.0.0.0-1`.
 
@@ -91,7 +91,7 @@ To allow worker containers to access configuration snapshots, you must set the p
 
 To access the Reverse Proxy you will need to determine an External IP for a Node in the cluster and then connnect to this using https on port 30443.
 
-For Google, access to a NodePort requires the following filewall rule to be created:
+For Google, access to a NodePort requires the following firewall rule to be created:
 `gcloud compute firewall-rules create isvawrp-node-port --allow tcp:30443`
 
 The Minikube YAML file includes an ingress definition for the Reverse Proxy.  To use the ingress, you will need to determine the IP address where this is listening and then point `www.iamlab.ibm.com` to it in your `/etc/hosts` file.
@@ -163,6 +163,7 @@ Load the templates using the following commands:
 oc create -f verify-access-openldap-template.yaml
 oc create -f verify-access-postgresql-template.yaml
 oc create -f verify-access-templates-openshift4.yaml
+oc create -f verify-access-operator-template.yaml
 ```
 
 ## Deploy applications
@@ -204,6 +205,30 @@ If the LMI port-forwarding isn't stable, you can also create a route using the p
 OpenShift includes a web proxy which can route traffic to the Verify Access Reverse Proxy.  You will need to determine the IP address where this is listening and then point `www.iamlab.ibm.com` to it in your `/etc/hosts` file.
 
 To allow worker containers to access configuration snapshots, you must create an LMI user that matches the `configuration read username` and `configuration read password` set during deployment of the configuration container. This is done under **System->Account management** in the LMI. The default username is `cfgsvc` and this user already exists in the LMI.  If you use this username you will only need to set the password.
+
+
+## OpenShft Operator deployment
+The [Operator Deployment Demo](openshift/alt-deployment-configs/operator/README.md) can be used to automate management of 
+production contaienrs using the Verify Access Operator.
+
+# Automated Configuration
+New deployments can be automatically configured using the `verify-access-autoconf` python package to apply a YAML configuration file. The provided ``first-steps.yaml`` configuration file assumes that you have a copy of the PKI used to deploy the containers in the configuration directory.
+This can be done by either copying the files, or using a symbolic link to the directory which contains the required keys/certificates.
+
+The `env.properties` file is used to supply the url, user, secret, and activation codes for the deployment. This file may need to be updated if you 
+have made changes to the above deployments.
+
+For example a docker-compose deployment can be configured by executing the following from the ``container-deployment/configuration`` directory:
+
+```
+ln -s pki $HOME/dockershare/composekeys
+pip install verify-access-autoconf
+source env.properties
+python -m verify_access_autoconf #Accepts licenses, configures SSL databases and runtime environments.
+export ISVA_CONFIG_YAML=webseal_authsvc_login.yaml
+python -m verify_access_autoconf #Creates a WebSEAL instance and enables AAC authentication.
+```
+
 
 # Backup and Restore
 
