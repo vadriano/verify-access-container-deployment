@@ -12,7 +12,6 @@ has been created with the required properties to run the `config.yaml` deploymen
 
 An example secret is:
 
-    ```
     apiVersion: v1
     kind: Secret
     metadata:
@@ -27,18 +26,17 @@ An example secret is:
       base-code: TODO
       aac-code: TODO
       fed-code: TODO
-    ```
 
 The example deployment also assumes the following directory structure:
 
-├── config.yaml
-├── oshift-isva-operator-template.yaml
-├── oshift-isva-standalone-template.yaml
-├── pki
-│   ├── openldap.pem
-│   └── postgresql.pem
-├── README.md
-└── upload_snapshot_to_operator.sh
+    ├── config.yaml
+    ├── oshift-isva-operator-template.yaml
+    ├── oshift-isva-standalone-template.yaml
+    ├── pki
+    │   ├── openldap.pem
+    │   └── postgresql.pem
+    ├── README.md
+    └── upload_snapshot_to_operator.sh
 
 Where `openldap.pem` is the X509 certificate to verify the OpenLDAP server; and the `postgresql.pem` X509 Certificates
 verifies the connection to the HVDB.
