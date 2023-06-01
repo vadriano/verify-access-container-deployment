@@ -18,14 +18,14 @@ An example secret is:
       name: isva-secret
     type: Opaque
     data:
-      cfgsvc_passwd: TODO
-      postgres-passwd: TODO
-      ldap-passwd: TODO
-      secmaster-passwd: TODO
-      runtime-passwd: TODO
-      base-code: TODO
-      aac-code: TODO
-      fed-code: TODO
+      cfgsvc_passwd: VE9ETw==
+      postgres-passwd: VE9ETw==
+      ldap-passwd: VE9ETw==
+      secmaster-passwd: VE9ETw==
+      runtime-passwd: VE9ETw==
+      base-code: VE9ETw==
+      aac-code: VE9ETw==
+      fed-code: VE9ETw==
 
 The example deployment also assumes the following directory structure:
 
