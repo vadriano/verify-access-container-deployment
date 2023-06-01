@@ -7,41 +7,6 @@
 Demo does not include the OpenLDAP and PostgreSQL services. Administrators should deploy the required LDAP and HVDB
 services before creating containers.
 
-Demo assumes that containers are deployed to the "default" namespace and that a OpenShift secret called `isva-secrets`
-has been created with the required properties to run the `config.yaml` deployment.
-
-An example secret is:
-
-    apiVersion: v1
-    kind: Secret
-    metadata:
-      name: isva-secret
-    type: Opaque
-    data:
-      cfgsvc_passwd: VE9ETw==
-      postgres-passwd: VE9ETw==
-      ldap-passwd: VE9ETw==
-      secmaster-passwd: VE9ETw==
-      runtime-passwd: VE9ETw==
-      base-code: VE9ETw==
-      aac-code: VE9ETw==
-      fed-code: VE9ETw==
-
-The example deployment also assumes the following directory structure:
-
-    ├── autoconf.properties
-    ├── config.yaml
-    ├── oshift-isva-operator-template.yaml
-    ├── oshift-isva-standalone-template.yaml
-    ├── pki
-    │   ├── openldap.pem
-    │   └── postgresql.pem
-    ├── README.md
-    └── upload_snapshot_to_operator.sh
-
-Where `openldap.pem` is the X509 certificate to verify the OpenLDAP server; and the `postgresql.pem` X509 Certificates
-verifies the connection to the HVDB.
-
     oc process -f oshift-isva-standalone-template.yaml \
         -p APP_NAME='verify-access-demo' \
         -p ISVA_VERSION='10.0.5.0' \
@@ -54,7 +19,6 @@ verifies the connection to the HVDB.
         -p TIMEZONE='Etc/UTC' \
         -p SERVICE_ACCOUNT='verifyaccess' \
         | oc create -f -
-
 
 3 - Test deployment as required
 
