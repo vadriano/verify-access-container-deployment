@@ -13,9 +13,10 @@ services before creating containers.
         -p CONFIG_SERVICE='isvaconfig' \
         -p RUNTIME_SERVICE='isvaruntime' \
         -p WEBSEAL_SERVICE='isvawebeal' \
+        -p DSC_SERVICE='isvadsc' \
         -p CONFIG_ID='cfgsvc' \
         -p CONFIG_PW='betterThanPassw0rd' \
-        -p ISVA_IMAGE_NAME='icr.io/isva/verify-access'
+        -p ISVA_IMAGE_NAME='icr.io/isva/verify-access' \
         -p TIMEZONE='Etc/UTC' \
         -p SERVICE_ACCOUNT='verifyaccess' \
         | oc create -f -
@@ -41,7 +42,7 @@ eg: `$ bash upload_snapshot_to_operator.sh isamconfig-8694c5fb66-77rr5 isva_10.0
 
     oc process -f oshift-isva-operator-template.yaml \
         -p APP_NAME='verify-access-operator-demo' \
-        -p ISVA_BASE_IMAGE_NAME='icr.io/isva/verify-access'
+        -p ISVA_BASE_IMAGE_NAME='icr.io/isva/verify-access' \
         -p SERVICE_ACCOUNT='verifyaccess' \
         -p ISVA_VERSION='10.0.5.0' \
         -p INSTANCE='default' \

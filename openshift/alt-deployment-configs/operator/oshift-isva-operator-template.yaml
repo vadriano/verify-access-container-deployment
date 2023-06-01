@@ -98,7 +98,7 @@ objects:
         protocol: TCP
     selector:
       app: ${APP_NAME}-runtime
-    type: NodePort
+    type: ClusterIP
 
 - apiVersion: ibm.com/v1
   kind: IBMSecurityVerifyAccess
@@ -132,7 +132,7 @@ objects:
         protocol: TCP
     selector:
       app: ${APP_NAME}-dsc
-    type: NodePort
+    type: ClusterIP
 
 parameters:
   - dsiplaName: Deployment Name
