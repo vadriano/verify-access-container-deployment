@@ -140,7 +140,7 @@ parameters:
     name: APP_NAME
     value: isva-operator-sample
   - displayName: Access Manager Image Name
-    description: This is the tag used to identify access-manager images. The required containers should have a
+    description: This is the tag used to identify verify-access images. The required containers should have a
        '-wrp', '-dsc' or '-runtime' suffix.
     name: ISVA_BASE_IMAGE_NAME
     value: icr.io/isva/verify-access
@@ -148,7 +148,7 @@ parameters:
     description: This is the (existing) Service Account for running the pods.
     name: SERVICE_ACCOUNT
     value: verifyaccess
-  - displayName: ISAM Image Version
+  - displayName: ISVA Image Version
     description: The tag that will be used to pull the icr.io/isva image.
     name: ISVA_VERSION
     value: 10.0.6.0
