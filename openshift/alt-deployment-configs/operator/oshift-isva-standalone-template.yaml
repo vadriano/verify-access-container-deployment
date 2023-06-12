@@ -520,7 +520,7 @@ parameters:
     generate: expression
   - displayName: Access Manager Image Name 
     description: This is the name used to identify access-manager images. The supporting containers should have a
-       \'-openldap\' or \'-postgresql\' suffix. This value should include the registry domain.
+       \'-wrp\' or \'-runtime\' suffixes. This value should include the registry domain.
     name: ISVA_IMAGE_NAME
     value: icr.io/isva/verify-access
   - displayName: Timezone
