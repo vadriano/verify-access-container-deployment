@@ -151,7 +151,7 @@ parameters:
   - displayName: ISAM Image Version
     description: The tag that will be used to pull the icr.io/isva image.
     name: ISVA_VERSION
-    value: 10.0.5.0
+    value: 10.0.6.0
   - displayName: Verify Access WebSEAL Reverse Proxy Instance
     description: WebSEAL instance to deploy. Only valid for WRP containers.
     name: INSTANCE
