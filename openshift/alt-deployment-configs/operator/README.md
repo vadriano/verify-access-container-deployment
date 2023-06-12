@@ -37,7 +37,7 @@ eg: `$ bash upload_snapshot_to_operator.sh isamconfig-8694c5fb66-77rr5 isva_10.0
 >Note: the "snapshotId" property in the operator only refers to the "published" substring in the snapshot file name.
 
 5 - Deploy containers using the Deploy Operator template
-    be careful of "stale" secrets in your namespace: `kubectl delete secret verify-access-operator`
+    be careful of "stale" secrets in your namespace: `oc delete secret verify-access-operator`
 
 
     oc process -f oshift-isva-operator-template.yaml \

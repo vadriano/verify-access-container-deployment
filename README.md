@@ -209,7 +209,7 @@ To allow worker containers to access configuration snapshots, you must create an
 
 ## OpenShft Operator deployment
 The [Operator Deployment Demo](openshift/alt-deployment-configs/operator/README.md) can be used to automate management of 
-production contaienrs using the Verify Access Operator.
+production containers using the Verify Access Operator.
 
 # Automated Configuration
 New deployments can be automatically configured using the `verify-access-autoconf` python package to apply a YAML configuration file. The provided ``first-steps.yaml`` configuration file assumes that you have a copy of the PKI used to deploy the containers in the configuration directory.
