@@ -108,7 +108,7 @@ objects:
               secretKeyRef:
                 key: lmi-admin-password
                 name: ${APP_NAME}-lmi
-          image: docker.io/ibmcom/verify-access:${ISVA_VERSION}
+          image: icr.io/isva/verify-access:${ISVA_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}-config
           resources: {}
@@ -180,9 +180,9 @@ parameters:
     name: APP_NAME
     value: verifyaccess
   - displayName: Verify Access Image Version
-    description: The tag that will be used to pull the ibmcom/verify-access images.
+    description: The tag that will be used to pull the icr.io/isva/verify-access images.
     name: ISVA_VERSION
-    value: 10.0.3.1
+    value: 10.0.6.0
   - displayName: Config Service Name
     description: The name for the config service.  Also used as the hostname for connections within the cluster.
     name: CONFIG_SERVICE
@@ -314,7 +314,7 @@ objects:
               secretKeyRef:
                 name: ${CORE_APP_NAME}-config
                 key: config-read-password
-          image: docker.io/ibmcom/verify-access-wrp:${ISVA_VERSION}
+          image: icr.io/isva/verify-access-wrp:${ISVA_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${CORE_APP_NAME}-wrp-${INSTANCE_NAME}
           ports:
@@ -395,9 +395,9 @@ objects:
     loadBalancer: {}
 parameters:
   - displayName: Verify Access Image Version
-    description: The tag that will be used to pull the ibmcom/verify-access-wrp image.
+    description: The tag that will be used to pull the icr.io/isva/verify-access-wrp image.
     name: ISVA_VERSION
-    value: 10.0.3.1
+    value: 10.0.6.0
   - displayName: Core Application Name
     description: The name of the core application (omit -core).  This must match what was
       configured when creating the core application.
@@ -512,7 +512,7 @@ objects:
               secretKeyRef:
                 name: ${APP_NAME}-config
                 key: config-read-password
-          image: docker.io/ibmcom/verify-access-runtime:${ISVA_VERSION}
+          image: icr.io/isva/verify-access-runtime:${ISVA_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}-runtime
           ports:
@@ -582,9 +582,9 @@ parameters:
     name: APP_NAME
     value: verifyaccess
   - displayName: Verify Access Image Version
-    description: The tag that will be used to pull the ibmcom/verify-access images.
+    description: The tag that will be used to pull the icr.io/isva/verify-access images.
     name: ISVA_VERSION
-    value: 10.0.3.1
+    value: 10.0.6.0
   - displayName: Runtime Service Name
     description: The name for the runtime service.  Also used as the hostname for connections within the cluster.
     name: RUNTIME_SERVICE
@@ -693,7 +693,7 @@ objects:
               secretKeyRef:
                 name: ${APP_NAME}-config
                 key: config-read-password
-          image: docker.io/ibmcom/verify-access-dsc:${ISVA_VERSION}
+          image: icr.io/isva/verify-access-dsc:${ISVA_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}-dsc1
           ports:
@@ -793,7 +793,7 @@ objects:
               secretKeyRef:
                 name: ${APP_NAME}-config
                 key: config-read-password
-          image: docker.io/ibmcom/verify-access-dsc:${ISVA_VERSION}
+          image: icr.io/isva/verify-access-dsc:${ISVA_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}-dsc2
           ports:
@@ -893,7 +893,7 @@ objects:
               secretKeyRef:
                 name: ${APP_NAME}-config
                 key: config-read-password
-          image: docker.io/ibmcom/verify-access-dsc:${ISVA_VERSION}
+          image: icr.io/isva/verify-access-dsc:${ISVA_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}-dsc3
           ports:
@@ -993,7 +993,7 @@ objects:
               secretKeyRef:
                 name: ${APP_NAME}-config
                 key: config-read-password
-          image: docker.io/ibmcom/verify-access-dsc:${ISVA_VERSION}
+          image: icr.io/isva/verify-access-dsc:${ISVA_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}-dsc4
           ports:
@@ -1133,9 +1133,9 @@ parameters:
     name: APP_NAME
     value: verifyaccess
   - displayName: Verify Access Image Version
-    description: The tag that will be used to pull the ibmcom/verify-access images.
+    description: The tag that will be used to pull the icr.io/isva/verify-access images.
     name: ISVA_VERSION
-    value: 10.0.3.1
+    value: 10.0.6.0
   - displayName: Primary DSC Service Name
     description: The name for the Primary DSC service.  Also used as the hostname for connections within the cluster.
       Other DSC service/host names will have 2, 3, and 4 appended.

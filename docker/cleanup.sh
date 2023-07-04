@@ -4,6 +4,7 @@ docker rm -fv isvaruntime
 docker rm -fv isvaconfig
 docker rm -fv openldap
 docker rm -fv postgresql
+docker rm -fv isvaop
 docker volume rm isvaconfig
 docker volume rm libldap
 docker volume rm libsecauthority

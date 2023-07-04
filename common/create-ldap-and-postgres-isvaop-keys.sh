@@ -13,10 +13,14 @@ fi
 
 LDAP_CERT_DN="/CN=openldap/O=ibm/C=us"
 POSTGRES_CERT_DN="/CN=postgresql/O=ibm/C=us"
+ISVAOP_CERT_DN="/CN=isvaop.ibm.com/O=ibm/C=us"
 
 if [ ! -d "$DOCKERKEYS" ]; then mkdir $DOCKERKEYS; fi
 if [ ! -d "$DOCKERKEYS/openldap" ]; then mkdir $DOCKERKEYS/openldap; fi
 if [ ! -d "$DOCKERKEYS/postgresql" ]; then mkdir $DOCKERKEYS/postgresql; fi
+if [ ! -d "$DOCKERKEYS/isvaop" ]; then mkdir $DOCKERKEYS/isvaop; fi
+if [ ! -d "$DOCKERKEYS/isvaop/personal" ]; then mkdir $DOCKERKEYS/isvaop/personal; fi
+if [ ! -d "$DOCKERKEYS/isvaop/signer" ]; then mkdir $DOCKERKEYS/isvaop/signer; fi
 
 if [ ! -f "$DOCKERKEYS/openldap/ldap.key" ] || [ ! -f "$DOCKERKEYS/openldap/ldap.crt" ]
 then
@@ -40,9 +44,20 @@ cp "$DOCKERKEYS/openldap/ldap.crt" "$DOCKERKEYS/openldap/ca.crt"
 if [ ! -f "$DOCKERKEYS/postgresql/postgres.key" ] || [ ! -f "$DOCKERKEYS/postgresql/postgres.crt" ]
 then
 	echo "Creating postgres certificate files"
-  openssl req -x509 -newkey rsa:4096 -keyout $DOCKERKEYS/postgresql/postgres.key -out $DOCKERKEYS/postgresql/postgres.crt -days 3650 -subj $POSTGRES_CERT_DN -nodes
+  	openssl req -x509 -newkey rsa:4096 -keyout $DOCKERKEYS/postgresql/postgres.key -out $DOCKERKEYS/postgresql/postgres.crt -days 3650 -subj $POSTGRES_CERT_DN -nodes -addext "subjectAltName = DNS:postgresql"
 else
 	echo "Postgres certificate files found - using existing certificate files"
 fi
 
 cat  "$DOCKERKEYS/postgresql/postgres.crt" "$DOCKERKEYS/postgresql/postgres.key" > "$DOCKERKEYS/postgresql/server.pem"
+cp "$DOCKERKEYS/postgresql/postgres.crt" ${ISVAOPCONFIG}
+
+if [ ! -f "$DOCKERKEYS/isvaop/personal/isvaop.key" ] || [ ! -f "$DOCKERKEYS/isvaop/signer/isvaop.pem" ]
+then
+	echo "Creating ISVAOP certificate files"
+  openssl req -newkey rsa:2048 -nodes -inform PEM -keyout $DOCKERKEYS/isvaop/personal/isvaop_key.pem -x509 -days 3650 -out $DOCKERKEYS/isvaop/signer/isvaop.pem -subj $ISVAOP_CERT_DN
+else
+	echo "ISVAOP certificate files found - using existing certificate files"
+fi
+cp "$DOCKERKEYS/isvaop/personal/isvaop_key.pem" ${ISVAOPCONFIG}
+cp "$DOCKERKEYS/isvaop/signer/isvaop.pem" ${ISVAOPCONFIG}

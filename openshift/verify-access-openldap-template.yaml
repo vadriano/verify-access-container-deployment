@@ -125,7 +125,7 @@ objects:
               secretKeyRef:
                 name: ${APP_NAME}
                 key: config-password
-          image: docker.io/ibmcom/verify-access-openldap:${LDAP_VERSION}
+          image: icr.io/isva/verify-access-openldap:${LDAP_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}
           livenessProbe:
@@ -196,9 +196,9 @@ parameters:
     name: APP_NAME
     value: openldap
   - displayName: Image Version
-    description: The tag that will be used to pull the ibmcom/verify-access-openldap image.
+    description: The tag that will be used to pull the icr.io/isva/verify-access-openldap image.
     name: LDAP_VERSION
-    value: 10.0.3.1
+    value: 10.0.6.0
   - displayName: Domain
     description: This is used to create the suffix for users.  A value of ibm.com would create suffix dc=ibm,dc=com.
     name: DOMAIN

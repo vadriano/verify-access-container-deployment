@@ -207,7 +207,7 @@ OpenShift includes a web proxy which can route traffic to the Verify Access Reve
 To allow worker containers to access configuration snapshots, you must create an LMI user that matches the `configuration read username` and `configuration read password` set during deployment of the configuration container. This is done under **System->Account management** in the LMI. The default username is `cfgsvc` and this user already exists in the LMI.  If you use this username you will only need to set the password.
 
 
-## OpenShift Operator deployment
+## OpenShft Operator deployment
 The [Operator Deployment Demo](openshift/alt-deployment-configs/operator/README.md) can be used to automate management of 
 production containers using the Verify Access Operator.
 

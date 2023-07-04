@@ -19,12 +19,11 @@ MY_WEB1_IP=127.0.0.3
 MY_WEB2_IP=127.0.0.4
 
 # Versions
-CONTAINER_BASE=icr.io/verify-access
 ISVA_VERSION=10.0.6.0
 LDAP_VERSION=10.0.6.0
 DB_VERSION=10.0.6.0
-
-
+ISVAOP_VERSION=23.03
+CONTAINER_BASE=icr.io/isva/verify-access
 # Get directory for this script
 THISDIR="`dirname \"$0\"`"         # relative
 THISDIR="`( cd \"$THISDIR/..\" && pwd )`"  # absolutized and normalized
@@ -35,8 +34,9 @@ fi
 
 # Location where Keystores will be created
 DOCKERKEYS=${THISDIR}/local/dockerkeys
-
+ISVAOPCONFIG=${THISDIR}/common/isvaop-config
 # Location where Docker Shares will be created
 # Note that this directory is also hardcoded into YAML files
 DOCKERSHARE=${HOME}/dockershare
 export DOCKERSHARE
+export ISVAOPCONFIG
