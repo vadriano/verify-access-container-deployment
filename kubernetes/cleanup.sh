@@ -4,12 +4,14 @@ kubectl delete deploy isvaconfig
 kubectl delete deploy openldap
 kubectl delete deploy postgresql
 kubectl delete deploy isvadsc
+kubectl delete deploy isvaop
 kubectl delete service isvaconfig
 kubectl delete service isvaruntime
 kubectl delete service isvawrprp1
 kubectl delete service openldap
 kubectl delete service postgresql
 kubectl delete service isvadsc
+kubectl delete service isvaop
 kubectl delete ingress isvawrprp1
 kubectl delete secret configreader
 kubectl delete secret isvaadmin

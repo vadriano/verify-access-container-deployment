@@ -7,6 +7,7 @@ volumes:
   libsecauthority:
   pgdata:
 
+
 networks:
   isva-network:
     name: isva-compose-net
@@ -129,3 +130,16 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ${HOME}/dockershare/composekeys/postgresql:/var/local
+
+  isvaop:
+    image: ${CONTAINER_BASE}-oidc-provider:${ISVAOP_VERSION}
+    networks:
+      - isva-network
+    hostname: isvaop
+    restart: always
+    environment:
+      - CONTAINER_TIMEZONE=${TIMEZONE}
+    volumes:
+      - ${HOME}/dockershare/isvaop-config:/var/isvaop/config
+    depends_on:
+      - postgresql

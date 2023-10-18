@@ -102,7 +102,7 @@ objects:
                 key: database-name
           - name: POSTGRES_SSL_KEYDB
             value: /var/local/server.pem
-          image: docker.io/ibmcom/verify-access-postgresql:${DB_VERSION}
+          image: icr.io/isva/verify-access-postgresql:${DB_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}
           livenessProbe:
@@ -163,9 +163,9 @@ parameters:
     name: APP_NAME
     value: postgresql
   - displayName: Image Version
-    description: The tag that will be used to pull the ibmcom/verify-access-postgresql image.
+    description: The tag that will be used to pull the icr.io/isva/verify-access-postgresql image.
     name: DB_VERSION
-    value: 10.0.3.1
+    value: 10.0.6.0
   - displayName: Administrator Username
     description: The username for the database administrator.
     name: ADMIN_ID
