@@ -46,7 +46,7 @@ services:
           - www.iamlab.ibm.com
     restart: always
     environment:
-#     - INSTANCE=rp1
+      - INSTANCE=rp1
 #     - SNAPSHOT=${SNAPSHOT}
 #     - FIXPACKS=${FIXPACKS}
       - CONTAINER_TIMEZONE=${TIMEZONE}
