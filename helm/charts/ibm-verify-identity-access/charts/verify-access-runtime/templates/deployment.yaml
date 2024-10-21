@@ -1,0 +1,120 @@
+{{- include "sch.config.init" (list . "iviaruntime.sch.chart.config.values") -}}
+{{- $pvcName := "dataPVC" -}}
+
+{{- if .Values.container.enabled }}
+
+#
+# This file contains the main deployment definition used by the helm chart
+# installation.
+#
+
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: {{ template "runtime.name" . }}
+  labels:
+{{ include "sch.metadata.labels.standard" (list . "") | indent 4 }}
+
+spec:
+  replicas: {{ .Values.container.replicas }}
+
+  selector:
+    matchLabels:
+      app: {{ template "runtime.name" . }}
+      chart: {{ .Chart.Name }}
+      release: {{ .Release.Name }}
+      heritage: {{ .Release.Service }}
+
+  template:
+    metadata:
+      labels:
+        # XXX: For some reason the 'app' label needs to be the fully qualified
+        #      application name else the helm_test command fails because we
+        #      can't resolve the application name.  This should be revisited
+        #      at some point in the future so that we can make use of the
+        #      sch.metadata.labels.standard tag.
+        app: {{ template "runtime.name" . }}
+        chart: {{ .Chart.Name }}
+        release: {{ .Release.Name }}
+        heritage: {{ .Release.Service }}
+
+      annotations:
+{{- include "sch.metadata.annotations.metering" (list . .sch.chart.metering) | indent 8 }}
+
+    spec:
+      hostNetwork:    false
+      hostPID:        false
+      hostIPC:        false
+      affinity:
+{{- include "sch.affinity.nodeAffinity" (list .) | indent 8 }}
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - {{ template "runtime.name" . }}
+              topologyKey: "kubernetes.io/hostname"
+
+      imagePullSecrets:
+        - name: {{ template "docker.credentials.secret" . }}
+
+      containers:
+      - name:  {{ template "runtime.name" . }}
+        image: "{{ .Values.global.image.runtimerepository }}"
+        imagePullPolicy: {{ default "IfNotPresent" .Values.global.image.pullPolicy | quote }}
+        env:
+        - name: SNAPSHOT
+          value: {{ default "" .Values.global.container.snapshot | quote }}
+        - name: FIXPACKS
+          value: {{ default "" .Values.global.container.fixpacks | quote }}
+        - name: CONTAINER_TIMEZONE
+          value: {{ default "" $.Values.global.container.timezone | quote }}
+        - name: CONFIG_SERVICE_URL
+          value: {{ template "config.service.url" . }}
+        - name: CONFIG_SERVICE_USER_NAME
+          value: "admin"
+        - name: CONFIG_SERVICE_USER_PWD
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "admin.secret" . }}
+              key: {{ template "admin.secret.key" . }}
+
+        livenessProbe:
+          exec:
+            command:
+            - /sbin/health_check.sh
+            - livenessProbe
+          periodSeconds: 10
+          timeoutSeconds: 2
+          failureThreshold: 6
+{{- if not .Values.global.container.readinessProbeDisabled }}
+        readinessProbe:
+          httpGet:
+            scheme: HTTPS
+            port: {{ template "runtime.port" . }}
+            path: /sps/static/ibm-logo.png
+          periodSeconds: 10
+          failureThreshold: 2
+          timeoutSeconds: 2
+{{- end }}
+        startupProbe:
+          exec:
+            command:
+            - /sbin/health_check.sh
+          failureThreshold: 30
+          periodSeconds: 10
+          timeoutSeconds: 2
+
+        ports:
+        - name: {{ .sch.chart.config.servicename }}
+          containerPort: {{ template "runtime.port" . }}
+
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
+
+{{- end }}

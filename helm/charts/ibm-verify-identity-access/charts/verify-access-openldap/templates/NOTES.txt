@@ -1,0 +1,20 @@
+{{- include "sch.config.init" (list . "iviapostgresql.sch.chart.config.values") -}}
+
+{{- if .Values.container.enabled -}}
+
+1.0 General Information:
+
+To obtain the administrator password execute the following command:
+    kubectl get secret --namespace {{ .Release.Namespace }} {{ template "admin.secret" . }} -o jsonpath="{.data.{{ template "admin.secret.key" . }}}" | base64 --decode; echo
+
+2.0 OpenLDAP
+
+The OpenLDAP service provided is not meant for production and should only be used in PoC or demonstration environments.
+
+The directory has been configured with the following fields:
+  host:          {{ template "openldap.name" . }}
+  port:          636
+  domain:        {{ template "openldap.domain" . }}
+  root user:     cn=root,secAuthority=Default
+
+{{- end -}}

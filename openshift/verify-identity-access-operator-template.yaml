@@ -1,0 +1,189 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+labels:
+  template: ivia-operator-template
+metadata:
+  name: ivia-operator-template
+  annotations:
+    openshift.io/display-name: IBM Verify Access Operator Deployment Template
+    iconClass: icon-sso
+    description: IBM Verify Identity Access deployment template using the Verify Operator. Operator must be installed.
+    openshift.io/long-description: This template deploys the runtime services required for an IBM
+      Verify Identity Access environment using the Verify Access Operator.
+    openshift.io/documentation-url: https://ibm.biz/isamdocker
+    openshift.io/provider-display-name: Lachlan Gleeson
+    openshift.io/support-url: https://ibm.biz/iamcommunity
+    tags: ibm, isam, isva, ivia, verify-access, verify-operator, verify
+message: |-
+
+  Application Name: ${APP_NAME}
+
+  The following services have been created in your project:
+    - WebSEAL replicas: ${WRP_REPLICAS}
+    - Runtime replicas: ${RUNTIME_REPLICAS}
+    - Distributed Session Cache replicas: ${DSC_REPLICAS}
+objects:
+- apiVersion: ibm.com/v1
+  kind: IBMSecurityVerifyAccess
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: null
+    generation: 1
+    labels:
+      app: ${APP_NAME}-core
+      name: ${APP_NAME}-webseal
+    name: ${APP_NAME}-webseal
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        name: ${APP_NAME}-webseal
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: ${APP_NAME}-core
+          name: ${APP_NAME}-operator-template
+      spec:
+        serviceAccountName: ${SERVICE_ACCOUNT}
+        instance: ${INSTANCE}
+        image: ${IVIA_CONTAINER_HOST}/${IVIA_IMAGE_NAME}-wrp:${IVIA_VERSION}
+        imagePullSecrets:
+        - ${PULL_SECRET}
+        fixpacks:
+        - ${FIXPACKS}
+        volumes: 
+        - name: ${VOLUMES}
+        snapshotId: ${SNAPSHOT}
+        language: ${LANGUAGE}
+        replicas: ${{WRP_REPLICAS}}
+
+- apiVersion: ibm.com/v1
+  kind: IBMSecurityVerifyAccess
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: null
+    generation: 1
+    labels:
+      app: ${APP_NAME}-core
+      name: ${APP_NAME}-runtime
+    name: ${APP_NAME}-runtime
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        name: ${APP_NAME}-runtime
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: ${APP_NAME}-core
+          name: ${APP_NAME}-operator-template
+      spec:
+        serviceAccountName: ${SERVICE_ACCOUNT}
+        instance: ${INSTANCE}
+        image: ${IVIA_CONTAINER_HOST}/${IVIA_IMAGE_NAME}-runtime:${IVIA_VERSION}
+        imagePullSecrets:
+        - ${PULL_SECRET}
+        fixpacks:
+        - ${FIXPACKS}
+        volumes: 
+        - name: ${VOLUMES}
+        snapshotId: ${SNAPSHOT}
+        language: ${LANGUAGE}
+        replicas: ${{RUNTIME_REPLICAS}}
+
+- apiVersion: ibm.com/v1
+  kind: IBMSecurityVerifyAccess
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: null
+    generation: 1
+    labels:
+      app: ${APP_NAME}-core
+      name: ${APP_NAME}-dsc
+    name: ${APP_NAME}-dsc
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        name: ${APP_NAME}-dsc
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: ${APP_NAME}-core
+          name: ${APP_NAME}-operator-template
+      spec:
+        serviceAccountName: ${SERVICE_ACCOUNT}
+        image: ${IVIA_CONTAINER_HOST}/${IVIA_IMAGE_NAME}-dsc:${IVIA_VERSION}
+        imagePullSecrets:
+        - ${PULL_SECRET}
+        fixpacks:
+        - ${FIXPACKS}
+        volumes: 
+        - name: ${VOLUMES}
+        snapshotId: ${SNAPSHOT}
+        language: ${LANGUAGE}
+        replicas: ${{DSC_REPLICAS}}
+
+parameters:
+  - displayName: IVIA Image Version
+    description: The tag that will be used to pull the ibmcom/isam image.
+    name: IVIA_VERSION
+    value: 11.0.0.0
+  - displayName: Image Pull Secret
+    description: This is an (existing) docker login secret for pulling the Verify Identity Access image.
+      The user must have registered for the image from the value specified by IVIA_CONTAINER_HOST
+    name: PULL_SECRET
+    value: ivia-login
+  - displayName: Container repository
+    description: This is the hostname for pulling the Verify Identity Access images.
+    name: IVIA_CONTAINER_HOST
+    value: icr.io/ivia/
+  - displayName: Verify Identity Access Image Tag
+    description: This is the tag used to identify Verify Identity Access images. The supporting containers should have a
+       \'-wrp\', \'-dsc\' or \'-runtime\' suffix.
+    name: IVIA_IMAGE_NAME
+    value: verify-identity-access
+  - displayName: Service Account
+    description: This is the (existing) Service Account for running the pods.
+    name: SERVICE_ACCOUNT
+    value: verifyaccess
+  - displayName: Verify Identity Access WebSEAL Reverse Proxy Instance
+    description: WebSEAL instance to deploy. Only valid for WRP containers.
+    name: INSTANCE
+    from: '[a-zA-Z0-9]{100}'
+    value: default
+  - displayName: Verify Identity Access Snapshot
+    description: Identifier of the snapshot to deploy
+    name: SNAPSHOT
+    value: published
+  - displayName: Language
+    description: Language is the language which will be used for messages which are logged by the deployment.
+    name: LANGUAGE
+    value: en_US.utf8
+  - displayName: Fixpacks
+    description: Fixpacks is an array of strings which indicate the name of fixpacks which should be installed in the deployment.
+    name: FIXPACKS
+  - displayName: WebSEAL Reverse proxy Replicas
+    description: The number of pods which will be started for the webseal deployment.
+    name: WRP_REPLICAS
+    value: "1"
+  - displayName: Access Control and Federation runtime proxy replicas
+    description: The number of pods which will be started for the runtime deployment.
+    name: RUNTIME_REPLICAS
+    value: "1"
+  - displayName: Distributed Session Cache replicas
+    description: The number of pods which will be started for the dsc deployment.
+    name: DSC_REPLICAS
+    value: "0"

@@ -23,6 +23,8 @@ mv .env .env.original
 sed  '/LDAP_VERSION/d' .env.original > .env
 mv .env .env.original
 sed  '/DB_VERSION/d' .env.original > .env
+mv .env .env.original
+sed  '/CONTAINER_BASE/d' .env.original > .env
 rm .env.original
 cat >> .env <<EOF
 CONTAINER_BASE=${CONTAINER_BASE}

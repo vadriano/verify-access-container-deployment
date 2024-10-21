@@ -1,0 +1,22 @@
+ apiVersion: networking.k8s.io/v1
+ kind: Ingress
+ metadata:
+   name: iamlab-iviawrp-rp1
+   annotations:
+     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+     nginx.ingress.kubernetes.io/affinity: "cookie"
+ spec:
+  tls:
+  - hosts:
+    - www.iamlab.ibm.com
+  rules:
+  - host: www.iamlab.ibm.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: iviawrprp1
+            port:
+              number: 9443

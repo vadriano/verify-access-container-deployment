@@ -1,18 +1,18 @@
 apiVersion: template.openshift.io/v1
 kind: Template
 labels:
-  template: verify-access-config
+  template: verify-identity-access-config
 metadata:
   creationTimestamp: null
-  name: verify-access-config
+  name: verify-identity-access-config
   annotations:
-    openshift.io/display-name: IBM Security Verify Access Config
+    openshift.io/display-name: IBM Verify Identity Access Config
     iconClass: icon-sso
-    description: IBM Security Verify Access Config Service
+    description: IBM Verify Identity Access Config Service
     openshift.io/long-description: This template deploys the config service required for an IBM
-      Security Verify Access environment.
+      Verify Identity Access environment.
     openshift.io/documentation-url: https://ibm.biz/verifyaccesscontainers
-    openshift.io/provider-display-name: IBM Security Verify Access
+    openshift.io/provider-display-name: IBM Verify Identity Access
     openshift.io/support-url: https://ibm.biz/iamcommunity
     tags: ibm, verifyaccess
 message: |-
@@ -108,7 +108,7 @@ objects:
               secretKeyRef:
                 key: lmi-admin-password
                 name: ${APP_NAME}-lmi
-          image: docker.io/ibmcom/verify-access:${ISVA_VERSION}
+          image: icr.io/ivia/verify-identity-access-config:${IVIA_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}-config
           resources: {}
@@ -179,14 +179,14 @@ parameters:
     description: This is the name for the application which is used to create unique object names in the cluster.
     name: APP_NAME
     value: verifyaccess
-  - displayName: Verify Access Image Version
-    description: The tag that will be used to pull the ibmcom/verify-access images.
-    name: ISVA_VERSION
+  - displayName: Verify Identity Access Image Version
+    description: The tag that will be used to pull the icr.io/ivia/verify-identity-access images.
+    name: IVIA_VERSION
     value: 10.0.3.1
   - displayName: Config Service Name
     description: The name for the config service.  Also used as the hostname for connections within the cluster.
     name: CONFIG_SERVICE
-    value: isvaconfig
+    value: iviaconfig
   - displayName: LMI Admin Password
     description: This will be the password for the config service admin user (for both Web and REST access)
     name: ADMIN_PW
@@ -207,7 +207,7 @@ parameters:
     name: STORAGE_CLASS
     value: default
   - displayName: Image Pull Secret
-    description: This is an (existing) docker login secret for pulling the Access Manager image.
+    description: This is an (existing) docker login secret for pulling the Verify Identity Access image.
       Only required if hosting images on a private repository
     name: PULL_SECRET
     value: dockerlogin
@@ -223,18 +223,18 @@ parameters:
 apiVersion: template.openshift.io/v1
 kind: Template
 labels:
-  template: verify-access-reverse-proxy
+  template: verify-identity-access-reverse-proxy
 metadata:
   creationTimestamp: null
-  name: verify-access-reverse-proxy
+  name: verify-identity-access-reverse-proxy
   annotations:
-    openshift.io/display-name: IBM Security Verify Access Reverse Proxy
+    openshift.io/display-name: IBM Verify Identity Access Reverse Proxy
     iconClass: icon-sso
-    description: IBM Security Verify Access Reverse Proxy
-    openshift.io/long-description: This template deploys an IBM Security Verify Access Reverse Proxy
+    description: IBM Verify Identity Access Reverse Proxy
+    openshift.io/long-description: This template deploys an IBM Verify Identity Access Reverse Proxy
       instance.  This template can be deployed multiple times to create multiple Reverse Proxies.
     openshift.io/documentation-url: https://ibm.biz/verifyaccesscontainers
-    openshift.io/provider-display-name: IBM Security Verify Access
+    openshift.io/provider-display-name: IBM Verify Identity Access
     openshift.io/support-url: https://ibm.biz/iamcommunity
     tags: ibm, verifyaccess
 message: |-
@@ -314,7 +314,7 @@ objects:
               secretKeyRef:
                 name: ${CORE_APP_NAME}-config
                 key: config-read-password
-          image: docker.io/ibmcom/verify-access-wrp:${ISVA_VERSION}
+          image: icr.io/ivia/verify-identity-access-wrp:${IVIA_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${CORE_APP_NAME}-wrp-${INSTANCE_NAME}
           ports:
@@ -394,9 +394,9 @@ objects:
   status:
     loadBalancer: {}
 parameters:
-  - displayName: Verify Access Image Version
-    description: The tag that will be used to pull the ibmcom/verify-access-wrp image.
-    name: ISVA_VERSION
+  - displayName: Verify Identity Access Image Version
+    description: The tag that will be used to pull the icr.io/ivia/verify-identity-access-wrp image.
+    name: IVIA_VERSION
     value: 10.0.3.1
   - displayName: Core Application Name
     description: The name of the core application (omit -core).  This must match what was
@@ -410,13 +410,13 @@ parameters:
   - displayName: Service Name
     description: The name of the Service. Also used as the hostname for connections within the cluster.
     name: SERVICE_NAME
-    value: isvawrprp1
+    value: iviawrprp1
   - displayName: Fully Qualified DNS Name for Route
     description: A DNS or hosts entry must associate this hostname with IP of OpenShift router.
     name: DNS_NAME
     value: www.iamlab.ibm.com
   - displayName: Image Pull Secret
-    description: This is an (existing) docker login secret for pulling the Access Manager image.
+    description: This is an (existing) docker login secret for pulling the Verify Identity Access image.
       Only required if hosting images on a private repository
     name: PULL_SECRET
     value: dockerlogin
@@ -432,18 +432,18 @@ parameters:
 apiVersion: template.openshift.io/v1
 kind: Template
 labels:
-  template: verify-access-runtime
+  template: verify-identity-access-runtime
 metadata:
   creationTimestamp: null
-  name: verify-access-runtime
+  name: verify-identity-access-runtime
   annotations:
-    openshift.io/display-name: IBM Security Verify Access Runtime
+    openshift.io/display-name: IBM Verify Identity Access Runtime
     iconClass: icon-sso
-    description: IBM Security Verify Access Runtime Services
+    description: IBM Verify Identity Access Runtime Services
     openshift.io/long-description: This template deploys the runtime services required for an IBM
-      Security Verify Access environment.
+      Verify Identity Access environment.
     openshift.io/documentation-url: https://ibm.biz/verifyaccesscontainers
-    openshift.io/provider-display-name: IBM Security Verify Access
+    openshift.io/provider-display-name: IBM Verify Identity Access
     openshift.io/support-url: https://ibm.biz/iamcommunity
     tags: ibm, verifyaccess
 message: |-
@@ -512,7 +512,7 @@ objects:
               secretKeyRef:
                 name: ${APP_NAME}-config
                 key: config-read-password
-          image: docker.io/ibmcom/verify-access-runtime:${ISVA_VERSION}
+          image: icr.io/ivia/verify-identity-access-runtime:${IVIA_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}-runtime
           ports:
@@ -581,16 +581,16 @@ parameters:
     description: This is the name for the application which is used to create unique object names in the cluster.
     name: APP_NAME
     value: verifyaccess
-  - displayName: Verify Access Image Version
-    description: The tag that will be used to pull the ibmcom/verify-access images.
-    name: ISVA_VERSION
+  - displayName: Verify Identity Access Image Version
+    description: The tag that will be used to pull the icr.io/ivia/verify-identity-access images.
+    name: IVIA_VERSION
     value: 10.0.3.1
   - displayName: Runtime Service Name
     description: The name for the runtime service.  Also used as the hostname for connections within the cluster.
     name: RUNTIME_SERVICE
-    value: isvaruntime
+    value: iviaruntime
   - displayName: Image Pull Secret
-    description: This is an (existing) docker login secret for pulling the Access Manager image.
+    description: This is an (existing) docker login secret for pulling the Verify Identity Access image.
       Only required if hosting images on a private repository
     name: PULL_SECRET
     value: dockerlogin
@@ -606,18 +606,18 @@ parameters:
 apiVersion: template.openshift.io/v1
 kind: Template
 labels:
-  template: verify-access-dsc
+  template: verify-identity-access-dsc
 metadata:
   creationTimestamp: null
-  name: verify-access-dsc
+  name: verify-identity-access-dsc
   annotations:
-    openshift.io/display-name: IBM Security Verify Access DSC
+    openshift.io/display-name: IBM Verify Identity Access DSC
     iconClass: icon-sso
-    description: IBM Security Verify Access DSC Services
+    description: IBM Verify Identity Access DSC Services
     openshift.io/long-description: This template deploys the DSC services for an IBM
-      Security Verify Access environment.  Initially only the primary DSC starts.
+      Verify Identity Access environment.  Initially only the primary DSC starts.
     openshift.io/documentation-url: https://ibm.biz/verifyaccesscontainers
-    openshift.io/provider-display-name: IBM Security Verify Access
+    openshift.io/provider-display-name: IBM Verify Identity Access
     openshift.io/support-url: https://ibm.biz/iamcommunity
     tags: ibm, verifyaccess
 message: |-
@@ -657,7 +657,7 @@ objects:
         labels:
           app: ${APP_NAME}
           name: ${APP_NAME}-dsc1
-          isvaaffinity: ${APP_NAME}-dsc
+          iviaaffinity: ${APP_NAME}-dsc
       spec:
         affinity:
           podAntiAffinity:
@@ -666,7 +666,7 @@ objects:
               podAffinityTerm:
                 labelSelector:
                   matchExpressions:
-                  - key: isvaaffinity
+                  - key: iviaaffinity
                     operator: In
                     values:
                     - ${APP_NAME}-dsc
@@ -693,7 +693,7 @@ objects:
               secretKeyRef:
                 name: ${APP_NAME}-config
                 key: config-read-password
-          image: docker.io/ibmcom/verify-access-dsc:${ISVA_VERSION}
+          image: icr.io/ivia/verify-identity-access-dsc:${IVIA_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}-dsc1
           ports:
@@ -757,7 +757,7 @@ objects:
         labels:
           app: ${APP_NAME}
           name: ${APP_NAME}-dsc2
-          isvaaffinity: ${APP_NAME}-dsc
+          iviaaffinity: ${APP_NAME}-dsc
       spec:
         affinity:
           podAntiAffinity:
@@ -766,7 +766,7 @@ objects:
               podAffinityTerm:
                 labelSelector:
                   matchExpressions:
-                  - key: isvaaffinity
+                  - key: iviaaffinity
                     operator: In
                     values:
                     - ${APP_NAME}-dsc
@@ -793,7 +793,7 @@ objects:
               secretKeyRef:
                 name: ${APP_NAME}-config
                 key: config-read-password
-          image: docker.io/ibmcom/verify-access-dsc:${ISVA_VERSION}
+          image: icr.io/ivia/verify-identity-access-dsc:${IVIA_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}-dsc2
           ports:
@@ -857,7 +857,7 @@ objects:
         labels:
           app: ${APP_NAME}
           name: ${APP_NAME}-dsc3
-          isvaaffinity: ${APP_NAME}-dsc
+          iviaaffinity: ${APP_NAME}-dsc
       spec:
         affinity:
           podAntiAffinity:
@@ -866,7 +866,7 @@ objects:
               podAffinityTerm:
                 labelSelector:
                   matchExpressions:
-                  - key: isvaaffinity
+                  - key: iviaaffinity
                     operator: In
                     values:
                     - ${APP_NAME}-dsc
@@ -893,7 +893,7 @@ objects:
               secretKeyRef:
                 name: ${APP_NAME}-config
                 key: config-read-password
-          image: docker.io/ibmcom/verify-access-dsc:${ISVA_VERSION}
+          image: icr.io/ivia/verify-identity-access-dsc:${IVIA_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}-dsc3
           ports:
@@ -957,7 +957,7 @@ objects:
         labels:
           app: ${APP_NAME}
           name: ${APP_NAME}-dsc4
-          isvaaffinity: ${APP_NAME}-dsc
+          iviaaffinity: ${APP_NAME}-dsc
       spec:
         affinity:
           podAntiAffinity:
@@ -966,7 +966,7 @@ objects:
               podAffinityTerm:
                 labelSelector:
                   matchExpressions:
-                  - key: isvaaffinity
+                  - key: iviaaffinity
                     operator: In
                     values:
                     - ${APP_NAME}-dsc
@@ -993,7 +993,7 @@ objects:
               secretKeyRef:
                 name: ${APP_NAME}-config
                 key: config-read-password
-          image: docker.io/ibmcom/verify-access-dsc:${ISVA_VERSION}
+          image: icr.io/ivia/verify-identity-access-dsc:${IVIA_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}-dsc4
           ports:
@@ -1132,17 +1132,17 @@ parameters:
     description: This is the name for the application which is used to create unique object names in the cluster.
     name: APP_NAME
     value: verifyaccess
-  - displayName: Verify Access Image Version
-    description: The tag that will be used to pull the ibmcom/verify-access images.
-    name: ISVA_VERSION
-    value: 10.0.3.1
+  - displayName: Verify Identity Access Image Version
+    description: The tag that will be used to pull the icr.io/ivia/verify-identity-access images.
+    name: IVIA_VERSION
+    value: 11.0.0.0
   - displayName: Primary DSC Service Name
     description: The name for the Primary DSC service.  Also used as the hostname for connections within the cluster.
       Other DSC service/host names will have 2, 3, and 4 appended.
     name: DSC_SERVICE
-    value: isvadsc
+    value: iviadsc
   - displayName: Image Pull Secret
-    description: This is an (existing) docker login secret for pulling the Access Manager image.
+    description: This is an (existing) docker login secret for pulling the Verify Identity Access image.
       Only required if hosting images on a private repository
     name: PULL_SECRET
     value: dockerlogin

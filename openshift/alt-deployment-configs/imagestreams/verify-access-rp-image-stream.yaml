@@ -1,20 +1,20 @@
 apiVersion: v1
 kind: Template
 labels:
-  template: verify-access-reverse-proxy
+  template: verify-identity-access-reverse-proxy
 metadata:
   creationTimestamp: null
-  name: verify-access-reverse-proxy
+  name: verify-identity-access-reverse-proxy
   annotations:
-    openshift.io/display-name: IBM Security Verify Access Reverse Proxy
+    openshift.io/display-name: IBM Verify Identity Access Reverse Proxy
     iconClass: icon-sso
-    description: IBM Security Verify Access Reverse Proxy
-    openshift.io/long-description: This template deploys an IBM Security Verify Access Reverse Proxy
+    description: IBM Verify Identity Access Reverse Proxy
+    openshift.io/long-description: This template deploys an IBM Verify Identity Access Reverse Proxy
       instance.  This template can be deployed multiple times to create multiple Reverse Proxies.
     openshift.io/documentation-url: https://ibm.biz/verifyaccesscontainers
-    openshift.io/provider-display-name: IBM Security Verify Access
+    openshift.io/provider-display-name: IBM Verify Identity Access
     openshift.io/support-url: https://ibm.biz/iamcommunity
-    tags: ibm, verifyaccess
+    tags: ibm, verifyaccess, isam, ivia, ivia
 message: |-
 
   Application Name: ${CORE_APP_NAME}-${INSTANCE_NAME}
@@ -61,7 +61,7 @@ objects:
       - annotations: null
         from:
           kind: DockerImage
-          name: 'docker.io/ibmcom/verify-access-wrp:${ISVA_VERSION}'
+          name: 'icr.io/ivia/verify-identity-access-wrp:${IVIA_VERSION}'
         importPolicy: {}
         name: base
         referencePolicy:
@@ -205,7 +205,7 @@ parameters:
     description: The name of the core application (omit -core).  This must match what was
       configured when creating the core application.
     name: CORE_APP_NAME
-    value: verifyaccess
+    value: verifyidentityaccess
   - displayName: Instance name
     description: This must match an instance configured in the configuration service.
     name: INSTANCE_NAME
@@ -213,7 +213,7 @@ parameters:
   - displayName: Service Name
     description: The name of the Service. Also used as the hostname for connections within the cluster.
     name: SERVICE_NAME
-    value: isvawrprp1
+    value: iviawrprp1
   - displayName: Fully Qualified DNS Name for Route
     description: A DNS or hosts entry must associate this hostname with IP of OpenShift router.
     name: DNS_NAME
@@ -223,6 +223,6 @@ parameters:
     name: TIMEZONE
     value: Etc/UTC
   - displayName: Service Account
-    description: This is the (existing) Service Account for running the pods.  It must allow runAsNonRoot, SETUID, SETGID.
+    description: This is the (existing) Service Account for running the pods.
     name: SERVICE_ACCOUNT
     value: verifyaccess

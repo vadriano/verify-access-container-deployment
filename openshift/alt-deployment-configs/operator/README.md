@@ -1,22 +1,22 @@
-# Deploying Verify Access using the OpenShift Operator
+# Deploying Verify Identity Access using the OpenShift Operator
 
-1 - install operator (check version is 23.3 and OpenShift can pull images from icr.io)
+1 - install operator (check version is 24.04 and OpenShift can pull images from icr.io)
 
-2 - Deploy ISVA using template + use Ansible (or other) to configure containers with required junctions, access policies, federations, ect.
+2 - Deploy IVIA using template + use Ansible (or other) to configure containers with required junctions, access policies, federations, ect.
 
 Demo does not include the OpenLDAP and PostgreSQL services. Administrators should deploy the required LDAP and HVDB
 services before creating containers.
 
-    oc process -f oshift-isva-standalone-template.yaml \
-        -p APP_NAME='verify-access-demo' \
-        -p ISVA_VERSION='10.0.5.0' \
-        -p CONFIG_SERVICE='isvaconfig' \
-        -p RUNTIME_SERVICE='isvaruntime' \
-        -p WEBSEAL_SERVICE='isvawebeal' \
-        -p DSC_SERVICE='isvadsc' \
+    oc process -f oshift-ivia-standalone-template.yaml \
+        -p APP_NAME='verify-identity-access-demo' \
+        -p IVIA_VERSION='11.0.0.0' \
+        -p CONFIG_SERVICE='iviaconfig' \
+        -p RUNTIME_SERVICE='iviaruntime' \
+        -p WEBSEAL_SERVICE='iviawebeal' \
+        -p DSC_SERVICE='iviadsc' \
         -p CONFIG_ID='cfgsvc' \
         -p CONFIG_PW='betterThanPassw0rd' \
-        -p ISVA_IMAGE_NAME='icr.io/isva/verify-access' \
+        -p IVIA_IMAGE_NAME='icr.io/ivia/verify-identity-access' \
         -p TIMEZONE='Etc/UTC' \
         -p SERVICE_ACCOUNT='verifyaccess' \
         | oc create -f -
@@ -32,7 +32,7 @@ attach to the configuration container and upload the specified snapshot to the O
 
     $ bash upload_snapshot_to_operator.sh <configuration_container_id> <snapshot_name>
 
-eg: `$ bash upload_snapshot_to_operator.sh isamconfig-8694c5fb66-77rr5 isva_10.0.5.0_published.snapshot`
+eg: `$ bash upload_snapshot_to_operator.sh isamconfig-8694c5fb66-77rr5 ivia_10.0.5.0_published.snapshot`
 
 >Note: the "snapshotId" property in the operator only refers to the "published" substring in the snapshot file name.
 
@@ -40,11 +40,11 @@ eg: `$ bash upload_snapshot_to_operator.sh isamconfig-8694c5fb66-77rr5 isva_10.0
     be careful of "stale" secrets in your namespace: `oc delete secret verify-access-operator`
 
 
-    oc process -f oshift-isva-operator-template.yaml \
-        -p APP_NAME='verify-access-operator-demo' \
-        -p ISVA_BASE_IMAGE_NAME='icr.io/isva/verify-access' \
+    oc process -f oshift-ivia-operator-template.yaml \
+        -p APP_NAME='verify-identity-access-operator-demo' \
+        -p IVIA_BASE_IMAGE_NAME='icr.io/ivia/verify-identity-access' \
         -p SERVICE_ACCOUNT='verifyaccess' \
-        -p ISVA_VERSION='10.0.5.0' \
+        -p IVIA_VERSION='11.0.0.0' \
         -p INSTANCE='default' \
         -p SNAPSHOT='published' \
         -p LANGUAGE='en_US.utf8' \

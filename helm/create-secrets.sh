@@ -27,8 +27,8 @@ kubectl delete secret postgresql-keys > /dev/null 2>&1
 echo "Creating server.pem as a Secret"
 kubectl create secret generic postgresql-keys --from-file "${DOCKERKEYS}/postgresql/server.pem"
 
-echo "Deleting helm-isvaadmin Secret"
-kubectl delete secret helm-isvaadmin > /dev/null 2>&1
-echo "Creating helm-isvaadmin Secret"
-kubectl create secret generic helm-isvaadmin
-kubectl patch secret/helm-isvaadmin -p '{"data":{"adminPassword":"UGFzc3cwcmQ="}}'
+echo "Deleting helm-iviaadmin Secret"
+kubectl delete secret helm-iviaadmin > /dev/null 2>&1
+echo "Creating helm-iviaadmin Secret"
+kubectl create secret generic helm-iviaadmin
+kubectl patch secret/helm-iviaadmin -p '{"data":{"adminPassword":"UGFzc3cwcmQ="}}'

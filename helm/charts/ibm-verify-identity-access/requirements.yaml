@@ -1,0 +1,35 @@
+
+#
+# This file contains the dependent charts for the IBM Security Verify Identity Access
+# helm chart.
+#
+
+dependencies:
+  - name: ibm-sch
+    repository: "@sch"
+    version: 1.3.05
+    alias: sch
+  - name: verify-identity-access-config
+    version: 1.3.0
+    alias: iviaconfig
+    repository: file://charts/verify-identity-access-config
+  - name: verify-identity-access-wrp
+    version: 1.3.0
+    alias: iviawrp
+    repository: file://charts/verify-identity-access-wrp
+  - name: verify-identity-access-runtime
+    version: 1.3.0
+    alias: iviaruntime
+    repository: file://charts/verify-identity-access-runtime
+  - name: verify-identity-access-dsc
+    version: 1.3.0
+    alias: iviadsc
+    repository: file://charts/verify-identity-access-dsc
+  - name: verify-identity-access-postgresql
+    version: 1.3.0
+    alias: iviapostgresql
+    repository: file://charts/verify-identity-access-postgresql
+  - name: verify-identity-access-openldap
+    version: 1.3.0
+    alias: iviaopenldap
+    repository: file://charts/verify-identity-access-openldap

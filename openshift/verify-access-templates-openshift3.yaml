@@ -107,7 +107,7 @@ objects:
               secretKeyRef:
                 key: lmi-admin-password
                 name: ${APP_NAME}-lmi
-          image: docker.io/ibmcom/verify-access:${ISVA_VERSION}
+          image: icr.io/isva/verify-access:${ISVA_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}-config
           resources: {}
@@ -306,7 +306,7 @@ objects:
               secretKeyRef:
                 name: ${CORE_APP_NAME}-config
                 key: config-read-password
-          image: docker.io/ibmcom/verify-access-wrp:${ISVA_VERSION}
+          image: icr.io/isva/verify-access-wrp:${ISVA_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${CORE_APP_NAME}-wrp-${INSTANCE_NAME}
           ports:
@@ -508,7 +508,7 @@ objects:
               secretKeyRef:
                 name: ${APP_NAME}-config
                 key: config-read-password
-          image: docker.io/ibmcom/verify-access-runtime:${ISVA_VERSION}
+          image: icr.io/isva/verify-access-runtime:${ISVA_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}-runtime
           ports:
@@ -684,7 +684,7 @@ objects:
               secretKeyRef:
                 name: ${APP_NAME}-config
                 key: config-read-password
-          image: docker.io/ibmcom/verify-access-dsc:${ISVA_VERSION}
+          image: icr.io/isva/verify-access-dsc:${ISVA_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}-dsc1
           ports:
@@ -783,7 +783,7 @@ objects:
               secretKeyRef:
                 name: ${APP_NAME}-config
                 key: config-read-password
-          image: docker.io/ibmcom/verify-access-dsc:${ISVA_VERSION}
+          image: icr.io/isva/verify-access-dsc:${ISVA_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}-dsc2
           ports:
@@ -882,7 +882,7 @@ objects:
               secretKeyRef:
                 name: ${APP_NAME}-config
                 key: config-read-password
-          image: docker.io/ibmcom/verify-access-dsc:${ISVA_VERSION}
+          image: icr.io/isva/verify-access-dsc:${ISVA_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}-dsc3
           ports:
@@ -981,7 +981,7 @@ objects:
               secretKeyRef:
                 name: ${APP_NAME}-config
                 key: config-read-password
-          image: docker.io/ibmcom/verify-access-dsc4:${ISVA_VERSION}
+          image: icr.io/isva/verify-access-dsc4:${ISVA_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}-dsc4
           ports:
