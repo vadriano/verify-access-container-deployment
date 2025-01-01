@@ -27,12 +27,12 @@ The docker compose scripts will create a `$HOME/dockershare` directory.  If you 
 All passwords set by these scripts are `Passw0rd`.  Obviously this is not a secure password!
 
 # Create Keystores
-Before running any other scripts, run `container-deployment/common/create-ldap-and-postgres-keys.sh`
+Before running any other scripts, run `verify-access-container-deployment/common/create-ldap-and-postgres-isvaop-keys.sh`
 
-This will create the `container-deployment/local/dockerkeys` directory and populate it with keystores for PostgreSQL and OpenLDAP containers.
+This will create the `verify-access-container-deployment/local/dockerkeys` directory and populate it with keystores for PostgreSQL and OpenLDAP containers.
 
 # Native Docker
-To set up a native Docker environment, use the files in `container-deployment/docker`.
+To set up a native Docker environment, use the files in `verify-access-container-deployment/docker`.
 
 These scripts assume you have the following IP addresses available locally on your Docker system with entries in `/etc/hosts` for the associated hostnames:
 - 127.0.0.2 (lmi.iamlab.ibm.com)
@@ -68,7 +68,7 @@ You can now connect to the Verify Identity Access LMI at https://127.0.0.2
 To clean up the docker resources created, run `docker-compose down -v` command.
 
 # Kubernetes
-To set up an environment using Kubernetes, use the files in `container-deployment/kubernetes`.
+To set up an environment using Kubernetes, use the files in `verify-access-container-deployment/kubernetes`.
 
 These scripts assume that you have the `kubectl` utility installed and that it is configured to talk to your cluster.
 
@@ -122,7 +122,7 @@ helm repo add ibm-security-incubator https://raw.githubusercontent.com/IBM-Secur
 ```
 
 # OpenShift
-To set up an environment using OpenShift, use the files in `container-deployment/openshift`.
+To set up an environment using OpenShift, use the files in `verify-access-container-deployment/openshift`.
 
 OpenShift 4.2 or above is required for lightweight containers to work with the default security context.  For older versions your can use the OpenShift 3.x template file.  These instructions are for OpenShift 4.x.
 
@@ -218,7 +218,7 @@ This can be done by either copying the files, or using a symbolic link to the di
 The `env.properties` file is used to supply the url, user, secret, and activation codes for the deployment. This file may need to be updated if you 
 have made changes to the above deployments.
 
-For example a docker-compose deployment can be configured by executing the following from the ``container-deployment/configuration`` directory:
+For example a docker-compose deployment can be configured by executing the following from the ``verify-access-container-deployment/configuration`` directory:
 
 ```
 ln -s pki $HOME/dockershare/composekeys
@@ -232,16 +232,16 @@ python -m verify_access_autoconf #Creates a WebSEAL instance and enables AAC aut
 
 # Backup and Restore
 
-To backup the state of your environment, use the `./ivia-backup....sh` script in the directory for the environment you're using.  The backup tar file created will contain:
-- Content of the `container-deployment/local/dockerkeys` directory
+To backup the state of your environment, use the `./isva-backup....sh` script in the directory for the environment you're using.  The backup tar file created will contain:
+- Content of the `verify-access-container-deployment/local/dockerkeys` directory
 - OpenLDAP directory content
 - PostgreSQL database content
 - Configuration snapshot from the Verify Identity Access config container
 
 To restore from a backup, perform these steps:
 
-1. Delete the `container-deployment/local/dockerkeys` directory
-1. Run `container-deployment/common/restore-keys.sh <archive tar file>`
+1. Delete the `verify-access-container-deployment/local/dockerkeys` directory
+1. Run `verify-access-container-deployment/common/restore-keys.sh <archive tar file>`
 1. Complete setup for the environment you want to create (until containers are running)
 1. Run `./ivia-restore....sh <archive tar file>` to restore configuration.
 

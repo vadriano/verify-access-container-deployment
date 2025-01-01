@@ -11,6 +11,7 @@ kubectl delete service openldap
 kubectl delete service postgresql
 kubectl delete service iviadsc
 kubectl delete ingress iviawrprp1
+kubectl delete service isvaop
 kubectl delete secret configreader
 kubectl delete secret iviaadmin
 kubectl delete secret dockerlogin

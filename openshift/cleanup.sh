@@ -1,6 +1,7 @@
 oc delete all -l app=verifyaccess
 oc delete all -l app=openldap
 oc delete all -l app=postgresql
+oc delete all -l app=isvaop
 oc delete secret -l app=verifyaccess
 oc delete secret -l app=openldap
 oc delete secret -l app=postgresql

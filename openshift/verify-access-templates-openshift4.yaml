@@ -182,7 +182,7 @@ parameters:
   - displayName: Verify Identity Access Image Version
     description: The tag that will be used to pull the icr.io/ivia/ivia images.
     name: IVIA_VERSION
-    value: 10.0.3.1
+    value: 11.0.0.0
   - displayName: Config Service Name
     description: The name for the config service.  Also used as the hostname for connections within the cluster.
     name: CONFIG_SERVICE
@@ -397,7 +397,7 @@ parameters:
   - displayName: Verify Identity Access Image Version
     description: The tag that will be used to pull the icr.io/ivia/ivia-wrp image.
     name: IVIA_VERSION
-    value: 10.0.3.1
+    value: 11.0.0.0
   - displayName: Core Application Name
     description: The name of the core application (omit -core).  This must match what was
       configured when creating the core application.
@@ -584,7 +584,7 @@ parameters:
   - displayName: Verify Identity Access Image Version
     description: The tag that will be used to pull the icr.io/ivia/ivia images.
     name: IVIA_VERSION
-    value: 10.0.3.1
+    value: 11.0.0.0
   - displayName: Runtime Service Name
     description: The name for the runtime service.  Also used as the hostname for connections within the cluster.
     name: RUNTIME_SERVICE

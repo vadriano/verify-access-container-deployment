@@ -52,7 +52,7 @@ services:
     restart: always
     #command: tail -F /dev/null
     environment:
-#     - INSTANCE=rp1
+      - INSTANCE=rp1
 #     - SNAPSHOT=${SNAPSHOT}
 #     - FIXPACKS=${FIXPACKS}
       - CONTAINER_TIMEZONE=${TIMEZONE}
@@ -176,3 +176,16 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data:Z
       - ${HOME}/dockershare/composekeys/postgresql:/var/local:Z
+
+  isvaop:
+    image: ${CONTAINER_BASE}-oidc-provider:${ISVAOP_VERSION}
+    networks:
+      - isva-network
+    hostname: isvaop
+    restart: always
+    environment:
+      - CONTAINER_TIMEZONE=${TIMEZONE}
+    volumes:
+      - ${HOME}/dockershare/isvaop-config:/var/isvaop/config
+    depends_on:
+      - postgresql

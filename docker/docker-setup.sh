@@ -11,7 +11,7 @@ fi
 # Get environment from common/env-config.sh
 . $RUNDIR/../common/env-config.sh
 
-if [ ! -f "${DOCKERKEYS}/openldap/ldap.key" ] || [ ! -f "${DOCKERKEYS}/openldap/ldap.crt" ] || [ ! -f "${DOCKERKEYS}/openldap/ca.crt" ] || [ ! -f "${DOCKERKEYS}/openldap/dhparam.pem" ] || [ ! -f "${DOCKERKEYS}/postgresql/server.pem" ]
+if [ ! -f "$DOCKERKEYS/openldap/ldap.key" ] || [ ! -f "$DOCKERKEYS/openldap/ldap.crt" ] || [ ! -f "$DOCKERKEYS/openldap/ca.crt" ] || [ ! -f "$DOCKERKEYS/openldap/dhparam.pem" ] || [ ! -f "$DOCKERKEYS/postgresql/server.pem" ] || [ ! -f "$DOCKERKEYS/isvaop/personal/isvaop_key.pem" ] || [ ! -f "$DOCKERKEYS/isvaop/signer/isvaop.pem" ]
 then
   echo "Key files not found.  Restore or create keys before running this script."
   exit 1
@@ -36,3 +36,5 @@ docker run -t -d --restart always -v iviaconfig:/var/shared --hostname iviawrprp
 docker run -t -d --restart always -v iviaconfig:/var/shared --hostname iviaruntime --name iviaruntime -e CONTAINER_TIMEZONE=Europe/London --network ivia icr.io/ivia/ivia-runtime:${ISVA_VERSION}
 
 docker run -t -d --restart always -v iviaconfig:/var/shared --hostname iviadsc --name iviadsc -e CONTAINER_TIMEZONE=Europe/London -e INSTANCE=1 --network ivia icr.io/ivia/ivia-dsc:${ISVA_VERSION}
+
+docker run -t -d --restart always -v ${IVIAOPCONFIG}:/var/isvaop/config --hostname isvaop --name isvaop -e CONTAINER_TIMEZONE=Europe/London -e INSTANCE=1 --network isva ${CONTAINER_BASE}-oidc-provider:${IVIAOP_VERSION}

@@ -35,8 +35,9 @@ fi
 
 # Location where Keystores will be created
 DOCKERKEYS=${THISDIR}/local/dockerkeys
-
+ISVAOPCONFIG=${THISDIR}/common/isvaop-config
 # Location where Docker Shares will be created
 # Note that this directory is also hardcoded into YAML files
 DOCKERSHARE=${HOME}/dockershare
 export DOCKERSHARE
+export ISVAOPCONFIG

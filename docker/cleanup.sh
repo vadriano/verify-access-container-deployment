@@ -5,6 +5,7 @@ docker rm -fv iviaconfig
 docker rm -fv openldap
 docker rm -fv postgresql
 docker volume rm iviaconfig
+docker rm -fv isvaop
 docker volume rm libldap
 docker volume rm libsecauthority
 docker volume rm ldapslapd
