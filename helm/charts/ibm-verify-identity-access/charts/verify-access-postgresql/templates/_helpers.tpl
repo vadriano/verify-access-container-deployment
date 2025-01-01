@@ -3,7 +3,7 @@
 {{/*
 ###############################################################################
 # Licensed Materials - Property of IBM.
-# Copyright IBM Corporation 2019. All Rights Reserved.
+# Copyright IBM Corporation 2024. All Rights Reserved.
 # U.S. Government Users Restricted Rights - Use, duplication or disclosure
 # restricted by GSA ADP Schedule Contract with IBM Corp.
 #
@@ -23,7 +23,7 @@ to restrictions in the DNS.
 */}}
 
 {{- define "postgresql.name" -}}
-{{- printf "%s-isvapostgresql" .Release.Name | trunc 63 | trimSuffix "-" -}}
+{{- printf "%s-iviapostgresql" .Release.Name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{/*
@@ -31,7 +31,7 @@ Our postgresql database details
 */}}
 
 {{- define "postgresql.dbname" -}}
-{{- printf "isva" -}}
+{{- printf "ivia" -}}
 {{- end -}}
 
 {{- define "postgresql.dbuser" -}}

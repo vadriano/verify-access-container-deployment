@@ -19,10 +19,15 @@ MY_WEB1_IP=127.0.0.3
 MY_WEB2_IP=127.0.0.4
 
 # Versions
-CONTAINER_BASE=icr.io/ivia/verify-identity-access
-ISVA_VERSION=11.0.0.0
-LDAP_VERSION=11.0.0.0
-DB_VERSION=11.0.0.0
+#CONTAINER_BASE=icr.io/ivia/verify-identity-access
+#ISVA_VERSION=11.0.0.0
+#LDAP_VERSION=11.0.0.0
+#DB_VERSION=11.0.0.0
+
+CONTAINER_BASE=docker-na.artifactory.swg-devops.com/sec-isam-docker-local
+ISVA_VERSION=development
+LDAP_VERSION=development
+DB_VERSION=development
 
 
 # Get directory for this script

@@ -1,4 +1,4 @@
-{{- include "sch.config.init" (list . "isvapostgresql.sch.chart.config.values") -}}
+{{- include "sch.config.init" (list . "iviapostgresql.sch.chart.config.values") -}}
 
 {{- if .Values.container.enabled }}
 

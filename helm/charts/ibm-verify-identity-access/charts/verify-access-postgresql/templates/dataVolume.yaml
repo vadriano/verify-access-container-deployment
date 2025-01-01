@@ -1,4 +1,4 @@
-{{- include "sch.config.init" (list . "isvapostgresql.sch.chart.config.values") -}}
+{{- include "sch.config.init" (list . "iviapostgresql.sch.chart.config.values") -}}
 #
 # This file contains the definitions for the data volume used by this helm
 # chart.  We only create a persistent volume claim if persistence has been

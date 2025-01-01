@@ -11,7 +11,7 @@ for COMMAND in jq oc; do
     fi
 done
 
-if [ "$#" -ne "1" ]; then
+if [ "$#" -ne "2" ]; then
     echo "Usage: $0 <config_container_id> <snapshot_id>"
     exit 2
 fi
