@@ -1,6 +1,6 @@
 # Deploying Verify Identity Access using the OpenShift Operator
 
-1 - install operator (check version is 24.04 and OpenShift can pull images from icr.io)
+1 - install operator (check version is 24.12 and OpenShift can pull images from icr.io)
 
 2 - Deploy IVIA using template + use Ansible (or other) to configure containers with required junctions, access policies, federations, ect.
 
