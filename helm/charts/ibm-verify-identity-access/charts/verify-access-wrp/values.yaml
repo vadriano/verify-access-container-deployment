@@ -9,7 +9,7 @@
 global:
   # Common image variables
   image:
-    repository: icr.io/ivia/verify-identity-access-wrp:11.0.0.0
+    repository: icr.io/ivia/ivia-wrp:11.0.0.0
     pullPolicy: IfNotPresent
 
   # Image credentials.

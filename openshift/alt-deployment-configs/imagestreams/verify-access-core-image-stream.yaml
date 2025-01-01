@@ -64,7 +64,7 @@ objects:
       - annotations: null
         from:
           kind: DockerImage
-          name: 'icr.io/ivia/verify-identity-access-config:${IVIA_VERSION}'
+          name: 'icr.io/ivia/ivia-config:${IVIA_VERSION}'
         importPolicy: {}
         name: base
         referencePolicy:
@@ -222,7 +222,7 @@ objects:
       - annotations: null
         from:
           kind: DockerImage
-          name: 'icr.io/ivia/verify-identity-access-dsc:${IVIA_VERSION}'
+          name: 'icr.io/ivia/ivia-dsc:${IVIA_VERSION}'
         importPolicy: {}
         name: base
         referencePolicy:
@@ -641,7 +641,7 @@ objects:
       - annotations: null
         from:
           kind: DockerImage
-          name: 'icr.io/ivia/verify-identity-access-runtime:${IVIA_VERSION}'
+          name: 'icr.io/ivia/ivia-runtime:${IVIA_VERSION}'
         importPolicy: {}
         name: base
         referencePolicy:
@@ -881,7 +881,7 @@ parameters:
     name: APP_NAME
     value: verifyaccess
   - displayName: Verify Identity Access Image Version
-    description: The tag that will be used to pull the icr.io/ivia/verify-identity-access images.
+    description: The tag that will be used to pull the icr.io/ivia/ivia images.
     name: IVIA_VERSION
     value: 11.0.0.0
   - displayName: Config Service Name

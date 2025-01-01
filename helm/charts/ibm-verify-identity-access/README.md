@@ -20,11 +20,11 @@ This chart will deploy an IBM Verify Identity Access environment.  This environm
 
 The chart makes use of the verify identity access docker images, which are available on Verify Docs: 
 * [icr.io/ivia/verify-identiy-access](https://docs.verify.ibm.com/ibm-security-verify-access/docs/containers#configuration-container)
-* [icr.io/ivia/verify-identity-access-wrp](https://docs.verify.ibm.com/ibm-security-verify-access/docs/containers#web-reverse-proxy)
-* [icr.io/ivia/verify-identity-access-runtime](https://docs.verify.ibm.com/ibm-security-verify-access/docs/containers#aac-and-federation-runtime)
-* [icr.io/ivia/verify-identity-access-dsc](https://docs.verify.ibm.com/ibm-security-verify-access/docs/containers#distributed-session-cache)
-* [icr.io/ivia/verify-identity-access-openldap](https://docs.verify.ibm.com/ibm-security-verify-access/docs/containers#distributed-session-cache)
-* [icr.io/ivia/verify-identity-access-postgresql](https://docs.verify.ibm.com/ibm-security-verify-access/docs/containers#postgresql)
+* [icr.io/ivia/ivia-wrp](https://docs.verify.ibm.com/ibm-security-verify-access/docs/containers#web-reverse-proxy)
+* [icr.io/ivia/ivia-runtime](https://docs.verify.ibm.com/ibm-security-verify-access/docs/containers#aac-and-federation-runtime)
+* [icr.io/ivia/ivia-dsc](https://docs.verify.ibm.com/ibm-security-verify-access/docs/containers#distributed-session-cache)
+* [icr.io/ivia/ivia-openldap](https://docs.verify.ibm.com/ibm-security-verify-access/docs/containers#distributed-session-cache)
+* [icr.io/ivia/ivia-postgresql](https://docs.verify.ibm.com/ibm-security-verify-access/docs/containers#postgresql)
 
 ## Prerequisites
 
@@ -232,11 +232,11 @@ The following tables list the configurable parameters of the Verify Identity Acc
 
 | Parameter | Description | Default |
 | --------- | ----------- | ------- |
-| `global.image.configrepository` | The config container image repository. | `icr.io/ivia/verify-identity-access:11.0.0.0` |
-| `global.image.wrprepository` | The web reverse proxy image repository. | `icr.io/ivia/verify-identity-access-wrp:11.0.0.0` |
-| `global.image.runtimerepository` | The runtime repository. | `icr.io/ivia/verify-identity-access-runtime:11.0.0.0` |
-| `global.image.dscrepository` | The dsc repository. | `icr.io/ivia/verify-identity-access-dsc:11.0.0.0` |
-| `global.image.dbrepository` | The image repository for the postgresql server. | `icr.io/ivia/verify-identity-access-postgresql:11.0.0.0` |
+| `global.image.configrepository` | The config container image repository. | `icr.io/ivia/ivia:11.0.0.0` |
+| `global.image.wrprepository` | The web reverse proxy image repository. | `icr.io/ivia/ivia-wrp:11.0.0.0` |
+| `global.image.runtimerepository` | The runtime repository. | `icr.io/ivia/ivia-runtime:11.0.0.0` |
+| `global.image.dscrepository` | The dsc repository. | `icr.io/ivia/ivia-dsc:11.0.0.0` |
+| `global.image.dbrepository` | The image repository for the postgresql server. | `icr.io/ivia/ivia-postgresql:11.0.0.0` |
 | `global.image.ldaprepository` | The image repository for the openldap server. | `icr.io/isva/verify-access-openldap:10.0.6.0` |
 | `global.image.pullPolicy` | The image pull policy. | `IfNotPresent` |
 | `global.imageCredentials.dockerSecret` | The name of an existing secret which contains the Docker Store credentials. | (none) |

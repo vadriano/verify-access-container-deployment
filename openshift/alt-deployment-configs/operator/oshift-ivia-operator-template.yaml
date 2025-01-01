@@ -143,7 +143,7 @@ parameters:
     description: This is the tag used to identify verify-identity-access images. The required containers should have a
        '-wrp', '-dsc' or '-runtime' suffix.
     name: IVIA_BASE_IMAGE_NAME
-    value: icr.io/ivia/verify-identity-access
+    value: icr.io/ivia/ivia
   - displayName: Service Account
     description: This is the (existing) Service Account for running the pods.
     name: SERVICE_ACCOUNT

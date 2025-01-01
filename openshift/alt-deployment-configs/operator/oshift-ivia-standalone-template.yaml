@@ -522,7 +522,7 @@ parameters:
     description: This is the name used to identify verify identity access images. The supporting containers should have a
        \'-wrp\' or \'-runtime\' suffixes. This value should include the registry domain.
     name: IVIA_IMAGE_NAME
-    value: icr.io/ivia/verify-identity-access
+    value: icr.io/ivia/ivia
   - displayName: Timezone
     description: The timezone for message logging (e.g. Europe/London)
     name: TIMEZONE

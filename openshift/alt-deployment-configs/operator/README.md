@@ -16,7 +16,7 @@ services before creating containers.
         -p DSC_SERVICE='iviadsc' \
         -p CONFIG_ID='cfgsvc' \
         -p CONFIG_PW='betterThanPassw0rd' \
-        -p IVIA_IMAGE_NAME='icr.io/ivia/verify-identity-access' \
+        -p IVIA_IMAGE_NAME='icr.io/ivia/ivia' \
         -p TIMEZONE='Etc/UTC' \
         -p SERVICE_ACCOUNT='verifyaccess' \
         | oc create -f -
@@ -42,7 +42,7 @@ eg: `$ bash upload_snapshot_to_operator.sh isamconfig-8694c5fb66-77rr5 ivia_10.0
 
     oc process -f oshift-ivia-operator-template.yaml \
         -p APP_NAME='verify-identity-access-operator-demo' \
-        -p IVIA_BASE_IMAGE_NAME='icr.io/ivia/verify-identity-access' \
+        -p IVIA_BASE_IMAGE_NAME='icr.io/ivia/ivia' \
         -p SERVICE_ACCOUNT='verifyaccess' \
         -p IVIA_VERSION='11.0.0.0' \
         -p INSTANCE='default' \

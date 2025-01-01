@@ -95,7 +95,7 @@ objects:
               secretKeyRef:
                 name: ${APP_NAME}-config
                 key: config-read-password
-          image: icr.io/ivia/verify-identity-access-snapshotmgr:${IVIA_VERSION}
+          image: icr.io/ivia/ivia-snapshotmgr:${IVIA_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}-snapmgr
           resources: {}
@@ -140,7 +140,7 @@ parameters:
     name: APP_NAME
     value: verifyidentityaccess
   - displayName: Verify Access Image Version
-    description: The tag that will be used to pull the icr.io.ivia/verify-identity-access-snapshotmgr image.
+    description: The tag that will be used to pull the icr.io.ivia/ivia-snapshotmgr image.
     name: IVIA_VERSION
     value: 11.0.0.0
   - displayName: Snapshot Service Name
@@ -283,7 +283,7 @@ objects:
                 name: ${APP_NAME}-config
                 key: config-read-password
 
-          image: icr.io/ivia/verify-identity-access-config:${IVIA_VERSION}
+          image: icr.io/ivia/ivia-config:${IVIA_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}-config
           resources: {}
@@ -355,7 +355,7 @@ parameters:
     name: APP_NAME
     value: ibmvia
   - displayName: Verify Identity Access Image Version
-    description: The tag that will be used to pull the icr.io/ivia/verify-identity-access images.
+    description: The tag that will be used to pull the icr.io/ivia/ivia images.
     name: IVIA_VERSION
     value: 11.0.0.0
   - displayName: Config Service Name

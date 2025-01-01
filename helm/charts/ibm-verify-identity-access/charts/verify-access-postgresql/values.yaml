@@ -9,7 +9,7 @@
 global:
   # Common image variables
   image:
-    dbrepository: icr.io/ivia/verify-identity-access-postgresql:11.0.0.0
+    dbrepository: icr.io/ivia/ivia-postgresql:11.0.0.0
     pullPolicy:   IfNotPresent
 
   # Container configuration.

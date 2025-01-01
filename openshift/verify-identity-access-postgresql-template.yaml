@@ -102,7 +102,7 @@ objects:
                 key: database-name
           - name: POSTGRES_SSL_KEYDB
             value: /var/local/server.pem
-          image: icr.io/ivia/verify-identity-access-postgresql:${DB_VERSION}
+          image: icr.io/ivia/ivia-postgresql:${DB_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}
           livenessProbe:
@@ -163,7 +163,7 @@ parameters:
     name: APP_NAME
     value: postgresql
   - displayName: Image Version
-    description: The tag that will be used to pull the icr.io/ivia/verify-identity-access-postgresql image.
+    description: The tag that will be used to pull the icr.io/ivia/ivia-postgresql image.
     name: DB_VERSION
     value: 11.0.0.0
   - displayName: Administrator Username

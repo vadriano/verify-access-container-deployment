@@ -61,7 +61,7 @@ objects:
       - annotations: null
         from:
           kind: DockerImage
-          name: 'icr.io/ivia/verify-identity-access-wrp:${IVIA_VERSION}'
+          name: 'icr.io/ivia/ivia-wrp:${IVIA_VERSION}'
         importPolicy: {}
         name: base
         referencePolicy:

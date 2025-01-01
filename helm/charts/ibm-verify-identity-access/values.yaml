@@ -9,11 +9,11 @@
 global:
   # Common image variables
   image:
-    configrepository:   icr.io/ivia/verify-identity-access-config:11.0.0.0
-    wrprepository:   icr.io/ivia/verify-identity-access-wrp:11.0.0.0
-    runtimerepository:   icr.io/ivia/verify-identity-access-runtime:11.0.0.0
-    dscrepository:   icr.io/ivia/verify-identity-access-dsc:11.0.0.0
-    dbrepository: icr.io/ivia/verify-identity-access-postgresql:11.0.0.0
+    configrepository:   icr.io/ivia/ivia-config:11.0.0.0
+    wrprepository:   icr.io/ivia/ivia-wrp:11.0.0.0
+    runtimerepository:   icr.io/ivia/ivia-runtime:11.0.0.0
+    dscrepository:   icr.io/ivia/ivia-dsc:11.0.0.0
+    dbrepository: icr.io/ivia/ivia-postgresql:11.0.0.0
     ldaprepository: icr.io/isva/verify-access-openldap:10.0.6.0
     pullPolicy:   IfNotPresent
 

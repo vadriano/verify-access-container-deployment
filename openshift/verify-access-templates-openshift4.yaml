@@ -108,7 +108,7 @@ objects:
               secretKeyRef:
                 key: lmi-admin-password
                 name: ${APP_NAME}-lmi
-          image: icr.io/ivia/verify-identity-access-config:${IVIA_VERSION}
+          image: icr.io/ivia/ivia-config:${IVIA_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}-config
           resources: {}
@@ -180,7 +180,7 @@ parameters:
     name: APP_NAME
     value: verifyaccess
   - displayName: Verify Identity Access Image Version
-    description: The tag that will be used to pull the icr.io/ivia/verify-identity-access images.
+    description: The tag that will be used to pull the icr.io/ivia/ivia images.
     name: IVIA_VERSION
     value: 10.0.3.1
   - displayName: Config Service Name
@@ -314,7 +314,7 @@ objects:
               secretKeyRef:
                 name: ${CORE_APP_NAME}-config
                 key: config-read-password
-          image: icr.io/ivia/verify-identity-access-wrp:${IVIA_VERSION}
+          image: icr.io/ivia/ivia-wrp:${IVIA_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${CORE_APP_NAME}-wrp-${INSTANCE_NAME}
           ports:
@@ -395,7 +395,7 @@ objects:
     loadBalancer: {}
 parameters:
   - displayName: Verify Identity Access Image Version
-    description: The tag that will be used to pull the icr.io/ivia/verify-identity-access-wrp image.
+    description: The tag that will be used to pull the icr.io/ivia/ivia-wrp image.
     name: IVIA_VERSION
     value: 10.0.3.1
   - displayName: Core Application Name
@@ -512,7 +512,7 @@ objects:
               secretKeyRef:
                 name: ${APP_NAME}-config
                 key: config-read-password
-          image: icr.io/ivia/verify-identity-access-runtime:${IVIA_VERSION}
+          image: icr.io/ivia/ivia-runtime:${IVIA_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}-runtime
           ports:
@@ -582,7 +582,7 @@ parameters:
     name: APP_NAME
     value: verifyaccess
   - displayName: Verify Identity Access Image Version
-    description: The tag that will be used to pull the icr.io/ivia/verify-identity-access images.
+    description: The tag that will be used to pull the icr.io/ivia/ivia images.
     name: IVIA_VERSION
     value: 10.0.3.1
   - displayName: Runtime Service Name
@@ -693,7 +693,7 @@ objects:
               secretKeyRef:
                 name: ${APP_NAME}-config
                 key: config-read-password
-          image: icr.io/ivia/verify-identity-access-dsc:${IVIA_VERSION}
+          image: icr.io/ivia/ivia-dsc:${IVIA_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}-dsc1
           ports:
@@ -793,7 +793,7 @@ objects:
               secretKeyRef:
                 name: ${APP_NAME}-config
                 key: config-read-password
-          image: icr.io/ivia/verify-identity-access-dsc:${IVIA_VERSION}
+          image: icr.io/ivia/ivia-dsc:${IVIA_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}-dsc2
           ports:
@@ -893,7 +893,7 @@ objects:
               secretKeyRef:
                 name: ${APP_NAME}-config
                 key: config-read-password
-          image: icr.io/ivia/verify-identity-access-dsc:${IVIA_VERSION}
+          image: icr.io/ivia/ivia-dsc:${IVIA_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}-dsc3
           ports:
@@ -993,7 +993,7 @@ objects:
               secretKeyRef:
                 name: ${APP_NAME}-config
                 key: config-read-password
-          image: icr.io/ivia/verify-identity-access-dsc:${IVIA_VERSION}
+          image: icr.io/ivia/ivia-dsc:${IVIA_VERSION}
           imagePullPolicy: IfNotPresent
           name: ${APP_NAME}-dsc4
           ports:
@@ -1133,7 +1133,7 @@ parameters:
     name: APP_NAME
     value: verifyaccess
   - displayName: Verify Identity Access Image Version
-    description: The tag that will be used to pull the icr.io/ivia/verify-identity-access images.
+    description: The tag that will be used to pull the icr.io/ivia/ivia images.
     name: IVIA_VERSION
     value: 11.0.0.0
   - displayName: Primary DSC Service Name
