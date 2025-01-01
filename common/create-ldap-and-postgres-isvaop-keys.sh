@@ -50,7 +50,7 @@ else
 fi
 
 cat  "$DOCKERKEYS/postgresql/postgres.crt" "$DOCKERKEYS/postgresql/postgres.key" > "$DOCKERKEYS/postgresql/server.pem"
-cp "$DOCKERKEYS/postgresql/postgres.crt" ${ISVAOPCONFIG}
+cp "$DOCKERKEYS/postgresql/postgres.crt" ${IVIAOPCONFIG}
 
 if [ ! -f "$DOCKERKEYS/isvaop/personal/isvaop.key" ] || [ ! -f "$DOCKERKEYS/isvaop/signer/isvaop.pem" ]
 then
@@ -59,5 +59,5 @@ then
 else
 	echo "ISVAOP certificate files found - using existing certificate files"
 fi
-cp "$DOCKERKEYS/isvaop/personal/isvaop_key.pem" ${ISVAOPCONFIG}
-cp "$DOCKERKEYS/isvaop/signer/isvaop.pem" ${ISVAOPCONFIG}
+cp "$DOCKERKEYS/isvaop/personal/isvaop_key.pem" ${IVIAOPCONFIG}
+cp "$DOCKERKEYS/isvaop/signer/isvaop.pem" ${IVIAOPCONFIG}

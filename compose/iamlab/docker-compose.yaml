@@ -177,11 +177,11 @@ services:
       - pgdata:/var/lib/postgresql/data:Z
       - ${HOME}/dockershare/composekeys/postgresql:/var/local:Z
 
-  isvaop:
-    image: ${CONTAINER_BASE}-oidc-provider:${ISVAOP_VERSION}
+  iviaop:
+    image: ${CONTAINER_BASE}-oidc-provider:${IVIAOP_VERSION}
     networks:
       - isva-network
-    hostname: isvaop
+    hostname: iviaop
     restart: always
     environment:
       - CONTAINER_TIMEZONE=${TIMEZONE}

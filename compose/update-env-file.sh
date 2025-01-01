@@ -22,7 +22,7 @@ sed  '/ISVA_VERSION/d' .env.original > .env
 mv .env .env.original
 sed  '/LDAP_VERSION/d' .env.original > .env
 mv .env .env.original
-sed  '/ISVAOP_VERSION/d' .env.original > .env
+sed  '/IVIAOP_VERSION/d' .env.original > .env
 mv .env .env.original
 sed  '/DB_VERSION/d' .env.original > .env
 mv .env .env.original
@@ -36,7 +36,7 @@ DB_VERSION=${DB_VERSION}
 LMI_IP=${MY_LMI_IP}
 WEB1_IP=${MY_WEB1_IP}
 WEB2_IP=${MY_WEB2_IP}
-ISVAOP_VERSION=${ISVAOP_VERSION}
+IVIAOP_VERSION=${IVIAOP_VERSION}
 EOF
 
 

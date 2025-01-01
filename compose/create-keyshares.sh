@@ -27,7 +27,7 @@ cp -R $DOCKERKEYS/* $KEY_DIR
 echo "Done."
 
 echo "Creating isvaop config shares at $CONFIG_DIR"
-cp -R $ISVAOPCONFIG/* $CONFIG_DIR
+cp -R $IVIAOPCONFIG/* $CONFIG_DIR
 cp $DOCKERKEYS/isvaop/personal/* $CONFIG_DIR
 cp $DOCKERKEYS/isvaop/signer/* $CONFIG_DIR
 cp $DOCKERKEYS/postgresql/postgres.crt $CONFIG_DIR
