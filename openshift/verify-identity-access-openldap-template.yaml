@@ -1,0 +1,227 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+labels:
+  template: verify-identity-access-openldap
+metadata:
+  creationTimestamp: null
+  name: verify-access-openldap
+  annotations:
+    openshift.io/display-name: IBM Verify Identity Access OpenLDAP
+    iconClass: icon-sso
+    description: An OpenLDAP container provided for testing.
+    openshift.io/long-description: An OpenLDAP container which has the IBM Verify Identity Access schema
+      pre-loaded and is enabled for secure communication.  This container is provided as-is
+      for testing and demonstration purposes only.
+    openshift.io/documentation-url: https://ibm.biz/verifyaccesscontainers
+    openshift.io/provider-display-name: IBM Verify Identity Access
+    openshift.io/support-url: https://ibm.biz/iamcommunity
+    tags: ibm, verifyaccess, isam, isva, ivia
+message: |-
+  The following service has been created in your project: ${APP_NAME}.
+
+  Admin Bind DN: cn=root,secAuthority=default
+  Admin Bind PW: ${ADMIN_PW}
+
+  Configuration PW: ${CONFIG_PW}
+objects:
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    name: ${APP_NAME}-ldaplib
+    labels:
+      app: ${APP_NAME}
+  spec:
+    storageClassName: ${STORAGE_CLASS}
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 50Mi
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    name: ${APP_NAME}-ldapslapd
+    labels:
+      app: ${APP_NAME}
+  spec:
+    storageClassName: ${STORAGE_CLASS}
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 50Mi
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    name: ${APP_NAME}-ldapsecauthority
+    labels:
+      app: ${APP_NAME}
+  spec:
+    storageClassName: ${STORAGE_CLASS}
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 50Mi
+- apiVersion: v1
+  kind: Secret
+  metadata:
+    annotations:
+      template.openshift.io/expose-domain: '{.data[''domain'']}'
+      template.openshift.io/expose-admin_password: '{.data[''admin-password'']}'
+      template.openshift.io/expose-config_password: '{.data[''config-password'']}'
+    name: ${APP_NAME}
+    labels:
+      app: ${APP_NAME}
+  stringData:
+    domain: ${DOMAIN}
+    admin-password: ${ADMIN_PW}
+    config-password: ${CONFIG_PW}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "2"
+    creationTimestamp: null
+    generation: 3
+    labels:
+      app: ${APP_NAME}
+    name: ${APP_NAME}
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: ${APP_NAME}
+    strategy:
+      rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 1
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: ${APP_NAME}
+      spec:
+        serviceAccountName: ${SERVICE_ACCOUNT}
+        containers:
+        - args:
+          - --copy-service
+          env:
+          - name: LDAP_DOMAIN
+            valueFrom:
+              secretKeyRef:
+                name: ${APP_NAME}
+                key: domain
+          - name: LDAP_ADMIN_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: ${APP_NAME}
+                key: admin-password
+          - name: LDAP_CONFIG_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: ${APP_NAME}
+                key: config-password
+          image: icr.io/isva/verify-access-openldap:${LDAP_VERSION}
+          imagePullPolicy: IfNotPresent
+          name: ${APP_NAME}
+          livenessProbe:
+            tcpSocket:
+              port: 636
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          readinessProbe:
+            tcpSocket:
+              port: 636
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          ports:
+          - containerPort: 636
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/ldap
+            name: ${APP_NAME}-ldaplib
+          - mountPath: /etc/ldap/slapd.d
+            name: ${APP_NAME}-ldapslapd
+          - mountPath: /var/lib/ldap.secAuthority
+            name: ${APP_NAME}-ldapsecauthority
+          - mountPath: /container/service/slapd/assets/certs
+            name: ${APP_NAME}-keys
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: ${APP_NAME}-ldapslapd
+          persistentVolumeClaim:
+            claimName: ${APP_NAME}-ldapslapd
+        - name: ${APP_NAME}-ldaplib
+          persistentVolumeClaim:
+            claimName: ${APP_NAME}-ldaplib
+        - name: ${APP_NAME}-ldapsecauthority
+          persistentVolumeClaim:
+            claimName: ${APP_NAME}-ldapsecauthority
+        - name: ${APP_NAME}-keys
+          secret:
+            defaultMode: 420
+            secretName: ${KEY_SECRET}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: null
+    labels:
+      app: ${APP_NAME}
+    name: ${APP_NAME}
+  spec:
+    ports:
+    - name: ldaps
+      port: 636
+      protocol: TCP
+      targetPort: 636
+    selector:
+      app: ${APP_NAME}
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+parameters:
+  - displayName: Application Name
+    description: The name of the application.  Also used as the hostname for connections within the cluster.
+    name: APP_NAME
+    value: openldap
+  - displayName: Image Version
+    description: The tag that will be used to pull the icr.io/isva/verify-access-openldap image.
+    name: LDAP_VERSION
+    value: 10.0.6.0
+  - displayName: Domain
+    description: This is used to create the suffix for users.  A value of ibm.com would create suffix dc=ibm,dc=com.
+    name: DOMAIN
+    value: ibm.com
+  - displayName: Administrator Password
+    description: This is the password for the cn=root,secAuthority=Default user.
+    name: ADMIN_PW
+    from: '[a-zA-Z0-9]{16}'
+    generate: expression
+  - displayName: Configuration Password
+    description: This is the configuration password for the OpenLDAP.
+    name: CONFIG_PW
+    from: '[a-zA-Z0-9]{16}'
+    generate: expression
+  - displayName: Keys Secret
+    description: The (existing) Secret for crypto data.  Files required are ca.crt, ldap.crt, ldap.key, dhparam.pem.
+    name: KEY_SECRET
+    value: openldap-keys
+  - displayName: Storage class
+    description: Storage class that will be requested by PVC.
+    name: STORAGE_CLASS
+    value: default
+  - displayName: Service Account
+    description: This is the (existing) Service Account for running the pods.  It must allow RUNASANY user.
+    name: SERVICE_ACCOUNT
+    value: verifyaccess-anyuid

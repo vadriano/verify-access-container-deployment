@@ -27,7 +27,7 @@ fi
 # Check the snapshot exists
 oc exec -t $1 -- ls -lah /var/shared/snapshots/$2
 if [ "$?" -ne "0" ]; then
-    echo "Could not find snapshot id in given container"
+    echo "Could not find snapshot id [$2] in config container [$1]"
     exit 4
 fi
 

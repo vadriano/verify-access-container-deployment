@@ -1,20 +1,20 @@
 apiVersion: v1
 kind: Template
 labels:
-  template: verify-access-core
+  template: verify-identity-access-core
 metadata:
   creationTimestamp: null
-  name: verify-access-core
+  name: verify-dentity-access-core
   annotations:
-    openshift.io/display-name: IBM Security Verify Access Core
+    openshift.io/display-name: IBM Verify Identity Access Core
     iconClass: icon-sso
-    description: IBM Security Verify Access Core Services
+    description: IBM Verify Identity Access Core Services
     openshift.io/long-description: This template deploys the core services required for an IBM
-      Security Verify Access environment.  Initially only the Config Service starts.
+      Verify Identity Access environment.  Initially only the Config Service starts.
     openshift.io/documentation-url: https://ibm.biz/verifyaccesscontainers
-    openshift.io/provider-display-name: IBM Security Verify Access
+    openshift.io/provider-display-name: IBM Verify Identity Access
     openshift.io/support-url: https://ibm.biz/iamcommunity
-    tags: ibm, verifyaccess
+    tags: ibm, verifyaccess, identity, isam, ivia, ivia
 message: |-
 
   Application Name: ${APP_NAME}
@@ -64,7 +64,7 @@ objects:
       - annotations: null
         from:
           kind: DockerImage
-          name: 'docker.io/ibmcom/verify-access:${ISVA_VERSION}'
+          name: 'icr.io/ivia/ivia-config:${IVIA_VERSION}'
         importPolicy: {}
         name: base
         referencePolicy:
@@ -222,7 +222,7 @@ objects:
       - annotations: null
         from:
           kind: DockerImage
-          name: 'docker.io/ibmcom/verify-access-dsc:${ISVA_VERSION}'
+          name: 'icr.io/ivia/ivia-dsc:${IVIA_VERSION}'
         importPolicy: {}
         name: base
         referencePolicy:
@@ -260,7 +260,7 @@ objects:
         labels:
           app: ${APP_NAME}-core
           name: ${APP_NAME}-dsc1
-          isvaaffinity: ${APP_NAME}-dsc
+          iviaaffinity: ${APP_NAME}-dsc
       spec:
         serviceAccountName: ${SERVICE_ACCOUNT}
         securityContext:
@@ -273,7 +273,7 @@ objects:
               podAffinityTerm:
                 labelSelector:
                   matchExpressions:
-                  - key: isvaaffinity
+                  - key: iviaaffinity
                     operator: In
                     values:
                     - ${APP_NAME}-dsc
@@ -356,7 +356,7 @@ objects:
         labels:
           app: ${APP_NAME}-core
           name: ${APP_NAME}-dsc2
-          isvaaffinity: ${APP_NAME}-dsc
+          iviaaffinity: ${APP_NAME}-dsc
       spec:
         serviceAccountName: ${SERVICE_ACCOUNT}
         securityContext:
@@ -369,7 +369,7 @@ objects:
               podAffinityTerm:
                 labelSelector:
                   matchExpressions:
-                  - key: isvaaffinity
+                  - key: iviaaffinity
                     operator: In
                     values:
                     - ${APP_NAME}-dsc
@@ -452,7 +452,7 @@ objects:
         labels:
           app: ${APP_NAME}-core
           name: ${APP_NAME}-dsc3
-          isvaaffinity: ${APP_NAME}-dsc
+          iviaaffinity: ${APP_NAME}-dsc
       spec:
         serviceAccountName: ${SERVICE_ACCOUNT}
         securityContext:
@@ -465,7 +465,7 @@ objects:
               podAffinityTerm:
                 labelSelector:
                   matchExpressions:
-                  - key: isvaaffinity
+                  - key: iviaaffinity
                     operator: In
                     values:
                     - ${APP_NAME}-dsc
@@ -548,7 +548,7 @@ objects:
         labels:
           app: ${APP_NAME}-core
           name: ${APP_NAME}-dsc4
-          isvaaffinity: ${APP_NAME}-dsc
+          iviaaffinity: ${APP_NAME}-dsc
       spec:
         serviceAccountName: ${SERVICE_ACCOUNT}
         securityContext:
@@ -561,7 +561,7 @@ objects:
               podAffinityTerm:
                 labelSelector:
                   matchExpressions:
-                  - key: isvaaffinity
+                  - key: iviaaffinity
                     operator: In
                     values:
                     - ${APP_NAME}-dsc
@@ -641,7 +641,7 @@ objects:
       - annotations: null
         from:
           kind: DockerImage
-          name: 'docker.io/ibmcom/verify-access-runtime:${ISVA_VERSION}'
+          name: 'icr.io/ivia/ivia-runtime:${IVIA_VERSION}'
         importPolicy: {}
         name: base
         referencePolicy:
@@ -880,30 +880,30 @@ parameters:
     description: This is the name for the application which is used to create unique object names in the cluster.
     name: APP_NAME
     value: verifyaccess
-  - displayName: Verify Access Image Version
-    description: The tag that will be used to pull the ibmcom/verify-access images.
-    name: ISVA_VERSION
-    value: 10.0.3.1
+  - displayName: Verify Identity Access Image Version
+    description: The tag that will be used to pull the icr.io/ivia/ivia images.
+    name: IVIA_VERSION
+    value: 11.0.0.0
   - displayName: Config Service Name
     description: The name for the config service.  Also used as the hostname for connections within the cluster.
     name: CONFIG_SERVICE
-    value: isvaconfig
+    value: iviaconfig
   - displayName: Primary DSC Service Name
     description: The name for the Primary DSC service.  Also used as the hostname for connections within the cluster.
       Other DSC service/host names will have 2, 3, and 4 appended.
     name: DSC_SERVICE
-    value: isvadsc
+    value: iviadsc
   - displayName: Runtime Service Name
     description: The name for the runtime service.  Also used as the hostname for connections within the cluster.
     name: RUNTIME_SERVICE
-    value: isvaruntime
+    value: iviaruntime
   - displayName: LMI Admin Password
     description: This will be the password for the config service admin user (for both Web and REST access)
     name: ADMIN_PW
     from: '[a-zA-Z0-9]{16}'
     generate: expression
   - displayName: Image Pull Secret
-    description: This is an (existing) docker login secret for pulling the Access Manager image.
+    description: This is an (existing) docker login secret for pulling the Verify Identity Access images.
       Only required if hosting images on a private repository.
     name: PULL_SECRET
     value: dockerlogin
@@ -912,6 +912,6 @@ parameters:
     name: TIMEZONE
     value: Etc/UTC
   - displayName: Service Account
-    description: This is the (existing) Service Account for running the pods.  It must allow runAsNonRoot, SETUID, SETGID.
+    description: This is the (existing) Service Account for running the pods.
     name: SERVICE_ACCOUNT
     value: verifyaccess

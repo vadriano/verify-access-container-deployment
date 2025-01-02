@@ -1,0 +1,27 @@
+#
+# This file contains the definition for this helm chart.
+#
+
+name: verify-identity-access-postgresql
+description: A demonstration PostgreSQL database which can be used by IBM Verify Identity Access.
+icon: https://d1q6f0aelx0por.cloudfront.net/product-logos/32925feb-af2b-4b4c-8276-def2a031ed31-artwork2x.png
+
+version: 1.4.0
+tillerVersion: ">=2.6.0"
+engine: gotpl
+AppVersion: 11.0.0.0
+
+keywords:
+  - isam
+  - isva
+  - ivia
+  - amd64
+  - Security
+
+home: https://docs.verify.ibm.com/ibm-security-verify-access/docs/containers#postgresql
+
+sources:
+  - https://github.com/ibm-security/helm-charts/tree/master/
+
+maintainers:
+  - name: IBM Verify Identity Access

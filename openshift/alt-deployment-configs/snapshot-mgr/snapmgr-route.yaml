@@ -14,6 +14,6 @@ spec:
     termination: passthrough
   to:
     kind: Service
-    name: isvasnapmgr
+    name: iviasnapmgr
     weight: 100
   wildcardPolicy: None

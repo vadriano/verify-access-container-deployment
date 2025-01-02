@@ -10,7 +10,7 @@ fi
 
 . ${RUNDIR}/../common/env-config.sh
 
-if [ ! -d "${ISVAOPCONFIG}" ] 
+if [ ! -d "${IVIAOPCONFIG}" ] 
 then
   echo "Configuration files not found. "
   exit 1
@@ -20,5 +20,5 @@ fi
 echo "Deleting confimap"
 kubectl delete configmap isvaop-config
 echo "Creating confimap for isvaop"
-kubectl create configmap isvaop-config --from-file=${ISVAOPCONFIG}
+kubectl create configmap isvaop-config --from-file=${IVIAOPCONFIG}
 echo "Done."

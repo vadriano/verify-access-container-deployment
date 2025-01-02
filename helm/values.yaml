@@ -9,12 +9,12 @@
 global:
   # Common image variables
   image:
-    configrepository:   ibmcom/verify-access:10.0.3.1
-    wrprepository:   ibmcom/verify-access-wrp:10.0.3.1
-    runtimerepository:   ibmcom/verify-access-runtime:10.0.3.1
-    dscrepository:   ibmcom/verify-access-dsc:10.0.3.1
-    dbrepository: ibmcom/verify-access-postgresql:10.0.3.1
-    ldaprepository: ibmcom/verify-access-openldap:10.0.3.1
+    configrepository:   icr.io/ivia/ivia-config:11.0.0.0
+    wrprepository:   icr.io/ivia/ivia-wrp:11.0.0.0
+    runtimerepository:   icr.io/ivia/ivia-runtime:11.0.0.0
+    dscrepository:   icr.io/ivia/ivia-dsc:11.0.0.0
+    dbrepository: icr.io/ivia/ivia-postgresql:11.0.0.0
+    ldaprepository: icr.io/isva/verify-access-openldap:10.0.6.0
     pullPolicy:   IfNotPresent
 
   # Image credentials.
@@ -25,7 +25,7 @@ global:
   container:
     snapshot:           ""
     fixpacks:           ""
-    adminSecret:        "helm-isvaadmin"
+    adminSecret:        "helm-iviaadmin"
     timezone:           "Etc/UTC"
 
   # Persistence Storage
@@ -34,12 +34,12 @@ global:
     useDynamicProvisioning: true
 
   # Config container service Name
-  configservicename: isvaconfig
+  configservicename: iviaconfig
 
 ###############################################################################
 # Configuration container variables.
 
-isvaconfig:
+iviaconfig:
 
   # Resource Configuration.
   # Information on computing resources can be found at:
@@ -72,13 +72,13 @@ isvaconfig:
 ###############################################################################
 # Web Reverse Proxy container variables.
 
-isvawrp:
+iviawrp:
 
   # Container configuration.
   container:
     instances:
       - name: rp1
-        servicename: isvawrprp1
+        servicename: iviawrprp1
         servicetype: ClusterIP
         nodePort:
         replicas: 1
@@ -97,7 +97,7 @@ isvawrp:
 ###############################################################################
 # Runtime container variables.
 
-isvaruntime:
+iviaruntime:
 
   # Container configuration.
   container:
@@ -116,12 +116,12 @@ isvaruntime:
       cpu:    2000m
 
   service:
-    servicename: isvaruntime
+    servicename: iviaruntime
 
 ###############################################################################
 # DSC container variables.
 
-isvadsc:
+iviadsc:
 
   # Container configuration.
   container:
@@ -140,12 +140,12 @@ isvadsc:
       cpu:    1000m
 
   service:
-    servicename: isvadsc
+    servicename: iviadsc
 
 ###############################################################################
 # postgresql container variables.
 
-isvapostgresql:
+iviapostgresql:
 
   # Container configuration.
   container:
@@ -182,7 +182,7 @@ isvapostgresql:
 ###############################################################################
 # openldap container variables.
 
-isvaopenldap:
+iviaopenldap:
 
   # Container configuration.
   container:

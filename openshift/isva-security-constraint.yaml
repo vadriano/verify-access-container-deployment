@@ -1,6 +1,6 @@
 
 # The minimum security context constraints which are required to run
-# the Verify Access container.  We cannot use the 'restricted' security
+# the Verify Identity Access container.  We cannot use the 'restricted' security
 # constraint as we need additional capabilities which would otherwise
 # be denied to the container.  The 'anyuid' security constraint may
 # be used, but it allows additional capabilities which are not

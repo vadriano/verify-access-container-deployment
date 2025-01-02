@@ -27,11 +27,11 @@ kubectl delete secret postgresql-keys > /dev/null 2>&1
 echo "Creating server.pem as a Secret"
 kubectl create secret generic postgresql-keys --from-file "${DOCKERKEYS}/postgresql/server.pem"
 
-echo "Deleting isvaadmin Secret"
-kubectl delete secret isvaadmin > /dev/null 2>&1
-echo "Creating isvaadmin Secret"
-kubectl create secret generic isvaadmin
-kubectl patch secret/isvaadmin -p '{"data":{"adminpw":"UGFzc3cwcmQ="}}'
+echo "Deleting iviaadmin Secret"
+kubectl delete secret iviaadmin > /dev/null 2>&1
+echo "Creating iviaadmin Secret"
+kubectl create secret generic iviaadmin
+kubectl patch secret/iviaadmin -p '{"data":{"adminpw":"UGFzc3cwcmQ="}}'
 
 echo "Deleting configreader Secret"
 kubectl delete secret configreader > /dev/null 2>&1

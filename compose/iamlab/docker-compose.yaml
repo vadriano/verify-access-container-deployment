@@ -1,91 +1,136 @@
 version: '3'
 
 volumes:
-  isvaconfig:
+  iviaconfig:
   libldap:
   ldapslapd:
   libsecauthority:
   pgdata:
 
-
 networks:
-  isva-network:
-    name: isva-compose-net
+  ivia-network:
+    name: ivia-compose-net
 
 services:
 
 #
-# Verify Access Containers
+# Verify Identity Access Containers
 #
 
-  isvaconfig:
-    image: ${CONTAINER_BASE}:${ISVA_VERSION}
-    hostname: isvaconfig
+  iviaconfig:
+    image: ${CONTAINER_BASE}-config:${ISVA_VERSION}
+    hostname: iviaconfig
     networks:
-      - isva-network
+      - ivia-network
     restart: always
     environment:
 #     - SNAPSHOT=${SNAPSHOT}
 #     - FIXPACKS=${FIXPACKS}
       - CONTAINER_TIMEZONE=${TIMEZONE}
       - ADMIN_PWD=${ADMIN_PASSWORD}
+#      - CONFIG_SNAPSHOT_SECRETS=anotherSecretToDecryptWith||aKeyToTryAndDecryptWith
     volumes:
-      - isvaconfig:/var/shared
+      - iviaconfig:/var/shared:rw,z
     ports:
       - "${LMI_IP}:9443:9443"
+    extra_hosts:
+      - "instana.gc.au.ibm.com:10.150.25.144"
+      - "apm.gc.au.ibm.com:10.150.25.145"
+      - "instana-std.apm.gc.au.ibm.com:10.150.25.145"
+      - "agent-acceptor.apm.gc.au.ibm.com:10.150.25.145"
     depends_on:
       - openldap
       - postgresql
 
-  isvawrprp1:
+  iviawrprp1:
     image: ${CONTAINER_BASE}-wrp:${ISVA_VERSION}
-    hostname: isvawrprp1
+    hostname: iviawrprp1
     networks:
-      isva-network:
+      ivia-network:
         aliases:
           - www.iamlab.ibm.com
     restart: always
+    #command: tail -F /dev/null
     environment:
       - INSTANCE=rp1
 #     - SNAPSHOT=${SNAPSHOT}
 #     - FIXPACKS=${FIXPACKS}
       - CONTAINER_TIMEZONE=${TIMEZONE}
+#      - CONFIG_SNAPSHOT_SECRETS=anotherSecretToDecryptWith||aKeyToTryAndDecryptWith
     volumes:
-      - isvaconfig:/var/shared
+      - iviaconfig:/var/shared:rw,z
     ports:
       - "${WEB1_IP}:9443:9443"
+    extra_hosts:
+      - "instana.gc.au.ibm.com:10.150.25.144"
+      - "apm.gc.au.ibm.com:10.150.25.145"
+      - "instana-std.apm.gc.au.ibm.com:10.150.25.145"
+      - "agent-acceptor.apm.gc.au.ibm.com:10.150.25.145"
     depends_on:
       - openldap
 
-  isvaruntime:
+  iviaruntime:
     image: ${CONTAINER_BASE}-runtime:${ISVA_VERSION}
-    hostname: isvaruntime
+    hostname: iviaruntime
     networks:
-      - isva-network
+      - ivia-network
     restart: always
     environment:
 #     - SNAPSHOT=${SNAPSHOT}
 #     - FIXPACKS=${FIXPACKS}
       - CONTAINER_TIMEZONE=${TIMEZONE}
+#      - CONFIG_SNAPSHOT_SECRETS=anotherSecretToDecryptWith||aKeyToTryAndDecryptWith
+      - WLP_LOGGING_CONSOLE_FORMAT=simple
     volumes:
-      - isvaconfig:/var/shared
+      - iviaconfig:/var/shared:rw,z
+    extra_hosts:
+      - "instana.gc.au.ibm.com:10.150.25.144"
+      - "apm.gc.au.ibm.com:10.150.25.145"
+      - "instana-std.apm.gc.au.ibm.com:10.150.25.145"
+      - "agent-acceptor.apm.gc.au.ibm.com:10.150.25.145"
     depends_on:
       - openldap
       - postgresql
 
-  isvadsc:
+  iviadsc:
     image: ${CONTAINER_BASE}-dsc:${ISVA_VERSION}
-    hostname: isvadsc
+    hostname: iviadsc
     networks:
-      - isva-network
+      - ivia-network
     restart: always
     environment:
       - INSTANCE=1
 #     - SNAPSHOT=${SNAPSHOT}
 #     - FIXPACKS=${FIXPACKS}
       - CONTAINER_TIMEZONE=${TIMEZONE}
+#      - CONFIG_SNAPSHOT_SECRETS=anotherSecretToDecryptWith||aKeyToTryAndDecryptWith
+    extra_hosts:
+      - "instana.gc.au.ibm.com:10.150.25.144"
+      - "apm.gc.au.ibm.com:10.150.25.145"
+      - "instana-std.apm.gc.au.ibm.com:10.150.25.145"
+      - "agent-acceptor.apm.gc.au.ibm.com:10.150.25.145"
     volumes:
-      - isvaconfig:/var/shared
+      - iviaconfig:/var/shared:rw,z
+
+  iviadsc-replica:
+    image: ${CONTAINER_BASE}-dsc:${ISVA_VERSION}
+    hostname: iviadsc-replica
+    networks:
+      - ivia-network
+    restart: always
+    environment:
+      - INSTANCE=2
+#     - SNAPSHOT=${SNAPSHOT}
+#     - FIXPACKS=${FIXPACKS}
+      - CONTAINER_TIMEZONE=${TIMEZONE}
+#      - CONFIG_SNAPSHOT_SECRETS=anotherSecretToDecryptWith||aKeyToTryAndDecryptWith
+    extra_hosts:
+      - "instana.gc.au.ibm.com:10.150.25.144"
+      - "apm.gc.au.ibm.com:10.150.25.145"
+      - "instana-std.apm.gc.au.ibm.com:10.150.25.145"
+      - "agent-acceptor.apm.gc.au.ibm.com:10.150.25.145"
+    volumes:
+      - iviaconfig:/var/shared:rw,z
 
 #
 # Service Containers
@@ -95,9 +140,10 @@ services:
     image: ${CONTAINER_BASE}-openldap:${LDAP_VERSION}
     hostname: openldap
     networks:
-      - isva-network
+      - ivia-network
     restart: always
     command: --copy-service
+    #command: "--copy-service -l debug"
     environment:
       - LDAP_ADMIN_PASSWORD=Passw0rd
       - LDAP_CONFIG_PASSWORD=Passw0rd
@@ -110,7 +156,7 @@ services:
       - libldap:/var/lib/ldap
       - ldapslapd:/etc/ldap/slapd.d
       - libsecauthority:/var/lib/ldap.secAuthority
-      - ${HOME}/dockershare/composekeys/openldap:/container/service/slapd/assets/certs
+      - ${HOME}/dockershare/composekeys/openldap:/container/service/slapd/assets/certs:Z
     ports:
 #      - ${LDAP_PORT}:389
       - ${LMI_IP}:1636:636
@@ -119,23 +165,23 @@ services:
     image: ${CONTAINER_BASE}-postgresql:${DB_VERSION}
     hostname: postgresql
     networks:
-      - isva-network
+      - ivia-network
     restart: always
     environment:
-      - POSTGRES_DB=isva
+      - POSTGRES_DB=ivia
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=Passw0rd
       - POSTGRES_SSL_KEYDB=/var/local/server.pem
 #     - POSTGRES_UNSECURE=${DB_SSL_DISABLED}
     volumes:
-      - pgdata:/var/lib/postgresql/data
-      - ${HOME}/dockershare/composekeys/postgresql:/var/local
+      - pgdata:/var/lib/postgresql/data:Z
+      - ${HOME}/dockershare/composekeys/postgresql:/var/local:Z
 
-  isvaop:
-    image: ${CONTAINER_BASE}-oidc-provider:${ISVAOP_VERSION}
+  iviaop:
+    image: ${CONTAINER_BASE}-oidc-provider:${IVIAOP_VERSION}
     networks:
       - isva-network
-    hostname: isvaop
+    hostname: iviaop
     restart: always
     environment:
       - CONTAINER_TIMEZONE=${TIMEZONE}

@@ -37,17 +37,17 @@ objects:
         spec:
           serviceAccountName: ${SERVICE_ACCOUNT}
           volumes:
-            - name: isvaop-config
+            - name: iviaop-config
               configMap:
-                name: ${ISVAOP_CONFIGMAP}
+                name: ${IVIAOP_CONFIGMAP}
           imagePullSecrets:
             - name: artifactory
           containers:
             - name: ${APP_NAME}
               image: >-
-                icr.io/isva/verify-access-oidc-provider:${ISVAOP_VERSION}
+                icr.io/isva/ivia-oidc-provider:${IVIAOP_VERSION}
               volumeMounts:
-                - name: isvaop-config
+                - name: iviaop-config
                   mountPath: /var/isvaop/config
   - apiVersion: v1
     kind: Service
@@ -90,16 +90,16 @@ parameters:
     description: >-
       The name which will be given to the IBM Security Verify Access OIDC
       Provider application.
-    value: isvaop
-  - name: ISVAOP_VERSION
-    description: The ISVAOP version/tag which is to be deployed.
-    value: '23.03'
+    value: iviaop
+  - name: IVIAOP_VERSION
+    description: The IVIAOP version/tag which is to be deployed.
+    value: '24.12'
   - name: SERVICE_ACCOUNT
     description: The service account which will be used when running the pod.
     value: verifyaccess-config
   - name: REPLICAS
     description: The number of replicas of the application to create.
     value: '1'
-  - name: ISVAOP_CONFIGMAP
+  - name: IVIAOP_CONFIGMAP
     description: The ConfigMap which holds the configuration of the container.
-    value: isvaop-config
+    value: iviaop-config

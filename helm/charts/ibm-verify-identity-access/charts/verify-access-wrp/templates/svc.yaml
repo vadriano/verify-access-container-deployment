@@ -1,0 +1,43 @@
+{{- include "sch.config.init" (list . "iviawrp.sch.chart.config.values") -}}
+
+{{- $dot := . }}
+{{- range $index, $inst := .Values.container.instances }}
+{{- $instance := lower $inst.name }}
+{{- $servicename := $inst.servicename }}
+{{- $servicetype := (default $.Values.service.type $inst.servicetype) }}
+{{- $nodePort := $inst.nodePort }}
+{{- $index    := (printf "%d" $index) }}
+
+#
+# This file contains the definition for the service provides by this helm
+# chart.
+#
+
+apiVersion: v1
+kind: Service
+
+metadata:
+{{- if $servicename }}
+  name: {{ $servicename }}
+{{- else }}
+  name: {{ include "wrp.name" (list $dot $instance) }}
+{{- end }}
+  labels:
+{{ include "sch.metadata.labels.standard" (list $dot "") | indent 4 }}
+
+spec:
+  type: {{ default "ClusterIP" $servicetype }}
+
+  ports:
+   - name: {{ include "wrp.service.name" (list $dot $index) }}
+     port: {{ template "runtime.port" $dot }}
+{{- if and (eq $servicetype "NodePort") $nodePort }}
+     nodePort: {{ $nodePort }}
+{{- end }}
+
+  selector:
+    app: {{ include "wrp.name" (list $dot $instance) }}
+
+---
+
+{{- end -}}

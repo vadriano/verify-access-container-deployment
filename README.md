@@ -1,11 +1,15 @@
 # Version Information
-These assets are for IBM Security Verify Access v10.0.6.0.
-They will also work for older versions (eg. v10.0.4.0) if version is changed where appropriate.
+These assets are for IBM Verify Identity Access v11.0.0.0.
+They will also work for older versions (eg. IBM Security Verify Access v10.0.8.0) if version is changed where appropriate.
+
+Assets for v10.0.0.0 (which will also work with v10.0.1.0) are available as a release.  Checkout tag `v10.0.0.0-1`.
+
+Assets for IBM Security Access Manager are available at https://ibm.biz/isamdocker
 
 # Resources
 ## Cookbooks
 ### Deployment with Native Docker and Docker Compose
-This cookbook describes deployment with Native Docker and Docker Compose.  It covers some docker concepts, deployment of Verify Access containers, and initial configuration of a simple Verify Access system. [Download docker cookbook from Security Learning Academy](http://ibm.biz/Verify_Access_Docker_Cookbook).
+This cookbook describes deployment with Native Docker and Docker Compose.  It covers some docker concepts, deployment of Verify Identity Access containers, and initial configuration of a simple Verify Identity Access system. [Download docker cookbook from Security Learning Academy](http://ibm.biz/Verify_Access_Docker_Cookbook).
 
 ### Deployment with Kubernetes
 This cookbook describes deployment using Kubernetes.  It requires that you have access to a Kubernetes cluster.  This could be a hosted cluster on a cloud environment or a test environment built using a tool such as Minikube.
@@ -38,7 +42,7 @@ If you want to use other local IP addresses then you'll need to modify the `comm
 
 Run `./docker-setup.sh` script to create docker containers.
 
-You can now connect to the Verify Access LMI at https://127.0.0.2
+You can now connect to the Verify Identity Access LMI at https://127.0.0.2
 
 To clean up the docker resources created, run the `./cleanup.sh` script.
 
@@ -59,7 +63,7 @@ Change directory to the `iamlab` directory.
 
 Run command `docker-compose up -d` to create containers.
 
-You can now connect to the Verify Access LMI at https://127.0.0.2
+You can now connect to the Verify Identity Access LMI at https://127.0.0.2
 
 To clean up the docker resources created, run `docker-compose down -v` command.
 
@@ -73,22 +77,22 @@ First, run `./create-secrets.sh` command to create the secrets required for the 
 Then, run `kubectl create -f <YAML file>` to define the resources required.
 
 There are YAML files for the following environments:
-- Minikube (`isva-minikube.yaml`)
+- Minikube (`ivia-minikube.yaml`)
    - Also works with Kubernetes included with Docker CE on Mac
-- IBM Cloud Free Edition (`isva-ibmcloud.yaml`)
-- IBM Cloud Paid Edition (`isva-ibmcloud-pvc.yaml`)
-- Google (`isva-google.yaml`)
+- IBM Cloud Free Edition (`ivia-ibmcloud.yaml`)
+- IBM Cloud Paid Edition (`ivia-ibmcloud-pvc.yaml`)
+- Google (`ivia-google.yaml`)
 
 Once all pods are running, you can run the `./lmi-access.sh` script to start a port-forward session for access to the LMI. With this running, you can access LMI using at https://localhost:9443
 
-If the LMI port-forwarding isn't stable, you can also create a node port or ingress using the provided `isvaconfig-nodeport.yaml` or `isvaconfig-ingress.yaml` files (but this will open your LMI to the world).  If using an ingress, you will need to determine the IP address where this is listening and then point `lmi.iamlab.ibm.com` to it in your `/etc/hosts` file.
+If the LMI port-forwarding isn't stable, you can also create a node port or ingress using the provided `iviaconfig-nodeport.yaml` or `iviaconfig-ingress.yaml` files (but this will open your LMI to the world).  If using an ingress, you will need to determine the IP address where this is listening and then point `lmi.iamlab.ibm.com` to it in your `/etc/hosts` file.
 
 To allow worker containers to access configuration snapshots, you must set the password of the `cfgsvc` user in the LMI to match the password set in the `configreader` secret (default is `Passw0rd`).  You can set this password under **System->Account management** in the LMI.
 
 To access the Reverse Proxy you will need to determine an External IP for a Node in the cluster and then connnect to this using https on port 30443.
 
 For Google, access to a NodePort requires the following firewall rule to be created:
-`gcloud compute firewall-rules create isvawrp-node-port --allow tcp:30443`
+`gcloud compute firewall-rules create iviawrp-node-port --allow tcp:30443`
 
 The Minikube YAML file includes an ingress definition for the Reverse Proxy.  To use the ingress, you will need to determine the IP address where this is listening and then point `www.iamlab.ibm.com` to it in your `/etc/hosts` file.
 
@@ -135,7 +139,7 @@ Create a project:
 
 ## Create and apply security constraints
 Although the lightweight worker containers can run with the default service account, additional permissions are required for other components:
-- The Verify Access configuration container requires setuid and setgid permissions.
+- The Verify Identity Access configuration container requires setuid and setgid permissions.
 - The postgreSQL container requires permission to run as a non-root user
 - The OpenLDAP container requires permission to run as root
 
@@ -156,9 +160,9 @@ Next, run `./create-secrets.sh` command to create the secrets required for the e
 Load the templates using the following commands:
 
 ```
-oc create -f verify-access-openldap-template.yaml
-oc create -f verify-access-postgresql-template.yaml
-oc create -f verify-access-templates-openshift4.yaml
+oc create -f verify-identity-access-openldap-template.yaml
+oc create -f verify-identity-access-postgresql-template.yaml
+oc create -f verify-identity-access-templates-openshift4.yaml
 oc create -f verify-access-operator-template.yaml
 ```
 
@@ -177,35 +181,35 @@ Perform the following actions:
 As part of deploying a template you will get the chance to update the default deploy parameters.
 
 ### Deploy on the command line
-Use the following command to search for Verify Access templates:
+Use the following command to search for Verify Identity Access templates:
 ```
 oc new-app -S --template=verify
 ```
 
 To show the parameters available in a template, use the `describe` command. For example:
 ```
-oc describe template verify-access-config
+oc describe template verify-identity-access-config
 ```
 
 To deploy a template, use the `oc new-app` command specifying the template and any parameter overrides you need.  For example:
 ```
-oc new-app --template verify-access-config -p ADMIN_PW=Passw0rd -p CONFIG_PW=Passw0rd
+oc new-app --template verify-identity-access-config -p ADMIN_PW=Passw0rd -p CONFIG_PW=Passw0rd
 ```
 
 ## Access LMI and Web Proxy
-Once Verify Access is deployed, you can run the `./lmi-access.sh` script to start a port-forward session for access to the LMI.
+Once Verify Identity Access is deployed, you can run the `./lmi-access.sh` script to start a port-forward session for access to the LMI.
 With this running, you can access LMI using at https://localhost:9443.
 
 If the LMI port-forwarding isn't stable, you can also create a route using the provided `lmi-route.yaml` file (but this will open your LMI to the world).  You will need to determine the IP address where this is listening and then point `lmi.iamlab.ibm.com` to it in your `/etc/hosts` file.
 
-OpenShift includes a web proxy which can route traffic to the Verify Access Reverse Proxy.  You will need to determine the IP address where this is listening and then point `www.iamlab.ibm.com` to it in your `/etc/hosts` file.
+OpenShift includes a web proxy which can route traffic to the Verify Identity Access Reverse Proxy.  You will need to determine the IP address where this is listening and then point `www.iamlab.ibm.com` to it in your `/etc/hosts` file.
 
 To allow worker containers to access configuration snapshots, you must create an LMI user that matches the `configuration read username` and `configuration read password` set during deployment of the configuration container. This is done under **System->Account management** in the LMI. The default username is `cfgsvc` and this user already exists in the LMI.  If you use this username you will only need to set the password.
 
 
 ## OpenShift Operator deployment
 The [Operator Deployment Demo](openshift/alt-deployment-configs/operator/README.md) can be used to automate management of 
-production containers using the Verify Access Operator.
+production containers using the Verify Identity Access Operator.
 
 # Automated Configuration
 New deployments can be automatically configured using the `verify-access-autoconf` python package to apply a YAML configuration file. The provided ``first-steps.yaml`` configuration file assumes that you have a copy of the PKI used to deploy the containers in the configuration directory.
@@ -232,14 +236,14 @@ To backup the state of your environment, use the `./isva-backup....sh` script in
 - Content of the `verify-access-container-deployment/local/dockerkeys` directory
 - OpenLDAP directory content
 - PostgreSQL database content
-- Configuration snapshot from the Verify Access config container
+- Configuration snapshot from the Verify Identity Access config container
 
 To restore from a backup, perform these steps:
 
 1. Delete the `verify-access-container-deployment/local/dockerkeys` directory
 1. Run `verify-access-container-deployment/common/restore-keys.sh <archive tar file>`
 1. Complete setup for the environment you want to create (until containers are running)
-1. Run `./isva-restore....sh <archive tar file>` to restore configuration.
+1. Run `./ivia-restore....sh <archive tar file>` to restore configuration.
 
 # License
 

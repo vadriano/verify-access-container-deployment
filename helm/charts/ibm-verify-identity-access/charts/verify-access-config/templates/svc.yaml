@@ -1,0 +1,32 @@
+{{- include "sch.config.init" (list . "iviaconfig.sch.chart.config.values") -}}
+
+#
+# This file contains the definition for the service provides by this helm
+# chart.
+#
+
+apiVersion: v1
+kind: Service
+
+metadata:
+{{- if $.Values.global.configservicename }}
+  name: {{ $.Values.global.configservicename }}
+{{- else }}
+  name: {{ include "sch.names.fullName" (list .) }}
+{{- end }}
+
+  labels:
+{{ include "sch.metadata.labels.standard" (list . "") | indent 4 }}
+
+spec:
+  type: {{ .Values.service.type }}
+
+  ports:
+   - name: {{ .sch.chart.config.servicename }}-https
+     port: {{ template "admin.port" . }}
+{{ if and (eq .Values.service.type "NodePort") .Values.service.nodePort }}
+     nodePort: {{ .Values.service.nodePort }}
+{{- end }}
+
+  selector:
+    app: {{ template "config.name" . }}

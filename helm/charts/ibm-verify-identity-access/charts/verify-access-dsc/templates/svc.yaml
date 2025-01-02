@@ -1,0 +1,49 @@
+{{- include "sch.config.init" (list . "iviadsc.sch.chart.config.values") -}}
+
+{{- if .Values.container.enabled }}
+
+{{- $dot := . }}
+{{- range $index, $element := .sch.chart.config.servers -}}
+
+#
+# This file contains the definition for the service provides by this helm
+# chart.
+#
+
+apiVersion: v1
+kind: Service
+
+metadata:
+{{- if (eq $element "primary") }}
+  {{- if $.Values.service.servicename }}
+  name: {{ $.Values.service.servicename }}
+  {{- else }}
+  name: {{ include "dsc.name" (list $dot $element) }}
+  {{- end }}
+{{- else }}
+  {{- if $.Values.service.servicename }}
+  name: {{ printf "%s2" $.Values.service.servicename }}
+  {{- else }}
+  name: {{ include "dsc.name" (list $dot $element) }}
+  {{- end }}
+{{- end }}
+  labels:
+{{ include "sch.metadata.labels.standard" (list $dot "") | indent 4 }}
+
+spec:
+  type: ClusterIP
+
+  ports:
+   - name: {{ include "dsc.service.name" (list $dot $element) }}
+     port: {{ template "runtime.port" $dot }}
+   - name: {{ include "dsc.replica.service.name" (list $dot $element) }}
+     port: {{ template "replica.port" $dot }}
+
+  selector:
+    app: {{ include "dsc.name" (list $dot $element) }}
+
+---
+
+{{- end -}}
+
+{{- end -}}
