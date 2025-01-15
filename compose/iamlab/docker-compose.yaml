@@ -137,7 +137,7 @@ services:
 #
 
   openldap:
-    image: ${CONTAINER_BASE}-openldap:${LDAP_VERSION}
+    image: icr.io/isva/verify-access-openldap:10.0.6.0
     hostname: openldap
     networks:
       - ivia-network
@@ -180,7 +180,7 @@ services:
   iviaop:
     image: ${CONTAINER_BASE}-oidc-provider:${IVIAOP_VERSION}
     networks:
-      - isva-network
+      - ivia-network
     hostname: iviaop
     restart: always
     environment:
