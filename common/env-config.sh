@@ -23,6 +23,7 @@ CONTAINER_BASE=icr.io/ivia/ivia
 ISVA_VERSION=11.0.0.0
 LDAP_VERSION=11.0.0.0
 DB_VERSION=11.0.0.0
+IVIAOP_VERSION=24.12
 
 
 # Get directory for this script
