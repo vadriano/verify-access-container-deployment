@@ -283,6 +283,8 @@ spec:
                 secretKeyRef:
                   name: configreader
                   key: cfgsvcpw
+            - name: CONFIG_SERVICE_TLS_CACERT
+              value: disabled
           livenessProbe:
             exec:
               command:
@@ -360,6 +362,8 @@ spec:
                 secretKeyRef:
                   name: configreader
                   key: cfgsvcpw
+            - name: CONFIG_SERVICE_TLS_CACERT
+              value: disabled
           livenessProbe:
             exec:
               command:
@@ -444,6 +448,8 @@ spec:
                 secretKeyRef:
                   name: configreader
                   key: cfgsvcpw
+            - name: CONFIG_SERVICE_TLS_CACERT
+              value: disabled
           livenessProbe:
             exec:
               command:
