@@ -37,4 +37,4 @@ docker run -t -d --restart always -v iviaconfig:/var/shared --hostname iviarunti
 
 docker run -t -d --restart always -v iviaconfig:/var/shared --hostname iviadsc --name iviadsc -e CONTAINER_TIMEZONE=Europe/London -e INSTANCE=1 --network ivia icr.io/ivia/ivia-dsc:${ISVA_VERSION}
 
-docker run -t -d --restart always -v ${IVIAOPCONFIG}:/var/isvaop/config --hostname isvaop --name isvaop -e CONTAINER_TIMEZONE=Europe/London -e INSTANCE=1 --network isva ${CONTAINER_BASE}-oidc-provider:${IVIAOP_VERSION}
+docker run -t -d --restart always -v ${IVIAOPCONFIG}:/var/isvaop/config --hostname isvaop --name isvaop -e CONTAINER_TIMEZONE=Europe/London -e INSTANCE=1 --network ivia ${CONTAINER_BASE}-oidc-provider:${IVIAOP_VERSION}

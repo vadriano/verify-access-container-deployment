@@ -1,3 +1,4 @@
+docker rm -fv isvaop
 docker rm -fv iviawrprp1
 docker rm -fv iviadsc
 docker rm -fv iviaruntime

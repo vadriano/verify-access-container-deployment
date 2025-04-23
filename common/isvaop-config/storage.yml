@@ -5,7 +5,7 @@ session_cache:
 server_connections:
   - name: hvdb                                  # Connection name
     type: postgresql                            # Connection type: `redis`, `ldap`, `postgresql`, `oracle` (to be supported in future releases), `db2` (to be supported in future releases)
-    database_name: isva                     # Specifies the database name. For database types only
+    database_name: ivia                     # Specifies the database name. For database types only
     hosts:                                      # List of host information (IP and port).
       - hostname: postgresql                 # Server's hostname.
         hostport: 5432                          # Server's host port.
