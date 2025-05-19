@@ -25,14 +25,13 @@ LDAP_VERSION=latest
 DB_VERSION=11.0.0.0
 IVIAOP_VERSION=24.12
 
-set -o
 # Get directory for this script
 PARENT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && cd .. && pwd )"
 if [ -z "$PARENT" ] ; then
   echo "Failed to get local path"
   exit 1  # fail
 fi
-set +o
+
 # Location where Keystores will be created
 DOCKERKEYS=${PARENT}/local/dockerkeys
 IVIAOPCONFIG=${PARENT}/common/isvaop-config
