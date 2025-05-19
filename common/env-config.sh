@@ -25,18 +25,16 @@ LDAP_VERSION=latest
 DB_VERSION=11.0.0.0
 IVIAOP_VERSION=24.12
 
-
 # Get directory for this script
-THISDIR="`dirname \"$0\"`"         # relative
-THISDIR="`( cd \"$THISDIR/..\" && pwd )`"  # absolutized and normalized
-if [ -z "$THISDIR" ] ; then
+PARENT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && cd .. && pwd )"
+if [ -z "$PARENT" ] ; then
   echo "Failed to get local path"
   exit 1  # fail
 fi
 
 # Location where Keystores will be created
-DOCKERKEYS=${THISDIR}/local/dockerkeys
-IVIAOPCONFIG=${THISDIR}/common/isvaop-config
+DOCKERKEYS=${PARENT}/local/dockerkeys
+IVIAOPCONFIG=${PARENT}/common/isvaop-config
 # Location where Docker Shares will be created
 # Note that this directory is also hardcoded into YAML files
 DOCKERSHARE=${HOME}/dockershare
